@@ -2,3 +2,82 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+.content_btns {
+    display: flex;
+    right: -26%;
+    position: fixed;
+    top: 22%;
+    transform: rotateZ(90deg);
+    transform-origin: 4% 57% 0;
+    width: 28%;
+    z-index: 9;
+}
+.bttn.videos_btn, .bttn.videos_btn:hover, .bttn.videos_btn:focus {
+    background-color: #4e9a05;
+    border-radius: 0;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: 100%;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+}
+.bttn.notes_btn, .bttn.notes_btn:hover, .bttn.notes_btn:focus {
+    background-color: #ff8503;
+    border-radius: 0;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: 100%;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+}
+.bttn.help_btn, .bttn.help_btn:hover, .bttn.help_btn:focus {
+    background-color: #cd4233;
+    border-radius: 0;
+    color: #fff;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+}

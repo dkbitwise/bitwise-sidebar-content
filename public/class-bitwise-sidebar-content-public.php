@@ -27,7 +27,7 @@ class Bitwise_Sidebar_Content_Public {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string $plugin_name The ID of this plugin.
 	 */
 	private $plugin_name;
 
@@ -36,21 +36,22 @@ class Bitwise_Sidebar_Content_Public {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
+	 * @param string $plugin_name The name of the plugin.
+	 * @param string $version The version of this plugin.
+	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -100,4 +101,21 @@ class Bitwise_Sidebar_Content_Public {
 
 	}
 
+	/**
+	 * @param $template
+	 *
+	 * @return string
+	 */
+	public function bit_sico_include_custom_topic_template( $template ) {
+		global $post;
+		$post_id = isset( $post->ID ) ? $post->ID : 0;
+		if ( $post_id > 0 ) {
+			$post_type = isset( $post->post_type ) ? $post->post_type : '';
+			if ( 'sfwd-topic' === $post_type ) {
+				$template = plugin_dir_path( __FILE__ ) . 'templates/single-sfwd-topic.php';
+			}
+		}
+
+		return $template;
+	}
 }
