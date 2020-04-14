@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -117,6 +116,11 @@ class Bitwise_Sidebar_Content {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-bitwise-sidebar-content-admin.php';
 
 		/**
+		 * The class responsible for defining all actions that occur in the admin area.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bitwise-sidebar-content-db.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
@@ -151,11 +155,15 @@ class Bitwise_Sidebar_Content {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
+		$plugin_db = new Bitwise_Sidebar_Content_DB();
+		$this->loader->add_action( 'admin_init', $plugin_db, 'add_if_needed' );
 
 		$plugin_admin = new Bitwise_Sidebar_Content_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'admin_sidebar_menu' );
 
 	}
 
@@ -173,7 +181,7 @@ class Bitwise_Sidebar_Content {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		$this->loader->add_filter( 'template_include', $plugin_public, 'bit_sico_include_custom_topic_template' );
+		//$this->loader->add_filter( 'template_include', $plugin_public, 'bit_sico_include_custom_topic_template' );
 	}
 
 	/**
@@ -215,5 +223,4 @@ class Bitwise_Sidebar_Content {
 	public function get_version() {
 		return $this->version;
 	}
-
 }

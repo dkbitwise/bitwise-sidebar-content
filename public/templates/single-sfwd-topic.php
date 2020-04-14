@@ -21,106 +21,6 @@
     <!-- BuddyPress and bbPress Stylesheets are called in wp_head, if plugins are activated -->
 	<?php wp_head(); ?>
 </head>
-<style type="text/css">
-    @media only screen and (min-width: 481px) {
-        header#masthead {
-            box-sizing: border-box;
-            position: fixed;
-            width: 100%;
-            margin-top: -25px !important;
-        }
-    }
-
-    .header-navigation > div > ul {
-        height: 35px !important;
-        list-style: none;
-        margin: 0;
-        overflow: hidden;
-        padding: 0;
-        text-align: right;
-        padding-top: 10px;
-    }
-
-    .site-header .header-inner .right-col {
-        display: table-cell;
-        float: none;
-        padding-top: 10px;
-    }
-
-    body #mastlogo {
-        min-height: 50px !important;
-        padding: 0px 18px;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-    }
-
-    .entry-content h2 {
-        margin: 14px 0;
-    }
-
-    .grassblade {
-        margin-top: -30px;
-    }
-
-    body {
-        background-color: inherit !important;
-    }
-
-    .cpMainContainer {
-        background-color: inherit !important;
-    }
-
-    #cpDocument {
-        background-color: inherit !important;
-    }
-
-    .btn121 {
-        background: #4e9a05;
-        position: fixed;
-        right: 0px;
-        top: 230px;
-        right: -45px;
-    }
-
-    .lf {
-        right: 0px;
-    }
-
-    .btn121 a {
-        color: #fff;
-    }
-
-    .btn121:hover {
-        right: 0px;
-    }
-
-    .btn1211 {
-        background: #ff8503;
-        position: fixed;
-        right: 0px;
-        top: 270px;
-        right: -105px;
-    }
-
-    .bttn.helpbtn .fa {
-        border: none;
-        border-radius: 100%;
-        padding: 3px 7px;
-        font-size: 15px;
-    }
-
-    .btn1211:hover {
-        right: 0px;
-    }
-
-    .btn1211 a {
-        color: #fff;
-    }
-</style>
 
 <?php
 global $rtl;
@@ -180,21 +80,6 @@ $logo_small          = wp_get_attachment_image( $logo_small_id, 'full', '', arra
         </div>
     </div>
 
-	<?PHP /*
-		        <div class="bit_com_btn btn1211" data-toggle="tooltip" data-placement="left">
-
-				<a href="#"  class="bttn communitybtn 1"><i class="fa fa-users" aria-hidden="true"></i>COMMUNITY&nbsp;&nbsp;</a>
-			</div>
-			<div class="com_wrapp">
-				<a href="#" class="com_close"><i class="fa fa-times" aria-hidden="true"></i></a>
-				<div class="thumbnail bt_box_shadow">
-					<h4 style="padding-top:10px; text-align: center; font-size: 15px;"> COMMUNITY </h4><hr style="margin-top:10px; margin-bottom:10px;">
-					<?php $forum_site = ($_SERVER['HTTP_HOST'] == 'bitwise.academy')? 'forum.bitwise.academy' : $_SERVER['HTTP_HOST'].'/forum'; ?>
-					<?php echo '<iframe style="height:750px; width:100%" src="//'.$forum_site.'/bitwise/?auth=sso"></iframe>' ;?>
-				</div>
-					</div>
-*/ ?>
-
     <div class="courses_btns">
         <a href="#" class="bttn completed_btn" data-tab="courses">MY COURSES</a>
         <a href="#" class="bttn inprogress_btn" data-tab="lessons">LESSONS</a>
@@ -221,11 +106,7 @@ $logo_small          = wp_get_attachment_image( $logo_small_id, 'full', '', arra
                 <ul class="sidebar_list">
 					<?php
 					foreach ( $courses as $course ) {
-						$get_data = get_post( $course );
-
-						// $short_description 	= ( is_plugin_active('learndash-course-grid/learndash-course-grid.php') && isset( $course_options['sfwd-courses_course_short_description'] ) ) ?  $course_options['sfwd-courses_course_short_description'] :  get_the_excerpt($course);
-						// var_dump(wp_html_excerpt( $get_data->post_content, 150 ));
-						?>
+						$get_data = get_post( $course ); ?>
                         <li>
                             <p class="title">
 								<?php if ( learndash_get_course_prerequisite_enabled( $course ) ){ ?>
@@ -434,7 +315,6 @@ $logo_small          = wp_get_attachment_image( $logo_small_id, 'full', '', arra
             $('.active_side_bar').delay(400000).show("slide", {direction: "right"}, 1200);
         });
     });
-
 </script>
 
 <script>

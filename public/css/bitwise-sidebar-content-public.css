@@ -1,83 +1,25 @@
 /**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
+ * All of the CSS for your public-facing functionality should be included in this file.
  */
-.content_btns {
-    display: flex;
-    right: -26%;
-    position: fixed;
-    top: 22%;
-    transform: rotateZ(90deg);
-    transform-origin: 4% 57% 0;
-    width: 28%;
-    z-index: 9;
-}
-.bttn.videos_btn, .bttn.videos_btn:hover, .bttn.videos_btn:focus {
-    background-color: #4e9a05;
-    border-radius: 0;
-    color: #fff;
-    font-weight: 600;
-    text-transform: uppercase;
-    width: 100%;
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-}
-.bttn.notes_btn, .bttn.notes_btn:hover, .bttn.notes_btn:focus {
-    background-color: #ff8503;
-    border-radius: 0;
-    color: #fff;
-    font-weight: 600;
-    text-transform: uppercase;
-    width: 100%;
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-}
-.bttn.help_btn, .bttn.help_btn:hover, .bttn.help_btn:focus {
-    background-color: #cd4233;
-    border-radius: 0;
-    color: #fff;
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-}
+@media only screen and (min-width: 481px) { header#masthead { box-sizing: border-box; position: fixed; width: 100%; margin-top: -25px !important; }}
+.header-navigation > div > ul { height: 35px !important; list-style: none; margin: 0; overflow: hidden; padding: 0; text-align: right; padding-top: 10px;}
+.site-header .header-inner .right-col { display: table-cell; float: none; padding-top: 10px;}
+body #mastlogo { min-height: 50px !important; padding: 0 18px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center;}
+.entry-content h2 { margin: 14px 0;}
+.grassblade { margin-top: -30px;}
+body { background-color: inherit !important;}
+.cpMainContainer { background-color: inherit !important;}
+#cpDocument { background-color: inherit !important;}
+.btn121 { background: #4e9a05; position: fixed; top: 230px; right: -45px;}
+.lf { right: 0;}
+.btn121 a { color: #fff;}
+.btn121:hover { right: 0;}
+.btn1211 { background: #ff8503; position: fixed; top: 270px; right: -105px;}
+.bttn.helpbtn .fa { border: none; border-radius: 100%; padding: 3px 7px; font-size: 15px;}
+.btn1211:hover {right: 0;}
+.btn1211 a { color: #fff;}
+.content_btns { display: flex; right: -26%; position: fixed; top: 25%; transform: rotateZ(90deg); transform-origin: 4% 57% 0; width: 28%; z-index: 9;}
+.bttn.videos_btn, .bttn.videos_btn:hover, .bttn.videos_btn:focus { background-color: #4e9a05;}
+.bttn.notes_btn, .bttn.notes_btn:hover, .bttn.notes_btn:focus { background-color: #ff8503;}
+.bttn.help_btn, .bttn.help_btn:hover, .bttn.help_btn:focus { background-color: #cd4233;}
+.content_btns .bttn { width: 33%; text-align: center; padding: 15px 0 5px 0; border: 1px solid transparent; border-radius: 0; color: #fff; font-weight: 600; text-transform: uppercase; display: inline-block; margin-bottom: 0; font-size: 14px; line-height: 1.42857143; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none;}

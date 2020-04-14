@@ -27,7 +27,7 @@ class Bitwise_Sidebar_Content_Admin {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string $plugin_name The ID of this plugin.
 	 */
 	private $plugin_name;
 
@@ -36,21 +36,22 @@ class Bitwise_Sidebar_Content_Admin {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
+	 * @param string $plugin_name The name of this plugin.
+	 * @param string $version The version of this plugin.
+	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -98,6 +99,20 @@ class Bitwise_Sidebar_Content_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/bitwise-sidebar-content-admin.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	public function admin_sidebar_menu() {
+		add_menu_page( __( 'BitWise Sidebar', 'bitsa' ), 'BitWise Sidebar', 'manage_options', 'bitwise-sidebar-content', array(
+			$this,
+			'bitsa_sidebar_content',
+		), 'dashicons-welcome-learn-more', 18 );
+	}
+
+	/**
+	 * Showing video creation form
+	 */
+	public function bitsa_sidebar_content() {
+		require_once plugin_dir_path( __FILE__ ) . 'templates/bitwise-video.php';
 	}
 
 }
