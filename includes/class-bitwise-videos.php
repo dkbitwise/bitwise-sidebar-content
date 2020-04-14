@@ -9,7 +9,7 @@ class Bitwise_Videos {
 	private static $ins = null;
 
 	/**
-	 * @var $id 
+	 * @var $id
 	 */
 	public $id = 0;
 	public $video_url = '';
