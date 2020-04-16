@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The plugin bootstrap file
  *
@@ -64,19 +63,10 @@ register_deactivation_hook( __FILE__, 'deactivate_bitwise_sidebar_content' );
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-bitwise-sidebar-content.php';
 
-/**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    1.0.0
- */
-function run_bitwise_sidebar_content() {
-
-	$plugin = new Bitwise_Sidebar_Content();
-	$plugin->run();
-
+function bitscr_clean( $var ) {
+	if ( is_array( $var ) ) {
+		return array_map( 'bitscr_clean', $var );
+	} else {
+		return is_scalar( $var ) ? sanitize_text_field( $var ) : $var;
+	}
 }
-run_bitwise_sidebar_content();

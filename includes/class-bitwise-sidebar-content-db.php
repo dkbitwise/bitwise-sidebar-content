@@ -42,7 +42,6 @@ class Bitwise_Sidebar_Content_DB {
 	public function __construct() {
 		global $wpdb;
 		$this->wp_db = $wpdb;
-		//add_action( 'plugins_loaded', array( $this, 'add_if_needed' ) );
 	}
 
 	/**
@@ -104,9 +103,8 @@ class Bitwise_Sidebar_Content_DB {
 	protected function get_tables_list() {
 		$all_tables = array();
 		$tables     = array(
-			'bitscr_video',
-			'bitscr_help',
-			'bitscr_notes',
+			'bitscr_content',
+			'bitscr_courses',
 		);
 		foreach ( $tables as &$table ) {
 			$all_tables[] = $this->wp_db->prefix . $table;
@@ -118,16 +116,19 @@ class Bitwise_Sidebar_Content_DB {
 	/**
 	 * Add bitsa_school table
 	 */
-	public function bitscr_video() {
+	public function bitscr_content() {
 		$collate = '';
 
 		if ( $this->wp_db->has_cap( 'collation' ) ) {
 			$collate = $this->wp_db->get_charset_collate();
 		}
-		$values_table = "CREATE TABLE `" . $this->wp_db->prefix . "bitscr_video` (
-				`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,				
-				`video_url` VARCHAR(200) NOT NULL,
+		$values_table = "CREATE TABLE `" . $this->wp_db->prefix . "bitscr_content` (
+				`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,	
+				`sfwd_course_id` BIGINT(20) UNSIGNED NOT NULL,		
+				`sfwd_lesson_id` BIGINT(20) UNSIGNED NOT NULL,		
+				`content_url` VARCHAR(200) NOT NULL,
 				`type` VARCHAR(200) NOT NULL,
+				`source` VARCHAR(200) NOT NULL,
 				`date_added` DATETIME DEFAULT NULL,
 				PRIMARY KEY (`id`),
 				KEY `id` (`id`)
@@ -137,25 +138,25 @@ class Bitwise_Sidebar_Content_DB {
 
 		$tables = get_option( '_bit_scr_created_tables', array() );
 
-		array_push( $tables, $this->wp_db->prefix . 'bitsa_schools' );
+		array_push( $tables, $this->wp_db->prefix . 'bitscr_content' );
 		$tables = array_unique( $tables );
 		update_option( '_bit_scr_created_tables', $tables );
 	}
 
 	/**
-	 * Add bitscr_help table
+	 * Add bitsa_courses table
 	 */
-	public function bitscr_help() {
+	public function bitscr_courses() {
 		$collate = '';
 
 		if ( $this->wp_db->has_cap( 'collation' ) ) {
 			$collate = $this->wp_db->get_charset_collate();
 		}
-		$values_table = "CREATE TABLE `" . $this->wp_db->prefix . "bitscr_help` (
+		$values_table = "CREATE TABLE `" . $this->wp_db->prefix . "bitscr_courses` (
 				`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-				`help_doc_url` VARCHAR(20) NOT NULL,
-				`type` VARCHAR(20) NOT NULL,
-				`date_added` DATETIME DEFAULT NULL,
+				`name` VARCHAR(200),
+				`sfwd_course_id` BIGINT(20) UNSIGNED NOT NULL,
+				`sfwd_lessons` TEXT,
 				PRIMARY KEY (`id`),
 				KEY `id` (`id`)
                 ) " . $collate . ";";
@@ -164,34 +165,7 @@ class Bitwise_Sidebar_Content_DB {
 
 		$tables = get_option( '_bit_scr_created_tables', array() );
 
-		array_push( $tables, $this->wp_db->prefix . 'bitsa_teachers' );
-		$tables = array_unique( $tables );
-		update_option( '_bit_scr_created_tables', $tables );
-	}
-
-	/**
-	 * Add bitsa_classrooms table
-	 */
-	public function bitscr_notes() {
-		$collate = '';
-
-		if ( $this->wp_db->has_cap( 'collation' ) ) {
-			$collate = $this->wp_db->get_charset_collate();
-		}
-
-		$values_table = "CREATE TABLE `" . $this->wp_db->prefix . "bitscr_notes` (
-				`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-				`notes_doc_url` VARCHAR(20) NOT NULL,
-				`date_added` DATETIME DEFAULT NULL,
-				PRIMARY KEY (`id`),
-				KEY `id` (`id`)
-                ) " . $collate . ";";
-
-		dbDelta( $values_table );
-
-		$tables = get_option( '_bit_scr_created_tables', array() );
-
-		array_push( $tables, $this->wp_db->prefix . 'bitsa_classrooms' );
+		array_push( $tables, $this->wp_db->prefix . 'bitscr_courses' );
 		$tables = array_unique( $tables );
 		update_option( '_bit_scr_created_tables', $tables );
 	}

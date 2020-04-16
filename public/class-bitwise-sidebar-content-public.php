@@ -22,6 +22,7 @@
  */
 class Bitwise_Sidebar_Content_Public {
 
+	private static $ins = null;
 	/**
 	 * The ID of this plugin.
 	 *
@@ -42,17 +43,21 @@ class Bitwise_Sidebar_Content_Public {
 
 	/**
 	 * Initialize the class and set its properties.
-	 *
-	 * @param string $plugin_name The name of the plugin.
-	 * @param string $version The version of this plugin.
-	 *
-	 * @since    1.0.0
+	 * Bitwise_Sidebar_Content_Public constructor.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct() {
+	}
 
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
+	/**
+	 * Creating an instance of this class
+	 * @return Bitwise_Sidebar_Content_Public|null
+	 */
+	public static function get_instance() {
+		if ( null === self::$ins ) {
+			self::$ins = new self;
+		}
 
+		return self::$ins;
 	}
 
 	/**

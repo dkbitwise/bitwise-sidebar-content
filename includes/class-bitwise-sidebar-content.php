@@ -15,11 +15,9 @@
 /**
  * The core plugin class.
  *
- * This is used to define internationalization, admin-specific hooks, and
- * public-facing site hooks.
+ * This is used to define internationalization, admin-specific hooks, and public-facing site hooks.
  *
- * Also maintains the unique identifier of this plugin as well as the current
- * version of the plugin.
+ * Also maintains the unique identifier of this plugin as well as the current version of the plugin.
  *
  * @since      1.0.0
  * @package    Bitwise_Sidebar_Content
@@ -27,6 +25,11 @@
  * @author     Bitwise <https://bitwiseacademy.com/>
  */
 class Bitwise_Sidebar_Content {
+
+	/**
+	 * @var null
+	 */
+	public static $_instance = null;
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -56,6 +59,14 @@ class Bitwise_Sidebar_Content {
 	 */
 	protected $version;
 
+	public $admin;
+
+	public $bitscr_courses;
+
+	public $public;
+
+	public $data_store;
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -77,7 +88,6 @@ class Bitwise_Sidebar_Content {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
 	}
 
 	/**
@@ -102,32 +112,55 @@ class Bitwise_Sidebar_Content {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bitwise-sidebar-content-loader.php';
+		require_once __DIR__ . '/class-bitwise-sidebar-content-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bitwise-sidebar-content-i18n.php';
+		require_once __DIR__ . '/class-bitwise-sidebar-content-i18n.php';
+
+		/**
+		 * The class responsible for handling DB operations
+		 */
+		require_once __DIR__ . '/class-bitscr-data-store.php';
+
+		require_once __DIR__ . '/class-bitscr-common.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-bitwise-sidebar-content-admin.php';
+		require_once dirname( __DIR__ ) . '/admin/class-bitwise-sidebar-content-admin.php';
+		$this->admin = Bitwise_Sidebar_Content_Admin::get_instance();
 
 		/**
-		 * The class responsible for defining all actions that occur in the admin area.
+		 * The class responsible for creating required tables if they are missing
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-bitwise-sidebar-content-db.php';
+		require_once __DIR__ . '/class-bitwise-sidebar-content-db.php';
+
+		require_once __DIR__ . '/class-bitscr-course.php';
+		$this->bitscr_courses = Bitscr_Course::get_instance();
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-bitwise-sidebar-content-public.php';
+		require_once dirname( __DIR__ ) . '/public/class-bitwise-sidebar-content-public.php';
+		$this->public = Bitwise_Sidebar_Content_Public::get_instance();
 
 		$this->loader = new Bitwise_Sidebar_Content_Loader();
+	}
 
+	/**
+	 * Creating a new instance of this class
+	 * @return Bitwise_Sidebar_Content|null
+	 */
+	public static function get_instance() {
+		if ( null === self::$_instance ) {
+			self::$_instance = new self;
+		}
+
+		return self::$_instance;
 	}
 
 	/**
@@ -140,11 +173,8 @@ class Bitwise_Sidebar_Content {
 	 * @access   private
 	 */
 	private function set_locale() {
-
 		$plugin_i18n = new Bitwise_Sidebar_Content_i18n();
-
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -158,13 +188,11 @@ class Bitwise_Sidebar_Content {
 		$plugin_db = new Bitwise_Sidebar_Content_DB();
 		$this->loader->add_action( 'admin_init', $plugin_db, 'add_if_needed' );
 
-		$plugin_admin = new Bitwise_Sidebar_Content_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = $this->admin;
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'admin_sidebar_menu' );
-
 	}
 
 	/**
@@ -175,12 +203,9 @@ class Bitwise_Sidebar_Content {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-
-		$plugin_public = new Bitwise_Sidebar_Content_Public( $this->get_plugin_name(), $this->get_version() );
-
+		$plugin_public = $this->public;
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
 		//$this->loader->add_filter( 'template_include', $plugin_public, 'bit_sico_include_custom_topic_template' );
 	}
 
@@ -223,4 +248,30 @@ class Bitwise_Sidebar_Content {
 	public function get_version() {
 		return $this->version;
 	}
+
+	/**
+	 * @return Bitsa_Data_Store
+	 */
+	public function get_dataStore() {
+		if ( empty( $this->data_store ) ) {
+			$class            = apply_filters( 'bitsa_data_store_class', 'Bitscr_Data_Store' );
+			$this->data_store = new $class();
+		}
+
+		return $this->data_store;
+	}
 }
+
+if ( ! function_exists( 'Bitscr_Core' ) ) {
+	/**
+	 * @return Bitwise_Sidebar_Content|null
+	 */
+	function Bitscr_Core() {
+		$bitscr_main = Bitwise_Sidebar_Content::get_instance();
+		$bitscr_main->run();
+
+		return $bitscr_main;
+	}
+}
+
+$GLOBALS['Bitscr_Core'] = Bitscr_Core();

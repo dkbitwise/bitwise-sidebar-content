@@ -1,32 +1,23 @@
-(function( $ ) {
-	'use strict';
+(function ($) {
+    'use strict';
 
-	/**
-	 * All of the code for your admin-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
-
-})( jQuery );
+    $(document).ready(function () {
+        $('#bitscr_course').on('change', function () {
+            let course_id = $(this).val();
+            let data = {
+                'action': 'bitscr_get_lessons',
+                'course_id': course_id
+            };
+            jQuery.post(ajaxurl, data, function (resp) {
+                console.log(resp);
+                if (true === resp.success) {
+                    let html = '<option value="0">Select a lesson</option>';
+                    for (let lesson_id in resp.lessons) {
+                        html += '<option value="' + lesson_id + '">' + resp.lessons[lesson_id] + '</option>';
+                    }
+                    $('#bitscr_lessons').html(html);
+                }
+            });
+        });
+    });
+})(jQuery);
