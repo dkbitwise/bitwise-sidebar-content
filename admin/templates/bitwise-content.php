@@ -5,14 +5,15 @@
 $content_url = add_query_arg( array(
 	'page'    => 'bitwise-sidebar-content',
 	'add_new' => true
-), admin_url( 'admin.php' ) );
+), admin_url( 'admin.php' ) ); ?>
 
-?>
 <div class="bitwise-content-form" id="bitwise-content-form">
     <h3 class="bitwise-content">Contents <a class="bitwise-link" href="<?php echo esc_url( $content_url ) ?>">Add Content</a></h3>
 	<?php
 	if ( isset( $_GET['add_new'] ) && $_GET['add_new'] ) { ?>
-        <form class="bitwise-content-form-table">
+        <form class="bitwise-content-form-table" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
+            <input type="hidden" name="action" value="bitwise_content_form">
+            <input type="hidden" name="bitwise_content_form_nonce" value="<?php echo wp_create_nonce( 'bitwise_content_form_nonce_val' ) ?>">
             <table>
                 <tr>
                     <td>Select a Course</td>
@@ -61,7 +62,10 @@ $content_url = add_query_arg( array(
                     <td><input type="file" name="content_file"></td>
                 </tr>
                 <tr>
-                    <td><input class="primary button-primary" type="submit" value="Submit"></td>
+                    <td>
+                        <input type="hidden" name="bitwise-content">
+                        <input class="primary button-primary" type="submit" value="Submit"></td>
+
                 </tr>
 
             </table>

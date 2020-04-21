@@ -37,6 +37,8 @@ class Bitwise_Sidebar_Content_Admin {
 		add_action( 'admin_init', [ $this, 'enable_disable_logging' ] );
 
 		add_action( 'wp_ajax_bitscr_get_lessons', array( $this, 'bitscr_get_lessons' ) );
+
+		add_action( 'admin_post_bitwise_content_form', array( $this, 'bitwise_add_content' ) );
 	}
 
 	/**
@@ -145,6 +147,18 @@ class Bitwise_Sidebar_Content_Admin {
 
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			error_log( $log_message );
+		}
+	}
+
+	public function bitwise_add_content() {
+		echo "<pre>";
+		print_r( $_POST );
+		die( 'hre04' );
+
+		if ( isset( $_POST['bitwise_content_form_nonce'] ) && wp_verify_nonce( $_POST['bitwise_content_form_nonce'], 'bitwise_content_form_nonce_val' ) ) {
+			$posted_content = isset( $_POST ) ? bitscr_clean( $_POST ) : [];
+
+			bwf_pc_debug( $posted_content );
 		}
 	}
 

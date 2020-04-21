@@ -41,7 +41,7 @@ define( 'BITWISE_SIDEBAR_CONTENT_VERSION', '1.0.0' );
  * This action is documented in includes/class-bitwise-sidebar-content-activator.php
  */
 function activate_bitwise_sidebar_content() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bitwise-sidebar-content-activator.php';
+	require_once __DIR__ . '/includes/class-bitwise-sidebar-content-activator.php';
 	Bitwise_Sidebar_Content_Activator::activate();
 }
 
@@ -50,7 +50,7 @@ function activate_bitwise_sidebar_content() {
  * This action is documented in includes/class-bitwise-sidebar-content-deactivator.php
  */
 function deactivate_bitwise_sidebar_content() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bitwise-sidebar-content-deactivator.php';
+	require_once __DIR__ . '/includes/class-bitwise-sidebar-content-deactivator.php';
 	Bitwise_Sidebar_Content_Deactivator::deactivate();
 }
 
@@ -61,7 +61,7 @@ register_deactivation_hook( __FILE__, 'deactivate_bitwise_sidebar_content' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-bitwise-sidebar-content.php';
+require __DIR__ . '/includes/class-bitwise-sidebar-content.php';
 
 function bitscr_clean( $var ) {
 	if ( is_array( $var ) ) {
