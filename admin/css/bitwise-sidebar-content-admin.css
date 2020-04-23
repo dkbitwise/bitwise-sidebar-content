@@ -9,5 +9,10 @@ table.bitscr-courses { width: 100%;}
 .bitwise-content-form tr td:first-child { width: 45%;}
 .bitwise-content-form tr td { padding: 5px 0; }
 .bitscr-courses th { text-align: center; }
-.bitscr-courses td:last-child { text-align: left; }
-.bitscr-courses th:last-child { text-align: left; }
+.bitscr-courses th:last-child, .bitscr-courses td:last-child { text-align: left; }
+.bitwise-content-form-table #bitscr_course, .bitwise-content-form-table #bitscr_lessons, .bitwise-content-form-table input[type="text"] { width: 100%;}
+.bitwise-content-table-form { width: 550px;}
+.bitwise-content-form .bitwise-link { display: inline-block;}
+.bitwise-content-form .wp-spin.spinner { position: relative; left: 6px; top: -3px;}
+.bitscr-instance-table .bitscr-content td { padding-left: 10px;}
+.bitwise-content-table-form .bitscr-label label { display: inline-block; width: 30%;}

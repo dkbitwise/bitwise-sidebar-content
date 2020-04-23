@@ -63,6 +63,8 @@ class Bitwise_Sidebar_Content {
 
 	public $bitscr_courses;
 
+	public $bit_sc_content;
+
 	public $public;
 
 	public $data_store;
@@ -138,8 +140,14 @@ class Bitwise_Sidebar_Content {
 		 */
 		require_once __DIR__ . '/class-bitwise-sidebar-content-db.php';
 
+		require_once __DIR__ . '/class-bitscr-content-table.php';
+
+
 		require_once __DIR__ . '/class-bitscr-course.php';
 		$this->bitscr_courses = Bitscr_Course::get_instance();
+
+		require_once __DIR__ . '/class-bitwise-sc-content.php';
+		$this->bit_sc_content = Bitwise_SC_Content::get_instance();
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing

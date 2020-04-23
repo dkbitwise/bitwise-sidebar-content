@@ -59,6 +59,7 @@ class Bitwise_Sidebar_Content_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
+		wp_enqueue_media();
 		wp_enqueue_style( Bitscr_Core()->get_plugin_name(), plugin_dir_url( __FILE__ ) . 'css/bitwise-sidebar-content-admin.css', array(), Bitscr_Core()->get_version(), 'all' );
 	}
 
@@ -151,15 +152,41 @@ class Bitwise_Sidebar_Content_Admin {
 	}
 
 	public function bitwise_add_content() {
-		echo "<pre>";
-		print_r( $_POST );
-		die( 'hre04' );
-
 		if ( isset( $_POST['bitwise_content_form_nonce'] ) && wp_verify_nonce( $_POST['bitwise_content_form_nonce'], 'bitwise_content_form_nonce_val' ) ) {
 			$posted_content = isset( $_POST ) ? bitscr_clean( $_POST ) : [];
 
-			bwf_pc_debug( $posted_content );
+			$content_obj    = new Bitwise_SC_Content();
+			$sfwd_course_id = isset( $posted_content['course'] ) ? $posted_content['course'] : 0;
+			$sfwd_lesson_id = isset( $posted_content['lesson'] ) ? $posted_content['lesson'] : 0;
+			$content_type   = isset( $posted_content['content_type'] ) ? $posted_content['content_type'] : '';
+			$content_source = isset( $posted_content['content_source'] ) ? $posted_content['content_source'] : '';
+			$content_url    = isset( $posted_content['content_url'] ) ? $posted_content['content_url'] : '';
+
+			$content_obj->set_sfwd_course_id( $sfwd_course_id );
+			$content_obj->set_sfwd_lesson_id( $sfwd_lesson_id );
+			$content_obj->set_type( $content_type );
+			$content_obj->set_source( $content_source );
+			$content_obj->set_content_url( $content_url );
+			$content_obj->save( array() );
+
+			$content_id = Bitscr_Common::get_insert_id();
+
+			$content_page = add_query_arg( array(
+				'page' => 'bitwise-sidebar-content',
+			), admin_url( 'admin.php' ) );
+
+			wp_safe_redirect( $content_page );
+			exit();
+
 		}
+	}
+
+	public function get_date_format() {
+		return get_option( 'date_format', '' ) . ' ' . get_option( 'time_format', '' );
+	}
+
+	public function posts_per_page() {
+		return 20;
 	}
 
 }
