@@ -43,11 +43,11 @@ class Bitscr_Content_Table extends WP_List_Table {
 		echo esc_html__( 'No content available.', 'bitwise-sidebar-content' );
 	}
 
-	public function column_id( $item ) {
+	public function column_name( $item ) {
 		$edit_link     = $item['row_actions']['edit']['link'];
 		$column_string = '<div><strong>';
 
-		$column_string .= '<a href="' . $edit_link . '" class="row-title">' . $item['id'] . '</a>';
+		$column_string .= '<a href="' . $edit_link . '" class="row-title">' . $item['name'] . '</a>';
 		$column_string .= '</strong>';
 
 		$column_string .= "<div style='clear:both'></div></div>";
@@ -109,7 +109,7 @@ class Bitscr_Content_Table extends WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'id'         => __( 'Content ID', 'bitwise-sidebar-content' ),
+			'name'       => __( 'Content Title', 'bitwise-sidebar-content' ),
 			'type'       => __( 'Type', 'bitwise-sidebar-content' ),
 			'source'     => __( 'Target', 'bitwise-sidebar-content' ),
 			'date_added' => __( 'Date Added', 'bitwise-sidebar-content' ),

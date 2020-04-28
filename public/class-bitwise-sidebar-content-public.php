@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The public-facing functionality of the plugin.
  *
@@ -13,8 +12,7 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the public-facing stylesheet and JavaScript.
+ * Defines the plugin name, version, and two examples hooks for how to enqueue the public-facing stylesheet and JavaScript.
  *
  * @package    Bitwise_Sidebar_Content
  * @subpackage Bitwise_Sidebar_Content/public
@@ -66,21 +64,18 @@ class Bitwise_Sidebar_Content_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Bitwise_Sidebar_Content_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Bitwise_Sidebar_Content_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/bitwise-sidebar-content-public.css', array(), $this->version, 'all' );
-
+		global $post;
+		$post_id = isset( $post->ID ) ? $post->ID : 0;
+		if ( $post_id > 0 ) {
+			$post_type = isset( $post->post_type ) ? $post->post_type : '';
+			if ( 'sfwd-topic' === $post_type ) {
+				wp_enqueue_style( 'bitwise_sidebar_content_public', plugin_dir_url( __FILE__ ) . 'css/bitwise-sidebar-content-public.css', array(), '1.0.0', 'all' );
+				wp_enqueue_style( 'bitwise_sidebar_content_featherlight', plugin_dir_url( __FILE__ ) . 'css/featherlight.gallery.min.css', array(), '1.0.0', 'all' );
+				wp_enqueue_style( 'bitwise_sidebar_content_featherlight_min', plugin_dir_url( __FILE__ ) . 'css/featherlight.min.css', array(), '1.0.0', 'all' );
+				wp_enqueue_style( 'bitwise_sidebar_content_slidepanel', plugin_dir_url( __FILE__ ) . 'css/jquery.slidepanel.css', array(), '1.0.0', 'all' );
+				wp_enqueue_style( 'bitwise_sidebar_content_jquery-ui', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css', array(), '1.0.0', 'all' );
+			}
+		}
 	}
 
 	/**
@@ -89,21 +84,20 @@ class Bitwise_Sidebar_Content_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Bitwise_Sidebar_Content_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Bitwise_Sidebar_Content_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/bitwise-sidebar-content-public.js', array( 'jquery' ), $this->version, false );
-
+		global $post;
+		$post_id = isset( $post->ID ) ? $post->ID : 0;
+		if ( $post_id > 0 ) {
+			$post_type = isset( $post->post_type ) ? $post->post_type : '';
+			if ( 'sfwd-topic' === $post_type ) {
+				wp_enqueue_script( 'bitwise_sidebar_content_public_js', plugin_dir_url( __FILE__ ) . 'js/bitwise-sidebar-content-public.js', array( 'jquery' ), '1.0.0', false );
+				//wp_enqueue_script( 'bitwise_sidebar_min_jquery', plugin_dir_url( __FILE__ ) . 'js/jquery.min.js', array(), '1.0.0', false );
+				wp_enqueue_script( 'bitwise_sidebar_jquery_1_10_2', plugin_dir_url( __FILE__ ) . 'js/jquery-1.10.2.js', array(), '1.0.0', false );
+				wp_enqueue_script( 'bitwise_sidebar_jquery_ui', plugin_dir_url( __FILE__ ) . 'js/jquery-ui.js', array(), '1.0.0', false );
+				wp_enqueue_script( 'bitwise_sidebar_featherlight_min', plugin_dir_url( __FILE__ ) . 'js/featherlight.min.js', array(), '1.0.0', false );
+				wp_enqueue_script( 'bitwise_sidebar_featherlight_gallery', plugin_dir_url( __FILE__ ) . 'js/featherlight.gallery.min.js', array(), '1.0.0', false );
+				wp_enqueue_script( 'bitwise_sidebar_slidepanel', plugin_dir_url( __FILE__ ) . 'js/jquery.slidepanel.js', array(), '1.0.0', false );
+			}
+		}
 	}
 
 	/**

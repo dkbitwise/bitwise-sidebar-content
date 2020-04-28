@@ -35,10 +35,26 @@
             });
             mediaUploader.on('select', function () {
                 var attachment = mediaUploader.state().get('selection').first().toJSON();
-//                console.log(attachment);
                 $('#content_url').val(attachment.url);
             });
             mediaUploader.open();
+        });
+
+        $('.bitscr-delete-content').on('click', function () {
+            let content_id = $(this).attr('data-content-id');
+            if (parseInt(content_id) > 0) {
+                let data = {
+                    'action': 'bitscr_delete_content',
+                    'content_id': content_id
+                };
+                $('.bitwise-content-form').find('.wp-spin.spinner').css('visibility', 'visible');
+                $.post(ajaxurl, data, function (resp) {
+                    if (true === resp.success) {
+                        window.location = resp.redirect_url;
+                    }
+                });
+            }
+
         });
     });
 })(jQuery);

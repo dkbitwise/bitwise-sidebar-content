@@ -123,7 +123,8 @@ class Bitwise_Sidebar_Content_DB {
 			$collate = $this->wp_db->get_charset_collate();
 		}
 		$values_table = "CREATE TABLE `" . $this->wp_db->prefix . "bitscr_content` (
-				`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,	
+				`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+				`name` VARCHAR(200),
 				`sfwd_course_id` BIGINT(20) UNSIGNED NOT NULL,		
 				`sfwd_lesson_id` BIGINT(20) UNSIGNED NOT NULL,		
 				`content_url` VARCHAR(200) NOT NULL,

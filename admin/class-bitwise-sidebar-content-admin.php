@@ -37,6 +37,7 @@ class Bitwise_Sidebar_Content_Admin {
 		add_action( 'admin_init', [ $this, 'enable_disable_logging' ] );
 
 		add_action( 'wp_ajax_bitscr_get_lessons', array( $this, 'bitscr_get_lessons' ) );
+		add_action( 'wp_ajax_bitscr_delete_content', array( $this, 'bitscr_delete_content' ) );
 
 		add_action( 'admin_post_bitwise_content_form', array( $this, 'bitwise_add_content' ) );
 	}
@@ -88,6 +89,7 @@ class Bitwise_Sidebar_Content_Admin {
 	 * Showing content adding form
 	 */
 	public function bitsa_sidebar_content() {
+		$edit_id = filter_input( INPUT_GET, 'edit', FILTER_SANITIZE_NUMBER_INT );
 		$courses = Bitscr_Core()->bitscr_courses->bitscr_courses_list();
 		require_once __DIR__ . '/templates/bitwise-content.php';
 	}
@@ -126,6 +128,24 @@ class Bitwise_Sidebar_Content_Admin {
 		wp_send_json( $resp );
 	}
 
+	public function bitscr_delete_content() {
+		$posted_data = isset( $_POST ) ? bitscr_clean( $_POST ) : [];
+		$content_id  = isset( $posted_data['content_id'] ) ? $posted_data['content_id'] : 0;
+		$resp        = array(
+			'success' => false,
+		);
+		if ( $content_id > 0 ) {
+			$delete          = Bitscr_Common::delete_row( $content_id, 'content' );
+			$resp['success'] = true;
+			$resp['delete']  = $delete;
+
+			$resp['redirect_url'] = esc_url( add_query_arg( array(
+				'page' => 'bitwise-sidebar-content',
+			), admin_url( 'admin.php' ) ) );
+		}
+		wp_send_json( $resp );
+	}
+
 	/**
 	 * Write a message to log in WC log tab if logging is enabled
 	 *
@@ -156,12 +176,24 @@ class Bitwise_Sidebar_Content_Admin {
 			$posted_content = isset( $_POST ) ? bitscr_clean( $_POST ) : [];
 
 			$content_obj    = new Bitwise_SC_Content();
+			$content_name   = isset( $posted_content['content_name'] ) ? $posted_content['content_name'] : 0;
 			$sfwd_course_id = isset( $posted_content['course'] ) ? $posted_content['course'] : 0;
 			$sfwd_lesson_id = isset( $posted_content['lesson'] ) ? $posted_content['lesson'] : 0;
 			$content_type   = isset( $posted_content['content_type'] ) ? $posted_content['content_type'] : '';
 			$content_source = isset( $posted_content['content_source'] ) ? $posted_content['content_source'] : '';
 			$content_url    = isset( $posted_content['content_url'] ) ? $posted_content['content_url'] : '';
 
+			if ( empty( $content_name ) ) {
+				$url_arr    = explode( '/', $content_url );
+				$url_length = is_array( $url_arr ) ? count( $url_arr ) : 0;
+
+				if ( $url_length > 0 ) {
+					$file         = $url_arr[ $url_length - 1 ];
+					$content_name = pathinfo( $file, PATHINFO_FILENAME );
+				}
+			}
+
+			$content_obj->set_name( $content_name );
 			$content_obj->set_sfwd_course_id( $sfwd_course_id );
 			$content_obj->set_sfwd_lesson_id( $sfwd_lesson_id );
 			$content_obj->set_type( $content_type );

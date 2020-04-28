@@ -214,7 +214,7 @@ class Bitwise_Sidebar_Content {
 		$plugin_public = $this->public;
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		//$this->loader->add_filter( 'template_include', $plugin_public, 'bit_sico_include_custom_topic_template' );
+		$this->loader->add_filter( 'template_include', $plugin_public, 'bit_sico_include_custom_topic_template' );
 	}
 
 	/**

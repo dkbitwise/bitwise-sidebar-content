@@ -8,6 +8,7 @@ class Bitwise_SC_Content {
 	private static $ins = null;
 
 	private $id = 0;
+	private $name = '';
 	private $sfwd_course_id = 0;
 	private $sfwd_lesson_id = 0;
 	private $content_url = '';
@@ -53,6 +54,15 @@ class Bitwise_SC_Content {
 	 */
 	public function set_id( $id ) {
 		$this->id = $id;
+	}
+
+	/**
+	 * Setter function for course name
+	 *
+	 * @param $name
+	 */
+	public function set_name( $name ) {
+		$this->name = $name;
 	}
 
 	/**
@@ -114,6 +124,14 @@ class Bitwise_SC_Content {
 	 */
 	public function get_id() {
 		return $this->id;
+	}
+
+	/**
+	 * Getter function for course name
+	 * @return string
+	 */
+	public function get_name() {
+		return $this->name;
 	}
 
 	/**
@@ -179,6 +197,7 @@ class Bitwise_SC_Content {
 		}
 
 		$data                   = array();
+		$data['name']           = $this->get_name();
 		$data['sfwd_course_id'] = $this->get_sfwd_course_id();
 		$data['sfwd_lesson_id'] = $this->get_sfwd_lesson_id();
 		$data['content_url']    = $this->get_content_url();
@@ -250,6 +269,7 @@ class Bitwise_SC_Content {
 			);
 			$items[]               = array(
 				'id'          => $content['id'],
+				'name'        => $content['name'],
 				'type'        => $content['type'],
 				'source'      => $content['source'],
 				'date_added'  => $content['date_added'],
@@ -257,11 +277,8 @@ class Bitwise_SC_Content {
 			);
 		}
 
-		$found_posts = array( 'found_posts' => count( $found_contents ) );
-
+		$found_posts          = array( 'found_posts' => count( $found_contents ) );
 		$found_posts['items'] = $items;
-
-		bwf_pc_debug( $found_posts );
 
 		return $found_posts;
 	}
