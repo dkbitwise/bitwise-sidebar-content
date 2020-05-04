@@ -13,10 +13,12 @@ $content_url = add_query_arg( array(
 	if ( ( isset( $_GET['add_new'] ) && $_GET['add_new'] ) || $edit_id > 0 ) {
 		$content = new Bitwise_SC_Content( $edit_id );
 		if ( $content instanceof Bitwise_SC_Content ) {
-			$course_id      = $content->get_sfwd_course_id();
+			$sfwd_course_id = $content->get_sfwd_course_id();
 			$sfwd_lesson_id = $content->get_sfwd_lesson_id();
-			$course         = new Bitscr_Course( $course_id );
-			$lessons        = $course->get_sfwd_lessons();
+			$course_data    = Bitscr_Common::get_multiple_columns( array( 'id' => 'bit_course_id' ), array( 'sfwd_course_id' => $sfwd_course_id ), 'courses' );
+			$bit_course_id  = isset( $course_data['bit_course_id'] ) ? $course_data['bit_course_id'] : 0;
+			$bit_course_obj = new Bitscr_Course( $bit_course_id );
+			$lessons        = ( $bit_course_obj instanceof Bitscr_Course ) ? $bit_course_obj->get_sfwd_lessons() : [];
 			$c_type         = $content->get_type();
 			$c_target       = $content->get_source();
 			$c_url          = $content->get_content_url();
@@ -25,6 +27,7 @@ $content_url = add_query_arg( array(
         <form class="bitwise-content-form-table" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
             <input type="hidden" name="action" value="bitwise_content_form">
             <input type="hidden" name="bitwise_content_form_nonce" value="<?php echo wp_create_nonce( 'bitwise_content_form_nonce_val' ) ?>">
+            <input type="hidden" name="content_id" value="<?php echo $edit_id ?>">
             <table class="bitwise-content-table-form">
                 <tr>
                     <td>Select a Course</td>
@@ -33,7 +36,7 @@ $content_url = add_query_arg( array(
                             <option value="0">Select a course</option>
 							<?php
 							foreach ( $courses as $course ) { ?>
-                                <option <?php echo selected( $course_id, $course['id'] ) ?> value="<?php echo $course['id'] ?>"><?php echo $course['name'] ?></option>
+                                <option data-course_id="<?php echo $course['id'] ?>" <?php echo selected( $bit_course_id, $course['id'] ) ?> value="<?php echo $course['sfwd_course_id'] ?>"><?php echo $course['name'] ?></option>
 								<?php
 							} ?>
                         </select>
@@ -53,6 +56,10 @@ $content_url = add_query_arg( array(
                     </td>
                 </tr>
                 <tr>
+                    <td>Enter the content title</td>
+                    <td><input value="<?php echo $c_name; ?>" type="text" name="content_name"/></td>
+                </tr>
+                <tr>
                     <td>Select content type</td>
                     <td class="bitscr-label">
                         <label><input <?php echo checked( $c_type, 'Video' ) ?> checked type="radio" name="content_type" value="Video">Video</label>
@@ -70,7 +77,6 @@ $content_url = add_query_arg( array(
                 <tr>
                     <td>Enter Content URL</td>
                     <td><input value="<?php echo $c_url; ?>" id="content_url" type="text" name="content_url"/></td>
-                    <td><input value="<?php echo $c_name; ?>" id="content_name" type="hidden" name="content_name"/></td>
                 </tr>
                 <tr>
                     <td>OR</td>

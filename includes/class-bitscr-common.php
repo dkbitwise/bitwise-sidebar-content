@@ -112,17 +112,17 @@ class Bitscr_Common {
 	}
 
 	/**
-	 * Get a complete row from a bitsa tables by its wp_id
+	 * Get a complete row from a bitscr tables by its sfwd_course_id
 	 *
-	 * @param $wp_id
+	 * @param $sfwd_course_id
 	 * @param $table_type
 	 *
 	 * @return mixed
 	 */
-	public static function get_data_by_wpid( $wp_id, $table_type ) {
+	public static function get_data_by_sfwd_course_id( $sfwd_course_id, $table_type ) {
 		self::set_table( $table_type );
 
-		return self::$data_store->get_specific_row( 'wp_id', $wp_id );
+		return self::$data_store->get_specific_row( 'sfwd_course_id', $sfwd_course_id );
 	}
 
 	/**
@@ -149,7 +149,7 @@ class Bitscr_Common {
 	 */
 	public static function get_single_column( $column, $table_type ) {
 		self::set_table( $table_type );
-		$data_query = "SELECT * FROM {table_name}";
+		$data_query = "SELECT `$column` FROM {table_name}";
 
 		return self::$data_store->get_results( $data_query );
 	}

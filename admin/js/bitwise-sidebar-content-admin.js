@@ -4,7 +4,7 @@
     $(document).ready(function () {
         var mediaUploader;
         $('#bitscr_course').on('change', function () {
-            let course_id = $(this).val();
+            let course_id = $(this).find(':selected').attr('data-course_id');
             let data = {
                 'action': 'bitscr_get_lessons',
                 'course_id': course_id
@@ -35,6 +35,7 @@
             });
             mediaUploader.on('select', function () {
                 var attachment = mediaUploader.state().get('selection').first().toJSON();
+                console.log(attachment);
                 $('#content_url').val(attachment.url);
             });
             mediaUploader.open();
@@ -56,5 +57,9 @@
             }
 
         });
-    });
+
+
+    }); //document.ready
+
+
 })(jQuery);

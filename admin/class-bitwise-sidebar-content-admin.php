@@ -176,6 +176,7 @@ class Bitwise_Sidebar_Content_Admin {
 			$posted_content = isset( $_POST ) ? bitscr_clean( $_POST ) : [];
 
 			$content_obj    = new Bitwise_SC_Content();
+			$content_id     = isset( $posted_content['content_id'] ) ? intval( $posted_content['content_id'] ) : 0;
 			$content_name   = isset( $posted_content['content_name'] ) ? $posted_content['content_name'] : 0;
 			$sfwd_course_id = isset( $posted_content['course'] ) ? $posted_content['course'] : 0;
 			$sfwd_lesson_id = isset( $posted_content['lesson'] ) ? $posted_content['lesson'] : 0;
@@ -193,6 +194,7 @@ class Bitwise_Sidebar_Content_Admin {
 				}
 			}
 
+			$content_obj->set_id( $content_id );
 			$content_obj->set_name( $content_name );
 			$content_obj->set_sfwd_course_id( $sfwd_course_id );
 			$content_obj->set_sfwd_lesson_id( $sfwd_lesson_id );
@@ -201,10 +203,13 @@ class Bitwise_Sidebar_Content_Admin {
 			$content_obj->set_content_url( $content_url );
 			$content_obj->save( array() );
 
-			$content_id = Bitscr_Common::get_insert_id();
+			if ( $content_id < 1 ) {
+				$content_id = Bitscr_Common::get_insert_id();
+			}
 
 			$content_page = add_query_arg( array(
 				'page' => 'bitwise-sidebar-content',
+				'edit' => $content_id
 			), admin_url( 'admin.php' ) );
 
 			wp_safe_redirect( $content_page );

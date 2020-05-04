@@ -7,7 +7,6 @@
  * @since Boss 1.0.0
  */ ?>
 <!DOCTYPE html>
-
 <html <?php language_attributes(); ?>>
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>"/>
@@ -63,6 +62,20 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 <?php get_template_part( 'template-parts/header-mobile' ); ?>
 <div id="panels" class="<?php echo ( boss_get_option( 'boss_adminbar' ) ) ? 'with-adminbar' : ''; ?>">
 
+	<?php
+	$course_id = learndash_get_course_id();
+	$get_post  = get_post( $course_id );
+
+	$bit_course_content = Bitscr_Common::get_multiple_data( array(), array( 'sfwd_course_id' => $course_id ), 'content' );
+
+	$videos = wp_list_filter( $bit_course_content, array( 'type' => 'Video' ) );
+	$helps  = wp_list_filter( $bit_course_content, array( 'type' => 'Help' ) );
+
+	$images = array( 'jpg', 'jpeg', 'png', 'gif' );
+	$docs   = array( 'csv', 'docs', 'xlms', 'ppt', 'pdf' );
+
+	?>
+
     <div class="bit_info_btn btn121" data-toggle="tooltip" data-placement="left">
         <div class="content_btns">
             <a href="javascript:void(0);" class="bttn videos_btn" data-tab="videos">VIDEOS</a>
@@ -81,13 +94,36 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
             </ul>
             <div class="tab-content">
                 <div id="videos" class="tab-pane fade">
-                    <p class="bit-videos">VIDEOS content</p>
+					<?php
+					foreach ( $videos as $video ) {
+						$file_ext = pathinfo( $video['content_url'], PATHINFO_EXTENSION );
+						$c_type   = in_array( $file_ext, $images, true ) ? 'image' : 'video';
+						$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type; ?>
+                        <h3 class="bit-video-title"><b>Title:</b> <?php echo $video['name'] ?></h3>
+                        <p class="bit-video-link"><b>URL:</b>
+                            <a data-c_type="<?php echo $c_type; ?>" data-url="<?php echo $video['content_url'] ?>" class="open_new_links" href="javascript:void(0);"><?php echo $video['content_url'] ?></a>
+                        </p>
+						<?php
+					} ?>
                 </div>
                 <div id="notes" class="tab-pane fade">
                     <p class="bit-notes">NOTES content</p>
                 </div>
                 <div id="help" class="tab-pane fade">
-                    <p class="bit-help">HELP content</p>
+					<?php
+					foreach ( $helps as $help ) {
+						$file_ext = pathinfo( $help['content_url'], PATHINFO_EXTENSION );
+						$images   = array( 'jpg', 'jpeg', 'png', 'gif' );
+						$c_type   = in_array( $file_ext, $images, true ) ? 'image' : 'video';
+						$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type;
+						?>
+                        <h3 class="bit-help-title"><b>Title:<b> <?php echo $help['name'] ?></h3>
+                        <p class="bit-help-link">
+                            <b>URL:</b>
+                            <a data-c_type="<?php echo $c_type; ?>" data-url="<?php echo $help['content_url'] ?>" class="open_new_links" href="javascript:void(0);"><?php echo $help['content_url'] ?></a>
+                        </p>
+						<?php
+					} ?>
                 </div>
             </div>
         </div>
@@ -138,9 +174,6 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                 </ul>
             </div>
             <div id="lessons" class="tab-pane fade">
-				<?php $course_id = learndash_get_course_id();
-				$get_post        = get_post( $course_id );
-				?>
                 <h3><?php echo $get_post->post_title; ?></h3>
 				<?php $lessons = apply_filters( 'boss_edu_course_lessons_list', learndash_get_course_lessons_list( $course_id ), true ); ?>
                 <p style="color:#4e9a06;"><small><?php echo count( $lessons ); ?> Lessons on <?php echo $get_post->post_title; ?></small></p>
@@ -232,18 +265,20 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 <?php wp_footer(); ?>
 <script>
     $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-
+        $('[data-toggle="tooltip"]').tooltip()
         /* $(".com_close").click(function () {
 			 $(this).show(".active_side_bar").delay(400).show("slide", {direction: "right"}, 1200);
 		 });*/
         $('.com_close').click(function () {
             //$(this).toggleClass('active');
-            $('.active_side_bar').delay(400).show("slide", {direction: "right"}, 400);
-            //$('.active_side_bar').addClass('bitscr_hide');
+            //$('.active_side_bar').delay(400).show("slide", {direction: "right"}, 400);
+            $('.active_side_bar').addClass('bitscr_hide');
         });
-    });
+        $('.content_btns').on('click', function () {
+            $('.active_side_bar').removeClass('bitscr_hide');
+        });
 
+    });
 </script>
 </body>
 </html>

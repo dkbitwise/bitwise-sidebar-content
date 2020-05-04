@@ -390,3 +390,33 @@ body {
     top: 0;
     transition: all 0.5s ease 0s;
 }
+.single-sfwd-topic .info_wrapp {
+    background-color: white;
+    box-shadow: 0 0 3px -1px #000000;
+    height: 100%;
+    right: 0;
+    padding: 10px;
+    position: fixed;
+    top: 8%;
+    transform: translateX(400%);
+    transition: all 3.5s ease 0s;
+    width: 30%;
+    z-index: 13;
+}
+.single-sfwd-topic .info_wrapp .nav-pills > li.active > a.nav_link {
+    background-color: #ff8503;
+    border-radius: 0;
+    color: #fff;
+}
+.single-sfwd-topic .info_wrapp .nav-pills > li > a.nav_link::after {
+    background-color: #000;
+    content: "";
+    height: 100%;
+    left: 111%;
+    position: absolute;
+    top: 0;
+    width: 1px;
+}
+.single-sfwd-topic .info_wrapp .nav-pills > li:last-child > a.nav_link::after {
+    background-color: transparent;
+}
