@@ -94,36 +94,46 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
             </ul>
             <div class="tab-content">
                 <div id="videos" class="tab-pane fade">
-					<?php
-					foreach ( $videos as $video ) {
-						$file_ext = pathinfo( $video['content_url'], PATHINFO_EXTENSION );
-						$c_type   = in_array( $file_ext, $images, true ) ? 'image' : 'video';
-						$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type; ?>
-                        <h3 class="bit-video-title"><b>Title:</b> <?php echo $video['name'] ?></h3>
-                        <p class="bit-video-link"><b>URL:</b>
-                            <a data-c_type="<?php echo $c_type; ?>" data-url="<?php echo $video['content_url'] ?>" class="open_new_links" href="javascript:void(0);"><?php echo $video['content_url'] ?></a>
-                        </p>
+                    <h3>All Videos</h3>
+                    <p><small style="color:#4e9a06;"><strong><?php echo count( $videos ); ?></strong> VIDEOS CURRENTLY AVAILABLE</small></p>
+                    <ul class="sidebar_list">
 						<?php
-					} ?>
+						foreach ( $videos as $video ) {
+							$file_ext = pathinfo( $video['content_url'], PATHINFO_EXTENSION );
+							$c_type   = in_array( $file_ext, $images, true ) ? 'image' : 'video';
+							$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type; ?>
+
+                            <li>
+                                <p class="bit-video-link title">
+                                    <strong><a data-c_type="<?php echo $c_type; ?>" data-url="<?php echo $video['content_url'] ?>" class="open_new_links" href="javascript:void(0);"><?php echo $video['name'] ?></a></strong>
+                                </p>
+                            </li>
+							<?php
+						} ?>
+                    </ul>
                 </div>
                 <div id="notes" class="tab-pane fade">
                     <p class="bit-notes">NOTES content</p>
                 </div>
                 <div id="help" class="tab-pane fade">
-					<?php
-					foreach ( $helps as $help ) {
-						$file_ext = pathinfo( $help['content_url'], PATHINFO_EXTENSION );
-						$images   = array( 'jpg', 'jpeg', 'png', 'gif' );
-						$c_type   = in_array( $file_ext, $images, true ) ? 'image' : 'video';
-						$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type;
-						?>
-                        <h3 class="bit-help-title"><b>Title:<b> <?php echo $help['name'] ?></h3>
-                        <p class="bit-help-link">
-                            <b>URL:</b>
-                            <a data-c_type="<?php echo $c_type; ?>" data-url="<?php echo $help['content_url'] ?>" class="open_new_links" href="javascript:void(0);"><?php echo $help['content_url'] ?></a>
-                        </p>
+                    <h3>All Help Contents</h3>
+                    <p><small style="color:#4e9a06;"><strong><?php echo count( $helps ); ?></strong> HELPS CURRENTLY AVAILABLE</small></p>
+                    <ul class="sidebar_list">
 						<?php
-					} ?>
+						foreach ( $helps as $help ) {
+							$file_ext = pathinfo( $help['content_url'], PATHINFO_EXTENSION );
+							$images   = array( 'jpg', 'jpeg', 'png', 'gif' );
+							$c_type   = in_array( $file_ext, $images, true ) ? 'image' : 'video';
+							$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type;
+							?>
+                            <li>
+                                <p class="bit-video-link title">
+                                    <strong><a data-c_type="<?php echo $c_type; ?>" data-url="<?php echo $help['content_url'] ?>" class="open_new_links" href="javascript:void(0);"><?php echo $help['name'] ?></a></strong>
+                                </p>
+                            </li>
+							<?php
+						} ?>
+                    </ul>
                 </div>
             </div>
         </div>

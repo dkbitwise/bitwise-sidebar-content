@@ -27,7 +27,7 @@
         }, time);
 
         var active = "europa-view";
-        $('.info_close').click(function () {
+        $('.info_close').click(function () { // Closing the right sidebar
             var divname = this.name;
             $("#" + ".bt_box_shadow").hide("slide", {direction: "right"}, 1200);
             $("#" + ".bt_box_shadow").delay(400000).show("slide", {direction: "right"}, 1200);
@@ -48,15 +48,15 @@
             jQuery("#tabs").tabs();
         });
 
-        jQuery('.open_new_links').on('click', function () {
+        $('.open_new_links').on('click', function () { //Opening the popup box with different content
             let new_window, features, title;
             features = 'location=1,status=1,toolbar=1,resizeable=1,width=800,height=500';
             new_window = window.open('', '_blank', features);
             title = 'Bitwise Content';
 
             let html_content = '';
-            let content_url = jQuery(this).attr('data-url');
-            let c_type = jQuery(this).attr('data-c_type');
+            let content_url = $(this).attr('data-url');
+            let c_type = $(this).attr('data-c_type');
             html_content += '<div class="content-div">';
             if ('image' === c_type) {
                 html_content += '<img src="' + content_url + '" width="100%" height="auto" >';
@@ -75,5 +75,16 @@
             }
         });
 
+        /**
+         * opening respective content by default on clicking a sidebar tab link
+         */
+        $('.content_btns').find('.bttn').on('click', function () {
+            let tab_slug = $(this).attr('data-tab');
+            $('.info_wrapp').find('.tab-pane').removeClass('active in');
+            $('.info_wrapp').find('#' + tab_slug).addClass('active in');
+
+            $('.info_wrapp').find('.nav.nav-pills li').removeClass('active');
+            $('.info_wrapp').find('a[href=#' + tab_slug + ']').parent('li').addClass('active');
+        });
     }); //document.ready
 })(jQuery);

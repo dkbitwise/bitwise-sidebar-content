@@ -2,10 +2,11 @@
  * All of the CSS for your public-facing functionality should be included in this file.
  */
 
-.bitscr_hide{
+.bitscr_hide {
     display: none;
 }
-.bitscr_show{
+
+.bitscr_show {
     display: block;
 }
 
@@ -390,6 +391,7 @@ body {
     top: 0;
     transition: all 0.5s ease 0s;
 }
+
 .single-sfwd-topic .info_wrapp {
     background-color: white;
     box-shadow: 0 0 3px -1px #000000;
@@ -403,11 +405,13 @@ body {
     width: 30%;
     z-index: 13;
 }
+
 .single-sfwd-topic .info_wrapp .nav-pills > li.active > a.nav_link {
     background-color: #ff8503;
     border-radius: 0;
     color: #fff;
 }
+
 .single-sfwd-topic .info_wrapp .nav-pills > li > a.nav_link::after {
     background-color: #000;
     content: "";
@@ -415,8 +419,29 @@ body {
     left: 111%;
     position: absolute;
     top: 0;
+    margin-left: 3px;
     width: 1px;
 }
+
 .single-sfwd-topic .info_wrapp .nav-pills > li:last-child > a.nav_link::after {
     background-color: transparent;
+}
+
+.single-sfwd-topic .info_wrapp .tab-pane {
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
+    height: 611px;
+    margin-top: 11px;
+}
+
+.single-sfwd-topic .info_wrapp .nav.nav-pills li + li {
+    margin: 0 10px 0 20px;
+}
+
+.single-sfwd-topic .info_wrapp .sidebar_list li {
+    display: block;
+}
+
+.single-sfwd-topic .info_wrapp .nav.nav-pills .nav_link {
+    padding: 3px 13px;
 }
