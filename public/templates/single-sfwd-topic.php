@@ -104,10 +104,16 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 							$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type; ?>
 
                             <li>
-                                <p class="bit-video-link title">
-                                    <strong><a data-c_type="<?php echo $c_type; ?>" data-url="<?php echo $video['content_url'] ?>" class="open_new_links" href="javascript:void(0);"><?php echo $video['name'] ?></a></strong>
-                                </p>
+                                <a class="example-image-link" href="<?php echo $video['content_url'] ?>" data-lightbox="<?php echo $video['name'] ?>" data-title="<?php echo $video['name'] ?>">
+                                    <h3><?php echo $video['name'] ?></h3>
+                                </a>
                             </li>
+
+                            <!--<li>
+                                <p class="bit-video-link title">
+                                    <strong><a data-c_type="<?php /*echo $c_type; */ ?>" data-url="<?php /*echo $video['content_url'] */ ?>" class="open_new_links" href="javascript:void(0);"><?php /*echo $video['name'] */ ?></a></strong>
+                                </p>
+                            </li>-->
 							<?php
 						} ?>
                     </ul>
@@ -127,9 +133,17 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 							$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type;
 							?>
                             <li>
-                                <p class="bit-video-link title">
-                                    <strong><a data-c_type="<?php echo $c_type; ?>" data-url="<?php echo $help['content_url'] ?>" class="open_new_links" href="javascript:void(0);"><?php echo $help['name'] ?></a></strong>
-                                </p>
+								<?php
+								if ( 'image' === $c_type ) { ?>
+                                    <a class="example-image-link" href="<?php echo $help['content_url'] ?>" data-lightbox="example-2" data-title="<?php echo $help['name'] ?>">
+                                        <h3><?php echo $help['name'] ?></h3>
+                                    </a>
+								<?php } else { ?>
+                                    <p class="bit-video-link title">
+                                        <strong><a data-c_type="<?php echo $c_type; ?>" data-url="<?php echo $help['content_url'] ?>" class="open_new_links" href="javascript:void(0);"><?php echo $help['name'] ?></a></strong>
+                                    </p>
+								<?php }
+								?>
                             </li>
 							<?php
 						} ?>

@@ -59,7 +59,7 @@
             let c_type = $(this).attr('data-c_type');
             html_content += '<div class="content-div">';
             if ('image' === c_type) {
-                html_content += '<img src="' + content_url + '" width="100%" height="auto" >';
+                html_content += '<img data-lightbox="example-1" src="' + content_url + '" width="100%" height="auto" >';
             } else if ('video' === c_type) {
                 html_content += '<video preload="none" class="lightbox" width="800" height="500" style="border:none;" controls>';
                 html_content += '<source src="' + content_url + '" type="video/mp4">';
@@ -86,5 +86,13 @@
             $('.info_wrapp').find('.nav.nav-pills li').removeClass('active');
             $('.info_wrapp').find('a[href=#' + tab_slug + ']').parent('li').addClass('active');
         });
+
+        lightbox.option({
+            'maxWid': 200,
+            'wrapAround': true,
+            'width': 'auto',
+            'maxWidth': '100%'
+        })
+
     }); //document.ready
 })(jQuery);

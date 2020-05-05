@@ -74,6 +74,7 @@ class Bitwise_Sidebar_Content_Public {
 				wp_enqueue_style( 'bitwise_sidebar_content_featherlight_min', plugin_dir_url( __FILE__ ) . 'css/featherlight.min.css', array(), '1.0.0', 'all' );
 				wp_enqueue_style( 'bitwise_sidebar_content_slidepanel', plugin_dir_url( __FILE__ ) . 'css/jquery.slidepanel.css', array(), '1.0.0', 'all' );
 				wp_enqueue_style( 'bitwise_sidebar_content_jquery-ui', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css', array(), '1.0.0', 'all' );
+				wp_enqueue_style( 'bitwise_lightbox_css', plugin_dir_url( __FILE__ ) . 'css/lightbox.min.css', array(), '1.0.0', 'all' );
 			}
 		}
 	}
@@ -96,6 +97,7 @@ class Bitwise_Sidebar_Content_Public {
 				wp_enqueue_script( 'bitwise_sidebar_featherlight_min', plugin_dir_url( __FILE__ ) . 'js/featherlight.min.js', array(), '1.0.0', false );
 				wp_enqueue_script( 'bitwise_sidebar_featherlight_gallery', plugin_dir_url( __FILE__ ) . 'js/featherlight.gallery.min.js', array(), '1.0.0', false );
 				wp_enqueue_script( 'bitwise_sidebar_slidepanel', plugin_dir_url( __FILE__ ) . 'js/jquery.slidepanel.js', array(), '1.0.0', false );
+				wp_enqueue_script( 'bitwise_lightbox_jqeury', plugin_dir_url( __FILE__ ) . 'js/lightbox-plus-jquery.min.js', array(), '1.0.0', false );
 			}
 		}
 	}
