@@ -87,12 +87,5 @@
             $('.info_wrapp').find('a[href=#' + tab_slug + ']').parent('li').addClass('active');
         });
 
-        lightbox.option({
-            'maxWid': 200,
-            'wrapAround': true,
-            'width': 'auto',
-            'maxWidth': '100%'
-        })
-
     }); //document.ready
 })(jQuery);

@@ -445,3 +445,6 @@ body {
 .single-sfwd-topic .info_wrapp .nav.nav-pills .nav_link {
     padding: 3px 13px;
 }
+button#html5-close {
+    width: 30px;
+}

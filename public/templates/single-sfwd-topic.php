@@ -69,12 +69,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 	$bit_course_content = Bitscr_Common::get_multiple_data( array(), array( 'sfwd_course_id' => $course_id ), 'content' );
 
 	$videos = wp_list_filter( $bit_course_content, array( 'type' => 'Video' ) );
-	$helps  = wp_list_filter( $bit_course_content, array( 'type' => 'Help' ) );
-
-	$images = array( 'jpg', 'jpeg', 'png', 'gif' );
-	$docs   = array( 'csv', 'docs', 'xlms', 'ppt', 'pdf' );
-
-	?>
+	$helps  = wp_list_filter( $bit_course_content, array( 'type' => 'Help' ) ); ?>
 
     <div class="bit_info_btn btn121" data-toggle="tooltip" data-placement="left">
         <div class="content_btns">
@@ -98,22 +93,12 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                     <p><small style="color:#4e9a06;"><strong><?php echo count( $videos ); ?></strong> VIDEOS CURRENTLY AVAILABLE</small></p>
                     <ul class="sidebar_list">
 						<?php
-						foreach ( $videos as $video ) {
-							$file_ext = pathinfo( $video['content_url'], PATHINFO_EXTENSION );
-							$c_type   = in_array( $file_ext, $images, true ) ? 'image' : 'video';
-							$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type; ?>
-
+						foreach ( $videos as $video ) { ?>
                             <li>
-                                <a class="example-image-link html5lightbox" href="<?php echo $video['content_url'] ?>" data-lightbox title="<?php echo $video['name'] ?>">
+                                <a data-group="video_content" class="html5lightbox" href="<?php echo $video['content_url'] ?>" title="<?php echo $video['name'] ?>">
                                     <h3><?php echo $video['name'] ?></h3>
                                 </a>
                             </li>
-
-                            <!--<li>
-                                <p class="bit-video-link title">
-                                    <strong><a data-c_type="<?php /*echo $c_type; */ ?>" data-url="<?php /*echo $video['content_url'] */ ?>" class="open_new_links" href="javascript:void(0);"><?php /*echo $video['name'] */ ?></a></strong>
-                                </p>
-                            </li>-->
 							<?php
 						} ?>
                     </ul>
@@ -126,23 +111,11 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                     <p><small style="color:#4e9a06;"><strong><?php echo count( $helps ); ?></strong> HELPS CURRENTLY AVAILABLE</small></p>
                     <ul class="sidebar_list">
 						<?php
-						foreach ( $helps as $help ) {
-							$file_ext = pathinfo( $help['content_url'], PATHINFO_EXTENSION );
-							$images   = array( 'jpg', 'jpeg', 'png', 'gif' );
-							$c_type   = in_array( $file_ext, $images, true ) ? 'image' : 'video';
-							$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type; ?>
+						foreach ( $helps as $help ) { ?>
                             <li>
-								<?php
-								if ( 'image' === $c_type ) { ?>
-                                    <a class="example-image-link html5lightbox" href="<?php echo $help['content_url'] ?>">
-                                        <h3><?php echo $help['name'] ?></h3>
-                                    </a>
-								<?php } else { ?>
-                                    <p class="bit-video-link title">
-                                        <strong><a data-c_type="<?php echo $c_type; ?>" data-url="<?php echo $help['content_url'] ?>" class="open_new_links" href="javascript:void(0);"><?php echo $help['name'] ?></a></strong>
-                                    </p>
-								<?php }
-								?>
+                                <a title="<?php echo $help['name'] ?>" data-group="help_content" class="example-image-link html5lightbox" href="<?php echo $help['content_url'] ?>">
+                                    <h3><?php echo $help['name'] ?></h3>
+                                </a>
                             </li>
 							<?php
 						} ?>
