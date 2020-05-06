@@ -98,6 +98,7 @@ class Bitwise_Sidebar_Content_Public {
 				wp_enqueue_script( 'bitwise_sidebar_featherlight_gallery', plugin_dir_url( __FILE__ ) . 'js/featherlight.gallery.min.js', array(), '1.0.0', false );
 				wp_enqueue_script( 'bitwise_sidebar_slidepanel', plugin_dir_url( __FILE__ ) . 'js/jquery.slidepanel.js', array(), '1.0.0', false );
 				wp_enqueue_script( 'bitwise_lightbox_jqeury', plugin_dir_url( __FILE__ ) . 'js/lightbox-plus-jquery.min.js', array(), '1.0.0', false );
+				wp_enqueue_script( 'bitwise_lightbox_html5', plugin_dir_url( __FILE__ ) . 'html5lightbox/html5lightbox.js', array(), '1.0.0', false );
 			}
 		}
 	}

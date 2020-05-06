@@ -104,7 +104,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 							$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type; ?>
 
                             <li>
-                                <a class="example-image-link" href="<?php echo $video['content_url'] ?>" data-lightbox="<?php echo $video['name'] ?>" data-title="<?php echo $video['name'] ?>">
+                                <a class="example-image-link html5lightbox" href="<?php echo $video['content_url'] ?>" data-lightbox title="<?php echo $video['name'] ?>">
                                     <h3><?php echo $video['name'] ?></h3>
                                 </a>
                             </li>
@@ -130,12 +130,11 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 							$file_ext = pathinfo( $help['content_url'], PATHINFO_EXTENSION );
 							$images   = array( 'jpg', 'jpeg', 'png', 'gif' );
 							$c_type   = in_array( $file_ext, $images, true ) ? 'image' : 'video';
-							$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type;
-							?>
+							$c_type   = in_array( $file_ext, $docs, true ) ? 'document' : $c_type; ?>
                             <li>
 								<?php
 								if ( 'image' === $c_type ) { ?>
-                                    <a class="example-image-link" href="<?php echo $help['content_url'] ?>" data-lightbox="example-2" data-title="<?php echo $help['name'] ?>">
+                                    <a class="example-image-link html5lightbox" href="<?php echo $help['content_url'] ?>">
                                         <h3><?php echo $help['name'] ?></h3>
                                     </a>
 								<?php } else { ?>
@@ -301,7 +300,6 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
         $('.content_btns').on('click', function () {
             $('.active_side_bar').removeClass('bitscr_hide');
         });
-
     });
 </script>
 </body>
