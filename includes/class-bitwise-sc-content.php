@@ -232,10 +232,8 @@ class Bitwise_SC_Content {
 		$data_store = Bitscr_Core()->get_dataStore();
 		$data_store->set_table( $table_name );
 
-		$sql_query = "SELECT * FROM {table_name}";
-
-		$sql_query .= " WHERE 1=1";
-
+		$sql_query      = "SELECT * FROM {table_name}";
+		$sql_query      .= " WHERE 1=1";
 		$found_contents = Bitscr_Core()->get_dataStore()->get_results( $sql_query );
 
 		if ( count( $found_contents ) > $limit ) {
@@ -267,10 +265,22 @@ class Bitwise_SC_Content {
 				'link'   => 'javascript:void(0);',
 				'attrs'  => 'class="bitscr-delete-content" data-content-id="' . $content['id'] . '" id="bitscr_delete_' . $content['id'] . '"',
 			);
-			$items[]               = array(
+
+			$sfwd_course_id = isset( $content['sfwd_course_id'] ) ? $content['sfwd_course_id'] : 0;
+			$sfwd_lesson_id = isset( $content['sfwd_lesson_id'] ) ? intval($content['sfwd_lesson_id']) : 0;
+
+			$course_data    = Bitscr_Common::get_multiple_columns( array( 'id' => 'bit_course_id' ), array( 'sfwd_course_id' => $sfwd_course_id ), 'courses' );
+			$bit_course_id  = isset( $course_data['bit_course_id'] ) ? $course_data['bit_course_id'] : 0;
+			$bit_course_obj = new Bitscr_Course( $bit_course_id );
+			$lessons        = ( $bit_course_obj instanceof Bitscr_Course ) ? $bit_course_obj->get_sfwd_lessons() : [];
+
+			$lesson_name    = array_key_exists( $sfwd_lesson_id, $lessons ) ? $lessons[ $sfwd_lesson_id ] : '';
+
+			$items[] = array(
 				'id'          => $content['id'],
 				'name'        => $content['name'],
 				'type'        => $content['type'],
+				'lesson_name' => $lesson_name,
 				'source'      => $content['source'],
 				'date_added'  => $content['date_added'],
 				'row_actions' => $row_actions,

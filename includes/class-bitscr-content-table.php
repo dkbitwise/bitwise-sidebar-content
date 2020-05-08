@@ -69,6 +69,10 @@ class Bitscr_Content_Table extends WP_List_Table {
 		return ( $column_string );
 	}
 
+	public function column_lesson( $item ) {
+		return $item['lesson_name'];
+	}
+
 	public function column_type( $item ) {
 		return $item['type'];
 	}
@@ -80,7 +84,6 @@ class Bitscr_Content_Table extends WP_List_Table {
 	public function column_date_added( $item ) {
 		return $item['date_added'];
 	}
-
 
 	/**
 	 * Prepare an array of items to be listed.
@@ -110,6 +113,7 @@ class Bitscr_Content_Table extends WP_List_Table {
 	public function get_columns() {
 		$columns = array(
 			'name'       => __( 'Content Title', 'bitwise-sidebar-content' ),
+			'lesson'     => __( 'Lesson', 'bitwise-sidebar-content' ),
 			'type'       => __( 'Type', 'bitwise-sidebar-content' ),
 			'source'     => __( 'Target', 'bitwise-sidebar-content' ),
 			'date_added' => __( 'Date Added', 'bitwise-sidebar-content' ),
@@ -142,7 +146,7 @@ class Bitscr_Content_Table extends WP_List_Table {
 	 * @since 3.1.0
 	 *
 	 */
-	public function search_box( $text = '', $input_id = 'bwfabt' ) {
+	public function search_box( $text = '', $input_id = 'bitscr' ) {
 		$input_id = $input_id . '-search-input'; ?>
         <p class="search-box">
             <label class="screen-reader-text" for="<?php echo esc_attr( $input_id ); ?>"><?php echo esc_html( $text ); ?>:</label>
@@ -150,36 +154,6 @@ class Bitscr_Content_Table extends WP_List_Table {
 			<?php submit_button( $text, '', '', false, array( 'id' => 'search-submit' ) ); ?>
         </p>
 		<?php
-	}
-
-	public static function render_trigger_nav() {
-		/*$experiment_status = array( '' => __( 'All', 'buildwoofunnels-ab-tests' ) ) + BWFABT_Core()->admin->get_experiment_statuses();
-		$html              = '<ul class="subsubsub subsubsub_bwfabt">';
-		$html_inside       = array();
-		$current_status    = '';
-		if ( isset( $_GET['status'] ) && '' !== $_GET['status'] ) {  // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
-			$current_status = ( '' === $_GET['status'] ) ? wc_clean( $_GET['status'] ) : intval( wc_clean( $_GET['status'] ) );  // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification
-		}
-
-		foreach ( $experiment_status as $slug => $status ) {
-			$need_class = '';
-			if ( $slug === $current_status ) {
-				$need_class = 'current';
-			}
-			$url = add_query_arg( array( 'status' => $slug ), admin_url( 'admin.php?page=bwf_ab_tests' ) );
-			if ( empty( $slug ) ) {
-				$url = admin_url( 'admin.php?page=bwf_ab_tests' );
-			}
-
-			$html_inside[] = sprintf( '<li><a href="%s" class="%s">%s</a> </li>', $url, $need_class, $status );
-		}
-
-		if ( is_array( $html_inside ) && count( $html_inside ) > 0 ) {
-			$html .= implode( '', $html_inside );
-		}
-		$html .= '</ul>';
-
-		echo wp_kses_post( $html );*/
 	}
 
 	/**
@@ -190,9 +164,7 @@ class Bitscr_Content_Table extends WP_List_Table {
 	 * @since 3.1.0
 	 *
 	 */
-	public function display_tablenav( $which ) {
-
-		?>
+	public function display_tablenav( $which ) { ?>
         <div class="tablenav <?php echo esc_attr( $which ); ?>">
 
 			<?php if ( $this->has_items() ) : ?>
