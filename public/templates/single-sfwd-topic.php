@@ -1,6 +1,6 @@
 <?php
 /**
- * The Template for displaying all single posts.
+ * The Template for displaying all single topics.
  *
  * @package WordPress
  * @subpackage Boss
@@ -92,11 +92,12 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                     <h3>All Videos</h3>
                     <p><small style="color:#4e9a06;"><strong><?php echo count( $videos ); ?></strong> VIDEOS CURRENTLY AVAILABLE</small></p>
                     <ul class="sidebar_list">
-						<?php
-						foreach ( $videos as $video ) { ?>
+						<?php $vcount = 0;
+						foreach ( $videos as $video ) {
+							$vcount ++; ?>
                             <li>
                                 <a data-group="video_content" class="html5lightbox" href="<?php echo $video['content_url'] ?>" title="<?php echo $video['name'] ?>">
-                                    <h3><?php echo $video['name'] ?></h3>
+                                    <h3><?php echo "($vcount) " . $video['name'] ?></h3>
                                 </a>
                             </li>
 							<?php
@@ -110,11 +111,12 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                     <h3>All Help Contents</h3>
                     <p><small style="color:#4e9a06;"><strong><?php echo count( $helps ); ?></strong> HELPS CURRENTLY AVAILABLE</small></p>
                     <ul class="sidebar_list">
-						<?php
-						foreach ( $helps as $help ) { ?>
+						<?php $hcount =0;
+						foreach ( $helps as $help ) {
+						    $hcount++; ?>
                             <li>
                                 <a title="<?php echo $help['name'] ?>" data-group="help_content" class="example-image-link html5lightbox" href="<?php echo $help['content_url'] ?>">
-                                    <h3><?php echo $help['name'] ?></h3>
+                                    <h3><?php echo "($hcount) ". $help['name'] ?></h3>
                                 </a>
                             </li>
 							<?php
@@ -217,10 +219,8 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                 </ul>
                 <h3>QUIZ</h3>
 				<?php
-
 				$quiz_status = learndash_is_quiz_notcomplete( get_current_user_id(), array( $topic->ID ) );
 				$quizzes     = learndash_get_lesson_quiz_list( $lesson_id, get_current_user_id(), true ); ?>
-
                 <ul>
                     <li style="color: black;"><?php echo ( count( $quizzes ) > 1 ) ? $quizzes[1]['post']->post_title : ''; ?></li>
                 </ul>
