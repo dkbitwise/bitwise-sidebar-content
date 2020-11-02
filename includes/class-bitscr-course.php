@@ -162,12 +162,16 @@ class Bitscr_Course {
 			$args         = array(
 				'post_status'   => 'publish',
 				'post_type'     => 'sfwd-courses',
-				'post_per_page' => '-1'
+				'posts_per_page' => '-1'
 			);
 			$sfwd_courses = new WP_Query( $args );
+		
+				
 			if ( $sfwd_courses->post_count > 0 ) {
 				foreach ( $sfwd_courses->posts as $sfwd_course ) {
 					$existing = false;
+							
+								
 					foreach ( $db_courses as $db_key => $db_course ) {
 						if ( $sfwd_course->ID === intval( $db_course['sfwd_course_id'] ) ) {
 							if ( $sfwd_course->post_title !== $db_course['name'] ) {
@@ -176,16 +180,38 @@ class Bitscr_Course {
 								$this->set_sfwd_course_id( $sfwd_course->ID );
 								$result = $this->save( array() );
 							}
+							
+							//Lesson update code updated by suresh on 7-7-2020
+							$lessons = learndash_get_lesson_list( $sfwd_course->ID ); //get the lessons for particular course
+							$sfwd_lessons = [];
+						foreach ( $lessons as $lesson ) {
+							$sfwd_lessons[ $lesson->ID ] = $lesson->post_title;
+						}
+							$this->set_sfwd_lessons( $sfwd_lessons );
+							$lessons = $this->get_sfwd_lessons();
+						    $lessons = empty( $lessons ) ? $lessons : json_encode( $lessons ); //serialize the lesson ids
+							$data['sfwd_lessons']   = $lessons;
+						
+						
+							if ( ! empty( $db_course['id']) && $db_course['id'] > 0 ) {
+								 Bitscr_Common::update_data( $data, array( 'id' => $db_course['id'] ), 'courses' );
+							}
+							//Update code end
+								
 							$existing = true;
 							break;
 						}
 					}
 
+		
 					if ( false === $existing ) {
+						
 						$this->set_name( $sfwd_course->post_title );
 						$this->set_sfwd_course_id( $sfwd_course->ID );
 
 						$lessons      = learndash_get_lesson_list( $sfwd_course->ID );
+						
+					
 						$sfwd_lessons = [];
 						foreach ( $lessons as $lesson ) {
 							$sfwd_lessons[ $lesson->ID ] = $lesson->post_title;

@@ -15,12 +15,12 @@
         box-sizing: border-box;
         position: fixed;
         width: 100%;
-        margin-top: -25px !important;
+       /* margin-top: -25px !important;*/
     }
 }
 
 .header-navigation > div > ul {
-    height: 35px !important;
+   /* height: 35px !important; */
     list-style: none;
     margin: 0;
     overflow: hidden;
@@ -32,11 +32,11 @@
 .site-header .header-inner .right-col {
     display: table-cell;
     float: none;
-    padding-top: 10px;
+   /* padding-top: 10px;*/
 }
 
 body #mastlogo {
-    min-height: 50px !important;
+    min-height: 40px !important;
     padding: 0 18px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -71,6 +71,7 @@ body {
     position: fixed;
     top: 230px;
     right: -45px;
+   
 }
 
 .lf {
@@ -109,9 +110,9 @@ body {
 
 .content_btns {
     display: flex;
-    right: -26%;
+    right: -25.5%;
     position: fixed;
-    top: 25%;
+    top: 21.5%;
     transform: rotateZ(90deg);
     transform-origin: 4% 57% 0;
     width: 28%;
@@ -123,21 +124,21 @@ body {
 }
 
 .bttn.notes_btn, .bttn.notes_btn:hover, .bttn.notes_btn:focus {
-    background-color: #ff8503;
-}
-
-.bttn.help_btn, .bttn.help_btn:hover, .bttn.help_btn:focus {
     background-color: #cd4233;
 }
 
+.bttn.help_btn, .bttn.help_btn:hover, .bttn.help_btn:focus {
+    background-color: #ff8503;
+}
+
 .content_btns .bttn {
-    width: 33%;
+    width: 100%;
     text-align: center;
-    padding: 15px 0 5px 0;
+    padding: 6px 12px;
     border: 1px solid transparent;
     border-radius: 0;
     color: #fff;
-    font-weight: 600;
+    /*font-weight: 600;*/
     text-transform: uppercase;
     display: inline-block;
     margin-bottom: 0;
@@ -389,7 +390,7 @@ body {
     position: fixed;
     text-shadow: 0 0;
     top: 0;
-    transition: all 0.5s ease 0s;
+    transition: all 0.5s ease 0s !important;
 }
 
 .single-sfwd-topic .info_wrapp {
@@ -400,8 +401,8 @@ body {
     padding: 10px;
     position: fixed;
     top: 8%;
-    transform: translateX(400%);
-    transition: all 3.5s ease 0s;
+    transform: translateX(100%);
+    transition: all 0.5s ease 0s !important;
     width: 30%;
     z-index: 13;
 }
@@ -410,6 +411,7 @@ body {
     background-color: #ff8503;
     border-radius: 0;
     color: #fff;
+    margin-left: 3px;
 }
 
 .single-sfwd-topic .info_wrapp .nav-pills > li > a.nav_link::after {
@@ -419,7 +421,7 @@ body {
     left: 111%;
     position: absolute;
     top: 0;
-    margin-left: 3px;
+   
     width: 1px;
 }
 
@@ -434,9 +436,6 @@ body {
     margin-top: 11px;
 }
 
-.single-sfwd-topic .info_wrapp .nav.nav-pills li + li {
-    margin: 0 10px 0 20px;
-}
 
 .single-sfwd-topic .info_wrapp .sidebar_list li {
     display: block;
@@ -448,3 +447,142 @@ body {
 button#html5-close {
     width: 30px;
 }
+/* Learndash notes Css added by suresh on 22-6-2020 */
+#bitwisescr-note-submit{
+    background: #bdd537;
+    color: #3a4111;
+    border: 0px!important;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
+    padding: 0 15px;
+    margin: 0;
+    border: 0;
+    height: 55px;
+    line-height: 55px;
+}
+
+#bitwisescr-note-actions {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background: #f3f3f3;
+}
+#bitwisescr-note-actions-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+#bitwisescr-note-editor-body {
+    padding: 15px;
+}
+#bitwisescr-note-actions li a {
+    font-size: 18px;
+    color: #000;
+    text-decoration: none;
+    transition: all ease-in-out 250ms;
+    text-align: center;
+    display: block;
+    height: 55px;
+    line-height: 55px;
+}
+#bitwisescr-note-actions li a {
+    text-decoration: none!important;
+    border: 0 !important;
+    box-shadow: none;
+}
+#bitwisescr-note-title-fieldnew {
+    padding: 15px;
+    background: #f3f3f3;
+    text-align: left;
+}
+#bitwisescr-note-submit:hover {
+    cursor: pointer;
+    background: #fff !important;
+    color: #333 !important;
+    box-shadow: 0 0 5px rgba(0,0,0,.1);
+}
+
+.sideBar_wrapp.active_side_bar .close {
+	width:40px;
+}
+/*.courses_btns .bttn{
+	width:33%!important;
+	
+}*/
+.pagination>li>a { width:auto; cursor:pointer;}
+.show_drpd{ float:left; padding-top: 21px;}
+.displaying_message{ display:inline-block; margin-top:12px;}
+.pagination {float:right; padding-top:0px!important;padding-bottom:0px!important;margin-top:12px!important;}
+.searchdiv { margin-top:23px; overflow:auto;margin-bottom:10px;}
+.genderradio span{padding-left:5px;}
+.genderradio input[type=radio] { margin-left:7px;}
+.pagination >li{margin: 0 0 0 0px;}
+
+.mce-ico mce-i-image{display:none!important;}
+.ldnotes-hide{display:none!important;}
+@media only screen and (max-width: 1114px) and (min-width: 992px){
+.container {
+    width: 921px!important;
+}
+}
+@media only screen and (max-width: 1050px) and (min-width: 992px){
+.container {
+    width: 899px!important;
+}
+}
+@media only screen and (max-width: 1301px) and (min-width: 1202px){
+.container {
+    width: 1097px!important;
+}
+}
+@media only screen and  (max-width: 878px) and (min-width:768px){
+.container {
+    width: 640px!important;
+}
+}
+.lds-bulk-download{    
+	margin-bottom: 12px;
+    margin-top: 12px;
+	
+}
+.info_wrapp .tab-content > .tab-pane > h3 {
+    font-weight: 100;
+    margin-top: 5px;
+}
+.thumbnail {
+border: 0px solid #ddd!important;	
+}
+#bitwisescr-course-note{
+  padding-top: 5px;
+}
+.info_wrapp .nav-pills > li > a.nav_link {
+    color: #000;
+    margin-right: 10px;
+    padding: 2px 8px;
+    position: relative;
+}
+@media only screen and (max-width: 800px) and (min-width: 450px){
+.info_wrapp {
+    width: 82% !important;
+}
+}
+@media only screen and (max-width: 450px) and (min-width: 375px){
+.info_wrapp {
+    width: 52% !important;
+}
+}
+@media only screen and (max-width: 570px) and (min-width: 375px){
+.content_btns {
+    width: 30% !important;
+}
+.courses_btns {
+    width: 30% !important;
+}
+}
+

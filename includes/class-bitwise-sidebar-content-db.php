@@ -105,6 +105,7 @@ class Bitwise_Sidebar_Content_DB {
 		$tables     = array(
 			'bitscr_content',
 			'bitscr_courses',
+			'bitscr_notes', //Added extra table for Notes updated by suresh on 26-6-2020
 		);
 		foreach ( $tables as &$table ) {
 			$all_tables[] = $this->wp_db->prefix . $table;
@@ -170,4 +171,36 @@ class Bitwise_Sidebar_Content_DB {
 		$tables = array_unique( $tables );
 		update_option( '_bit_scr_created_tables', $tables );
 	}
+	
+	/**
+	* Add bitsa_notes table updated by suresh on 26-6-2020
+	*/
+	public function bitscr_notes() {
+		$collate = '';
+
+		if ( $this->wp_db->has_cap( 'collation' ) ) {
+			$collate = $this->wp_db->get_charset_collate();
+		}
+		$values_table = "CREATE TABLE `bw_academy`.`" . $this->wp_db->prefix . "bitscr_notes` 
+		( `id` INT NOT NULL AUTO_INCREMENT ,
+		`user_id` BIGINT(23) NOT NULL , 
+		`course_id` BIGINT(23) NOT NULL ,
+		`lesson_id` BIGINT(23) NOT NULL , 
+		`topic_id` BIGINT(23) NOT NULL , 
+		`content` TEXT NOT NULL , 
+		`title` VARCHAR(256) NOT NULL , 
+		`added` TIMESTAMP NOT NULL , 
+		
+		PRIMARY KEY (`id`)) " . $collate . ";";
+
+		dbDelta( $values_table );
+
+		$tables = get_option( '_bit_scr_created_tables', array() );
+
+		array_push( $tables, $this->wp_db->prefix . 'bitscr_notes' );
+		$tables = array_unique( $tables );
+		update_option( '_bit_scr_created_tables', $tables );
+	}
+	
+	 // End new notes code function 
 }

@@ -98,9 +98,27 @@ $content_url = add_query_arg( array(
 		$contents = Bitscr_Core()->bit_sc_content->bitscr_content_list();
 		$table    = new Bitscr_Content_Table();
 		$table->render_trigger_nav();
-		$table->data = $contents;
-		$table->prepare_items();
-		$table->display();
+		
+		
+		$table->data = $contents; ?>
+	
+<?php
+	//	$table->search_box('Search', 'search');
+	//	$table->prepare_items();
+	//	$table->display();
+		?>
+		
+<form method="get">
+<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+<?php if(isset($table)) : ?>
+    <?php $table->prepare_items()   ?>
+    <?php //$table->search_box('Search', 'search_id'); //Needs To be called after $myRequestTable->prepare_items() ?>
+    <?php $table->display() ?>
+<?php endif; ?>
+</form>
+	
+		
+		<?php
 	} ?>
 
 </div>

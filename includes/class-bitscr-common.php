@@ -231,6 +231,164 @@ class Bitscr_Common {
 		echo "</pre>";
 		die( $msg );
 	}
+	
+	
+	/**
+	 * Select the particular topic with user notes created by suresh on 23-6-2020
+	 * 
+	 * @param user id
+	 * @param Topic id
+	 * 
+	 * 
+	*/
+	
+	public static function selecttopicnotes($user_id,$topicid){
+		global $wpdb;
+		$table = $wpdb->prefix.'bitscr_notes';
+		$notes = $wpdb->get_results("SELECT * FROM $table WHERE (user_id = $user_id AND topic_id = $topicid)");
+        return $notes;
+	}
+	
+	
+	
+	/**
+	 * Select the particular user notes created by suresh on 23-6-2020
+	 * 
+	 * @param user id
+	 *
+	 * 
+	 * 
+	*/
+	public static function selectusernotes($user_id){
+		global $wpdb;
+		$table = $wpdb->prefix.'bitscr_notes';
+		$notes = $wpdb->get_results("SELECT * FROM $table WHERE (user_id = $user_id)");
+        return $notes;	
+		
+		
+	}
+	
+	/* Select all notes for admin users updated by suresh on 23-6-2020
+	*
+	*
+	*/
+	public static function selectallnotes(){
+		global $wpdb;
+		$table = $wpdb->prefix.'bitscr_notes';
+		$notes = $wpdb->get_results("SELECT * FROM $table");
+        return $notes;	
+		
+		
+		
+	}
+	
+	/* Delete notes for particular id updated by suresh on 23-6-2020
+	* @param note id
+	*/
+	public static function deletenotes( $user_id,$noteid){
+		global $wpdb;
+		$table = $wpdb->prefix.'bitscr_notes';
+		return $wpdb->query("DELETE  FROM $table WHERE id = $noteid");
+		
+	}
+	
+		
+	/**
+	 * Select the particular Note id with user notes created by suresh on 2-7-2020
+	 * 
+	 * @param user id
+	 * @param note  id
+	 * 
+	 * 
+	*/
+	
+	public static function selectnotesbyid($user_id,$noteid)
+	{
+		
+		global $wpdb;
+		$table = $wpdb->prefix.'bitscr_notes';
+		$notes = $wpdb->get_results("SELECT * FROM $table WHERE (user_id = $user_id AND id = $noteid)");
+        return $notes;
+	
+	}
+	
+		
+	/**
+	 * Select the user notes with limit for pgination created by suresh on 2-7-2020
+	 * 
+	 * @param user id
+	 * @param offset
+	 * @param limit
+	 * @param current page
+	 * @page search string
+	 * 
+	 * 
+	*/
+	public static function selectusernoteswithlimit($search_str,$limit,$offset, $user_id,$current_page){
+		
+		 global $wpdb;
+		 $table = $wpdb->prefix.'bitscr_notes';
+		 $total = $wpdb->get_var("SELECT count(id) FROM $table WHERE (user_id = $user_id)");
+		 if($search_str!=''){
+		 	
+		 
+	 	 $note_list = $wpdb->get_results("SELECT * FROM $table where user_id=$user_id and  $search_str ORDER by added DESC  LIMIT $limit OFFSET $offset ");
+	 	 $search_found = $wpdb->get_var($wpdb->prepare("SELECT count(id) FROM  $table where user_id=$user_id and  $search_str ORDER by added DESC"));
+         $pages = ceil($search_found / $limit);
+         
+		
+		}else{
+		
+		 $note_list = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table where user_id=$user_id ORDER by added DESC  LIMIT $limit OFFSET $offset"));
+	     $search_found = $wpdb->get_var($wpdb->prepare("SELECT count(id) FROM $table where user_id=$user_id ORDER by added DESC"));
+		 $pages = ceil($search_found / $limit);
+		}
+		
+	
+		if( $note_list):
+			 $html='';
+			 $cuser = wp_get_current_user();
+			 foreach($note_list as $oldnote){
+				global $post;
+                $title = $oldnote->title;
+                $html.='<tr>
+                        <td style="text-align: center;"><input type="checkbox" id="lds-bulk-action-item'.$oldnote->topic_id.'" name="lds-bulk-action-item['.$oldnote->topic_id.']" value="'.$oldnote->topic_id.'"></td>
+                        <td id="post-'.$oldnote->id.'">
+                        <p><strong><label class="html5lightbox"  for="lds-bulk-action-item'.$oldnote->topic_id.'" >'.esc_html($title).'</label></strong></p>
+                        <p>Location:<a href="' . esc_url( get_the_permalink($oldnote->course_id) ) .'">' . get_the_title($oldnote->course_id) . '</a> &raquo; 
+						<a href="' . esc_url( get_the_permalink($oldnote->lesson_id) ) .'">' . get_the_title($oldnote->lesson_id) . '</a> &raquo;
+						<a href="' . esc_url( get_the_permalink($oldnote->topic_id) ) .'">' . get_the_title($oldnote->topic_id) . '</a> 
+						</p></td>';
+                if( array_intersect($allowed_roles, $current_user->roles ) ) { 
+                  	$user = get_user_by( 'id', $oldnote->user_id );
+                    $html.='<td><small>'.$user->display_name.'</small></td>';
+                 }
+               
+                    $html.='<td><small>'.date('d M Y',strtotime($oldnote->added)).'</small></td>
+                            <td style="text-align: right; width: 125px"><a href="#" style="padding:5px;" class="bitwisescr-notes-print-shortcode" title="print" data-note="'.$oldnote->topic_id.'"><i class="fa fa-print" aria-hidden="true"></i></a>
+                            <a href="javascript:void(0)" style="padding:5px;" title="download" class="downloadword" data-note="'.$oldnote->id.'"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                            <a href="javascript:void(0)" style="padding:5px;" title="delete" class="bitwisescr-notes-delete-note" data-note="'.$oldnote->id.'"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                           </td>
+                        </tr>	<div id="notesdiv'.$oldnote->id.'" style="display:none;">
+							 <div class="lightboxcontainer">';
+  				if($oldnote->content){
+  					$html.='<h3>'.$oldnote->title.'</h3>'.$oldnote->content;
+  				 }
+				$html.='</div>
+  						</div>';
+                    
+                   }
+          else: 
+                    $html=' <tr><td colspan="5"><p class="ldnt-alert">No notes found</p></td>
+                    </tr>';
+               endif; 
+	
+	   //Return the list of notes with pagination detail updated by suresh on 8-7-2020
+	   
+		return json_encode(array('status' => true, 'data' => $html, 'total' => $total, 'displaying' => count($note_list), 'current_page' => $current_page, 'per_page' => $limit, 'pages' => $pages));
+		exit;
+	}
+	
 }
 
 /**

@@ -225,7 +225,8 @@ class Bitwise_SC_Content {
 	 */
 	public function bitscr_content_list() {
 		$paged = isset( $_GET['paged'] ) ? absint( wc_clean( $_GET['paged'] ) ) : 0;  // phpcs:ignore WordPress.Security.NonceVerification
-
+	 	$search = $_GET['s'];
+	
 		$limit = Bitscr_Core()->admin->posts_per_page();
 
 		$table_name = 'bitscr_content';
@@ -235,12 +236,17 @@ class Bitwise_SC_Content {
 		$sql_query      = "SELECT * FROM {table_name}";
 		$sql_query      .= " WHERE 1=1";
 		$found_contents = Bitscr_Core()->get_dataStore()->get_results( $sql_query );
+		
+		if($search){
+			
+			$sql_query .="   and name LIKE  '%$search%'";
+		}
 
 		if ( count( $found_contents ) > $limit ) {
 			$paged     = ( $paged > 0 ) ? ( $paged - 1 ) : $paged;
 			$sql_query .= " LIMIT " . $limit * $paged . ", " . $limit;
 		}
-
+	
 		$contents = Bitscr_Core()->get_dataStore()->get_results( $sql_query );
 		$items    = array();
 

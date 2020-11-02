@@ -223,7 +223,7 @@ class Bitwise_Sidebar_Content_Admin {
 	}
 
 	public function posts_per_page() {
-		return 2;
+		return 5;
 	}
 
 }
