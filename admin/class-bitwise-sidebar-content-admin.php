@@ -183,6 +183,7 @@ class Bitwise_Sidebar_Content_Admin {
 			$content_type   = isset( $posted_content['content_type'] ) ? $posted_content['content_type'] : '';
 			$content_source = isset( $posted_content['content_source'] ) ? $posted_content['content_source'] : '';
 			$content_url    = isset( $posted_content['content_url'] ) ? $posted_content['content_url'] : '';
+			$content_status = isset( $posted_content['content_status'] ) ? $posted_content['content_status'] : 'draft';
 
 			if ( empty( $content_name ) ) {
 				$url_arr    = explode( '/', $content_url );
@@ -201,6 +202,7 @@ class Bitwise_Sidebar_Content_Admin {
 			$content_obj->set_type( $content_type );
 			$content_obj->set_source( $content_source );
 			$content_obj->set_content_url( $content_url );
+			$content_obj->set_status( $content_status );
 			$content_obj->save( array() );
 
 			if ( $content_id < 1 ) {

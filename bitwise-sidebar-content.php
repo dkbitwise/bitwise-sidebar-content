@@ -240,9 +240,5 @@ function bitscr_clean( $var ) {
     	<form id="singlesubmit<?php echo $oldnote->id;?>" method="get" action="">
        <input type="hidden" name="lds-bulk-action-item[<?php echo $oldnote->topic_id; ?>]"  value="<?php echo $oldnote->topic_id; ?>">
          </form>
-<?php } ?>
-
-
-
-<?php 		}
-?>
+<?php }
+	}
