@@ -115,7 +115,7 @@ class Bitwise_Sidebar_Content_Public {
 		if ( $post_id > 0 ) {
 			$post_type = isset( $post->post_type ) ? $post->post_type : '';
 			if ( 'sfwd-topic' === $post_type ) {
-				wp_enqueue_script( 'bitwise_sidebar_content_public_js', plugin_dir_url( __FILE__ ) . 'js/bitwise-sidebar-content-public.js', array( 'jquery' ), '1.0.0', false );
+				wp_enqueue_script( 'bitwise_sidebar_content_public_js', plugin_dir_url( __FILE__ ) . 'js/bitwise-sidebar-content-public.js', array( 'jquery' ), '1.0.0'.time(), false );
 				//wp_enqueue_script( 'bitwise_sidebar_min_jquery', plugin_dir_url( __FILE__ ) . 'js/jquery.min.js', array(), '1.0.0', false );
 				wp_enqueue_script( 'bitwise_sidebar_jquery_1_10_2', plugin_dir_url( __FILE__ ) . 'js/jquery-1.10.2.js', array(), '1.0.0', false );
 				wp_enqueue_script( 'bitwise_sidebar_jquery_ui', plugin_dir_url( __FILE__ ) . 'js/jquery-ui.js', array(), '1.0.0', false );
@@ -127,9 +127,9 @@ class Bitwise_Sidebar_Content_Public {
 				//Add script files for New notes using learndash notes js updated by suresh
 				wp_enqueue_script( 'learndash_sidebar_content_public_js', plugin_dir_url( __FILE__ ) . 'js/nt_notes.js', array( 'jquery' ), '1.0.0', false );
 				wp_enqueue_script( 'learndash_sidebar_print_public_js', plugin_dir_url( __FILE__ ) . 'js/nt_notes_lib.js', array( 'jquery' ), '1.0.0', false );
-
 			}
 		}
+
 	}
 
 	/**

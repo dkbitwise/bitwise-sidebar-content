@@ -276,10 +276,11 @@ class Bitscr_Common {
 		global $wpdb;
 		$table = $wpdb->prefix.'bitscr_notes';
 		$notes = $wpdb->get_results("SELECT * FROM $table");
-        return $notes;	
-		
-		
-		
+        return $notes;
+	}
+
+	public function selectallnoteswithlimit(){
+		return false;
 	}
 	
 	/* Delete notes for particular id updated by suresh on 23-6-2020

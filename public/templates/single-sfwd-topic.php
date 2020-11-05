@@ -68,7 +68,6 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 	$lessonid  = learndash_get_lesson_id();
 
 	$bit_course_content = Bitscr_Common::get_multiple_data( array(), array( 'sfwd_lesson_id' => $lessonid ), 'content' );
-	zwk_pc_debug($bit_course_content);
 
 	$videos = wp_list_filter( $bit_course_content, array( 'type' => 'Video', 'status' => 'published' ) );
 	$helps  = wp_list_filter( $bit_course_content, array( 'type' => 'Help', 'status' => 'published' ) ); ?>
@@ -112,7 +111,6 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 					/*********************************************************/
 					//Notes Tab content updated by suresh on 22-6-2020
 					/*********************************************************/
-
 					$current_user = wp_get_current_user();
 
 					$current_post_type = get_post_type( $course_id );
@@ -121,8 +119,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 					$id                = get_the_ID();
 					$oldnotes          = Bitscr_Common::selecttopicnotes( $current_user->ID, $id );
 					$allnotes          = Bitscr_Common::selectusernotes( $current_user->ID );
-					$allowed_roles     = array( 'administrator' );
-					?>
+					$allowed_roles     = array( 'administrator' ); ?>
 
                     <form id="bitwisescr-course-note" action="" method="post">
                         <input type="hidden" name="bitwisescr-note-user-id" id="bitwisescr-note-user-id" value="<?php echo $current_user->ID; ?>">
@@ -140,7 +137,6 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                         </div>
 						<?php
 						if ( isset( $oldnotes[0]->content ) ) {
-							//	$oldnotes[0]->content = str_replace("'", "\'", $oldnotes[0]->content);
 							$body = stripslashes( $oldnotes[0]->content );
 						} else {
 							$body = '';
@@ -239,7 +235,6 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 
                     </div>
                     <div id="notesdiv" style="display:none;">
-
 
                         <div class="lightboxcontainer">
 							<?php if ( isset( $oldnotes[0]->content ) ) {
