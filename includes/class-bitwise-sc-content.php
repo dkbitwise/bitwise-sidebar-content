@@ -14,7 +14,6 @@ class Bitwise_SC_Content {
 	private $content_url = '';
 	private $type = '';
 	private $source = '';
-	private $status = '';
 	private $date_added = '0000-00-00 00:00:00';
 
 	public $obj_type;
@@ -106,6 +105,7 @@ class Bitwise_SC_Content {
 	 */
 	public function set_source( $source ) {
 		$this->source = $source;
+
 	}
 
 	/**
@@ -115,13 +115,6 @@ class Bitwise_SC_Content {
 	 */
 	public function set_date_added( $date_added ) {
 		$this->date_added = $date_added;
-	}
-
-	/**
-	 * @param $status
-	 */
-	public function set_status( $status ) {
-		$this->status = $status;
 	}
 
 
@@ -181,13 +174,6 @@ class Bitwise_SC_Content {
 		return $this->source;
 	}
 
-	/**
-	 * Getter function for status
-	 * @return string
-	 */
-	public function get_status() {
-		return $this->status;
-	}
 
 	/**
 	 * Getter function for school date added
@@ -196,6 +182,7 @@ class Bitwise_SC_Content {
 	public function get_date_added() {
 		return $this->date_added;
 	}
+
 
 	/**
 	 * Adding a new content
@@ -216,7 +203,6 @@ class Bitwise_SC_Content {
 		$data['content_url']    = $this->get_content_url();
 		$data['type']           = $this->get_type();
 		$data['source']         = $this->get_source();
-		$data['status']         = $this->get_status();
 		$data['date_added']     = ( '0000-00-00 00:00:00' === $this->get_date_added() ) ? Bitscr_Common::get_now() : $this->get_date_added();
 
 		$db_course_id = $this->get_id();
@@ -302,7 +288,6 @@ class Bitwise_SC_Content {
 				'type'        => $content['type'],
 				'lesson_name' => $lesson_name,
 				'source'      => $content['source'],
-				'status'      => $content['status'],
 				'date_added'  => $content['date_added'],
 				'row_actions' => $row_actions,
 			);

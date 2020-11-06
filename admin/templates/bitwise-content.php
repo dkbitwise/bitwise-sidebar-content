@@ -21,7 +21,6 @@ $content_url = add_query_arg( array(
 			$lessons        = ( $bit_course_obj instanceof Bitscr_Course ) ? $bit_course_obj->get_sfwd_lessons() : [];
 			$c_type         = $content->get_type();
 			$c_target       = $content->get_source();
-			$c_status       = $content->get_status();
 			$c_url          = $content->get_content_url();
 			$c_name         = $content->get_name();
 		} ?>
@@ -40,16 +39,6 @@ $content_url = add_query_arg( array(
                                 <option data-course_id="<?php echo $course['id'] ?>" <?php echo selected( $bit_course_id, $course['id'] ) ?> value="<?php echo $course['sfwd_course_id'] ?>"><?php echo $course['name'] ?></option>
 								<?php
 							} ?>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Content status</td>
-                    <td class="select-status">
-                        <select id="bitscr_status" name="content_status">
-                            <option value="0">Select a Status</option>
-                            <option <?php echo selected('draft',$c_status) ?> value="draft">Draft</option>
-                            <option <?php echo selected('published',$c_status) ?> value="published">Published</option>
                         </select>
                     </td>
                 </tr>
@@ -109,16 +98,27 @@ $content_url = add_query_arg( array(
 		$contents = Bitscr_Core()->bit_sc_content->bitscr_content_list();
 		$table    = new Bitscr_Content_Table();
 		$table->render_trigger_nav();
+		
+		
 		$table->data = $contents; ?>
-
-        <form method="get">
-            <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
-			<?php if ( isset( $table ) ) : ?>
-				<?php $table->prepare_items() ?>
-				<?php //$table->search_box('Search', 'search_id'); //Needs To be called after $myRequestTable->prepare_items() ?>
-				<?php $table->display() ?>
-			<?php endif; ?>
-        </form>
+	
+<?php
+	//	$table->search_box('Search', 'search');
+	//	$table->prepare_items();
+	//	$table->display();
+		?>
+		
+<form method="get">
+<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+<?php if(isset($table)) : ?>
+    <?php $table->prepare_items()   ?>
+    <?php //$table->search_box('Search', 'search_id'); //Needs To be called after $myRequestTable->prepare_items() ?>
+    <?php $table->display() ?>
+<?php endif; ?>
+</form>
+	
+		
 		<?php
 	} ?>
+
 </div>

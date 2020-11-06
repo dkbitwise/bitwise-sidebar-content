@@ -85,9 +85,7 @@ class Bitwise_Sidebar_Content {
 			$this->version = '1.0.0';
 		}
 		$this->plugin_name = 'bitwise-sidebar-content';
-		if ( ! defined( 'BITSCR_DB_VERSION' ) ) {
-			define( 'BITSCR_DB_VERSION', '1.0.0' );
-		}
+
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -195,6 +193,9 @@ class Bitwise_Sidebar_Content {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
+		$plugin_db = new Bitwise_Sidebar_Content_DB();
+		$this->loader->add_action( 'admin_init', $plugin_db, 'add_if_needed' );
+
 		$plugin_admin = $this->admin;
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
@@ -213,7 +214,7 @@ class Bitwise_Sidebar_Content {
 		$plugin_public = $this->public;
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_filter( 'boss_learndash_locate_template', $plugin_public, 'bitsc_include_custom_lesson_template' );
+		$this->loader->add_filter( 'template_include', $plugin_public, 'bit_sico_include_custom_topic_template' );
 	}
 
 	/**

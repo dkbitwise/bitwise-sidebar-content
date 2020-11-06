@@ -36,20 +36,12 @@ class Bitwise_Sidebar_Content_DB {
 	 */
 	protected $max_index_length = 191;
 
-	protected $option_key = '';
-
 	/**
 	 * Bitsa_DB_Tables constructor.
 	 */
 	public function __construct() {
 		global $wpdb;
-		$this->wp_db      = $wpdb;
-		$this->option_key = '_bit_scr_created_tables_';
-		if (defined('BITSCR_DB_VERSION')){
-			$this->option_key .= str_replace( '.', '_', BITSCR_DB_VERSION );
-		}
-
-		add_action( 'plugins_loaded', array( $this, 'add_if_needed' ) );
+		$this->wp_db = $wpdb;
 	}
 
 	/**
@@ -89,7 +81,7 @@ class Bitwise_Sidebar_Content_DB {
 	 */
 	protected function find_missing_tables() {
 
-		$db_tables = get_option( $this->option_key, array() );
+		$db_tables = get_option( '_bit_scr_created_tables', array() );
 
 		$missing_tables = array();
 		foreach ( $this->get_tables_list() as $table ) {
@@ -139,7 +131,6 @@ class Bitwise_Sidebar_Content_DB {
 				`content_url` VARCHAR(200) NOT NULL,
 				`type` VARCHAR(200) NOT NULL,
 				`source` VARCHAR(200) NOT NULL,
-				`status` VARCHAR(200) NOT NULL DEFAULT 'draft',
 				`date_added` DATETIME DEFAULT NULL,
 				PRIMARY KEY (`id`),
 				KEY `id` (`id`)
@@ -147,11 +138,11 @@ class Bitwise_Sidebar_Content_DB {
 
 		dbDelta( $values_table );
 
-		$tables = get_option( $this->option_key, array() );
+		$tables = get_option( '_bit_scr_created_tables', array() );
 
 		array_push( $tables, $this->wp_db->prefix . 'bitscr_content' );
 		$tables = array_unique( $tables );
-		update_option( $this->option_key, $tables );
+		update_option( '_bit_scr_created_tables', $tables );
 	}
 
 	/**
@@ -174,23 +165,23 @@ class Bitwise_Sidebar_Content_DB {
 
 		dbDelta( $values_table );
 
-		$tables = get_option( $this->option_key, array() );
+		$tables = get_option( '_bit_scr_created_tables', array() );
 
 		array_push( $tables, $this->wp_db->prefix . 'bitscr_courses' );
 		$tables = array_unique( $tables );
-		update_option( $this->option_key, $tables );
+		update_option( '_bit_scr_created_tables', $tables );
 	}
-
+	
 	/**
-	 * Add bitsa_notes table updated by suresh on 26-6-2020
-	 */
+	* Add bitsa_notes table updated by suresh on 26-6-2020
+	*/
 	public function bitscr_notes() {
 		$collate = '';
 
 		if ( $this->wp_db->has_cap( 'collation' ) ) {
 			$collate = $this->wp_db->get_charset_collate();
 		}
-		$values_table = "CREATE TABLE `" . $this->wp_db->prefix . "bitscr_notes` 
+		$values_table = "CREATE TABLE `bw_academy`.`" . $this->wp_db->prefix . "bitscr_notes` 
 		( `id` INT NOT NULL AUTO_INCREMENT ,
 		`user_id` BIGINT(23) NOT NULL , 
 		`course_id` BIGINT(23) NOT NULL ,
@@ -204,12 +195,12 @@ class Bitwise_Sidebar_Content_DB {
 
 		dbDelta( $values_table );
 
-		$tables = get_option( $this->option_key, array() );
+		$tables = get_option( '_bit_scr_created_tables', array() );
 
 		array_push( $tables, $this->wp_db->prefix . 'bitscr_notes' );
 		$tables = array_unique( $tables );
-		update_option( $this->option_key, $tables );
+		update_option( '_bit_scr_created_tables', $tables );
 	}
+	
+	 // End new notes code function 
 }
-
-Bitwise_Sidebar_Content_DB::get_instance();
