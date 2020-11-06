@@ -115,7 +115,7 @@ class Bitwise_Sidebar_Content_Public {
 		if ( $post_id > 0 ) {
 			$post_type = isset( $post->post_type ) ? $post->post_type : '';
 			if ( 'sfwd-topic' === $post_type ) {
-				wp_enqueue_script( 'bitwise_sidebar_content_public_js', plugin_dir_url( __FILE__ ) . 'js/bitwise-sidebar-content-public.js', array( 'jquery' ), '1.0.0'.time(), false );
+				wp_enqueue_script( 'bitwise_sidebar_content_public_js', plugin_dir_url( __FILE__ ) . 'js/bitwise-sidebar-content-public.js', array( 'jquery' ), '1.0.0' . time(), false );
 				//wp_enqueue_script( 'bitwise_sidebar_min_jquery', plugin_dir_url( __FILE__ ) . 'js/jquery.min.js', array(), '1.0.0', false );
 				wp_enqueue_script( 'bitwise_sidebar_jquery_1_10_2', plugin_dir_url( __FILE__ ) . 'js/jquery-1.10.2.js', array(), '1.0.0', false );
 				wp_enqueue_script( 'bitwise_sidebar_jquery_ui', plugin_dir_url( __FILE__ ) . 'js/jquery-ui.js', array(), '1.0.0', false );
@@ -133,21 +133,22 @@ class Bitwise_Sidebar_Content_Public {
 	}
 
 	/**
-	 * @param $template
+	 * Include custom template for lesson and topic
+	 *
+	 * @param $path
 	 *
 	 * @return string
 	 */
-	public function bit_sico_include_custom_topic_template( $template ) {
-		global $post;
-		$post_id = isset( $post->ID ) ? $post->ID : 0;
-		if ( $post_id > 0 ) {
-			$post_type = isset( $post->post_type ) ? $post->post_type : '';
-			if ( 'sfwd-topic' === $post_type ) {
-				$template = plugin_dir_path( __FILE__ ) . 'templates/single-sfwd-topic.php';
-			}
+	public function bitsc_include_custom_lesson_template( $path ) {
+		/*if ( strpos( $path, 'single-sfwd-lesson.php' ) > 0 ) {
+			$path = __DIR__ . '/templates/single-sfwd-lesson.php';
+		}*/
+
+		if ( strpos( $path, 'single-sfwd-topic.php' ) > 0 ) {
+			$path = __DIR__ . '/templates/single-sfwd-topic.php';
 		}
 
-		return $template;
+		return $path;
 	}
 
 

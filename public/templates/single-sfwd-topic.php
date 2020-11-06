@@ -226,7 +226,6 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                             </form>
                         </div>
 
-
 						<?php foreach ( $allnotes as $oldnote ) { ?>
                             <form id="singlesubmit<?php echo $oldnote->id; ?>" method="get" action="">
                                 <input type="hidden" name="lds-bulk-action-item[<?php echo $oldnote->topic_id; ?>]" value="<?php echo $oldnote->topic_id; ?>">
@@ -406,9 +405,7 @@ $logdate = new DateTime( "now", new DateTimeZone( 'America/Los_Angeles' ) );
 $d       = date( "j-M-Y H:i:s e" );
 $user    = wp_get_current_user();
 
-$traces = "[" . $d . "] Topic template Backtrace @ " . $logdate->format( 'm-d-Y H:i:s' ) . " - Userid #" . $user->ID . " " . print_r( wp_debug_backtrace_summary( null, 0, false ), true ) . "\n";
-//bw_customlog($traces,"trace");
-?>
+$traces = "[" . $d . "] Topic template Backtrace @ " . $logdate->format( 'm-d-Y H:i:s' ) . " - Userid #" . $user->ID . " " . print_r( wp_debug_backtrace_summary( null, 0, false ), true ) . "\n"; ?>
 <script>
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip()

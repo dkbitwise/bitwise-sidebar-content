@@ -2,86 +2,6 @@
     'use strict';
 
     $(document).ready(function () {
-        console.log('woreko3qw4');
-
-        window.addEventListener('blur',function(){
-            if (document.activeElement instanceof HTMLIFrameElement) {
-                //Click in Iframe.
-                $(this).find('#download').on('click',function (){
-                   console.log('dkl');
-                   alert('dlkf4');
-                });
-                var activeElem = document.activeElement;
-                console.log('working90840');
-                console.log(activeElem);
-               // console.log(document.activeElement);
-
-               var download_btn = document.getElementById('download');
-                console.log(download_btn);
-
-                document.activeElement.click(function (){
-                   console.log('sodif04');
-                });
-
-
-                //document.activeElement.src('abc.com');
-                activeElem.click(function (){
-                    console.log('dieo89');
-                   alert('lol');
-
-                });
-            }
-        });
-
-
-        // check for browser support
-        if ( window.addEventListener ) {
-
-            // when DOM is ready assign button onclick handlers
-            window.addEventListener('DOMContentLoaded', function() {
-
-                // where to send messages with postMessage
-                var target_origin = 'http://localhost/bitwise/wp-content/plugins/bitwise-sidebar-content/public/html5lightbox/pdfjs/web/viewer.html?file=http%3A%2F%2Flocalhost%2Fbitwise%2Fwp-content%2Fuploads%2F2020%2F04%2FState-Bank-of-India.pdf';
-
-                // get reference to form to attach button onclick handlers
-                //var form = document.getElementById('demoForm');
-                // get reference to iframe window
-                var download = document.getElementById('download');
-                console.log(download);
-               // console.log(download.contentWindow);
-                //console.log(document.getElementsByClassName('html5lightbox-web-iframe'));
-
-               /* win.elements['download'].onClick = function (){
-                    console.log('clicked');
-                }*/
-
-                // set height of iframe and display value
-                /*form.elements.button1.onclick = function() {
-                    var ifrm = document.getElementById('ifrm');
-                    var ht = ifrm.style.height = '160px';
-                    this.form.display.value = 'The iframes height is: ' + ht;
-                }
-
-                // to increment and display counter variable in iframed document
-                form.elements['button2'].onclick = function() {
-                    win.postMessage( {'task': 'ctr'}, target_origin );
-                }
-
-                // to get value of form element in iframed document
-                form.elements.button3.onclick = function() {
-                    win.postMessage( {'task': 'val'}, target_origin );
-                }
-
-                // to invoke function in iframed document
-                form.elements.button4.onclick = function() {
-                    win.postMessage( {'task': 'clear'}, target_origin );
-                }*/
-
-            }, false);
-        }
-
-
-
         /* var navId = "masthead";
          var time = 7000;
          $('#' + navId).attr('data-visible', "time");
@@ -285,9 +205,7 @@
                 });
             }
 
-
         });
-
 
         //Download the notes updated by suresh on 22-6-2020
         $('.bitwisescr-notes-download-modal').click(function () {
@@ -337,27 +255,16 @@
                     note_id: note_id
                 },
                 success: function (data) {
-
                     $(element).parents('tr').fadeOut('slow');
-
                 }
-
             });
-
         }
-
     });
 
-
     //download single topic content
-
-    //$( '.downloadword' ).click(function() {
     $('body').on('click', '.downloadword', function () {
-
         var id = $(this).data('note');
         $("#singlesubmit" + id).submit();
-
-
     });
 
 
@@ -378,8 +285,6 @@
     });
     $('body').on('click', '.notes_list_tablediv .pagination li a:not(.notes_list_table .disabled a)', function () {
         var click_page = $(this).text();
-
-
         if (click_page != current_page) {
             if (click_page == 'Previous') {
                 if (current_page > 0) {
@@ -395,25 +300,20 @@
         }
     });
 
-
     //display count updated by suresh on 7-7-2020
-
     $(".notes_list_filter .data_display").change(function () {
         data_display = parseInt($(this).val());
         pages = Math.ceil(total_records / data_display);
         change_pagi(current_page);
     });
 
-
     //Search function for notes page updated by suresh on 7-7-2020
     $('body').on('keyup', '.notes_list_filter  .search', function () {
-
         search = $(this).val();
         change_pagi(1);
     });
 
     function change_pagi(now_page, api_run = true) {
-
         current_page = parseInt(now_page);
 
         if (current_page > pages && pages != 0) {
@@ -486,7 +386,6 @@
 
 
     //Function for get the all notes with pagination updated by suresh 8-7-2020
-
     function get_notes_data(filter) {
 
         $('.notes_list_table tbody').html(' <tr> ' +
@@ -516,17 +415,12 @@
                 } else {
                     $(".displaying_message").html('');
                 }
-
                 pages = response['pages'];
                 change_pagi(current_page, false);
             }
-
-
         }).always(function () {
         });
     }
-
-
 }); //document.ready
 })
 (jQuery);
