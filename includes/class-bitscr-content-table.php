@@ -6,7 +6,6 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 }
 
 class Bitscr_Content_Table extends WP_List_Table {
-
 	public $per_page = 5;
 	public $data;
 	public $meta_data;
@@ -30,9 +29,7 @@ class Bitscr_Content_Table extends WP_List_Table {
 		require_once( ABSPATH . '/wp-admin/includes/plugin-install.php' );
 
 		parent::__construct( $args );
-
 	}
-
 
 	/**
 	 * Text to display if no content are present.
@@ -81,13 +78,13 @@ class Bitscr_Content_Table extends WP_List_Table {
 		return isset( $item['source'] ) ? $item['source'] : '';
 	}
 
+	public function column_status( $item ) {
+		return isset( $item['status'] ) ? $item['status'] : 'draft';
+	}
+
 	public function column_date_added( $item ) {
 		return $item['date_added'];
 	}
-	
-	
-
-   
 
 	/**
 	 * Prepare an array of items to be listed.
@@ -101,20 +98,17 @@ class Bitscr_Content_Table extends WP_List_Table {
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
 		$total_items = $this->data['found_posts'];
-		
-			$searchcol= array('name');
+
+		$searchcol = array( 'name' );
 
 		$this->set_pagination_args( array(
-			'total_items' => $total_items, //WE have to calculate the total number of items
-			'per_page'    => $this->per_page, //WE have to determine how many items to show on a page
-			'search' =>$_REQUEST["s"] ,
+			'total_items'    => $total_items, //WE have to calculate the total number of items
+			'per_page'       => $this->per_page, //WE have to determine how many items to show on a page
+			'search'         => $_REQUEST["s"],
 			'search_columns' => $searchcol
 		) );
-		
-	
+
 		$this->items = $this->data['items'];
-		
-		
 	}
 
 	/**
@@ -128,6 +122,7 @@ class Bitscr_Content_Table extends WP_List_Table {
 			'lesson'     => __( 'Lesson', 'bitwise-sidebar-content' ),
 			'type'       => __( 'Type', 'bitwise-sidebar-content' ),
 			'source'     => __( 'Target', 'bitwise-sidebar-content' ),
+			'status'     => __( 'Status', 'bitwise-sidebar-content' ),
 			'date_added' => __( 'Date Added', 'bitwise-sidebar-content' ),
 		);
 
@@ -149,31 +144,6 @@ class Bitscr_Content_Table extends WP_List_Table {
 		echo '</tr>';
 	}
 
-	/**
-	 * Displays the search box.
-	 *
-	 * @param string $text The 'submit' button label.
-	 * @param string $input_id ID attribute value for the search input field.
-	 *
-	 * @since 3.1.0
-	 *
-	 */
- /*	public function search_box( $text, $input_id ) {
-    if ( empty( $_REQUEST['s'] ) && !$this->has_items() )
-        return;
-
-    $input_id = $input_id . '-search-input';
-    
-   
-?>
-<p class="search-box">
-<label class="screen-reader-text" for="<?php echo $input_id ?>"><?php echo $text; ?>:</label>
-<input type="search" id="<?php echo $input_id ?>" name="s" value="<?php _admin_search_query(); ?>" />
-<?php submit_button( $text, 'button', false, false, array('id' => 'search-submit') ); ?>
-</p>
-<?php
-}
-*/
 	/**
 	 * Generate the table navigation above or below the table
 	 *

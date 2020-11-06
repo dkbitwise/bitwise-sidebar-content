@@ -14,6 +14,7 @@ class Bitwise_SC_Content {
 	private $content_url = '';
 	private $type = '';
 	private $source = '';
+	private $status = '';
 	private $date_added = '0000-00-00 00:00:00';
 
 	public $obj_type;
@@ -34,7 +35,6 @@ class Bitwise_SC_Content {
 			}
 		}
 	}
-
 
 	/**
 	 * @return Bitwise_SC_Content|null
@@ -105,7 +105,6 @@ class Bitwise_SC_Content {
 	 */
 	public function set_source( $source ) {
 		$this->source = $source;
-
 	}
 
 	/**
@@ -115,6 +114,13 @@ class Bitwise_SC_Content {
 	 */
 	public function set_date_added( $date_added ) {
 		$this->date_added = $date_added;
+	}
+
+	/**
+	 * @param $status
+	 */
+	public function set_status( $status ) {
+		$this->status = $status;
 	}
 
 
@@ -174,6 +180,13 @@ class Bitwise_SC_Content {
 		return $this->source;
 	}
 
+	/**
+	 * Getter function for status
+	 * @return string
+	 */
+	public function get_status() {
+		return $this->status;
+	}
 
 	/**
 	 * Getter function for school date added
@@ -182,7 +195,6 @@ class Bitwise_SC_Content {
 	public function get_date_added() {
 		return $this->date_added;
 	}
-
 
 	/**
 	 * Adding a new content
@@ -203,6 +215,7 @@ class Bitwise_SC_Content {
 		$data['content_url']    = $this->get_content_url();
 		$data['type']           = $this->get_type();
 		$data['source']         = $this->get_source();
+		$data['status']         = $this->get_status();
 		$data['date_added']     = ( '0000-00-00 00:00:00' === $this->get_date_added() ) ? Bitscr_Common::get_now() : $this->get_date_added();
 
 		$db_course_id = $this->get_id();
@@ -224,9 +237,9 @@ class Bitwise_SC_Content {
 	 * @return array|object|null
 	 */
 	public function bitscr_content_list() {
-		$paged = isset( $_GET['paged'] ) ? absint( wc_clean( $_GET['paged'] ) ) : 0;  // phpcs:ignore WordPress.Security.NonceVerification
-	 	$search = $_GET['s'];
-	
+		$paged  = isset( $_GET['paged'] ) ? absint( wc_clean( $_GET['paged'] ) ) : 0;  // phpcs:ignore WordPress.Security.NonceVerification
+		$search = $_GET['s'];
+
 		$limit = Bitscr_Core()->admin->posts_per_page();
 
 		$table_name = 'bitscr_content';
@@ -236,17 +249,16 @@ class Bitwise_SC_Content {
 		$sql_query      = "SELECT * FROM {table_name}";
 		$sql_query      .= " WHERE 1=1";
 		$found_contents = Bitscr_Core()->get_dataStore()->get_results( $sql_query );
-		
-		if($search){
-			
-			$sql_query .="   and name LIKE  '%$search%'";
+
+		if ( $search ) {
+			$sql_query .= "   and name LIKE  '%$search%'";
 		}
 
 		if ( count( $found_contents ) > $limit ) {
 			$paged     = ( $paged > 0 ) ? ( $paged - 1 ) : $paged;
 			$sql_query .= " LIMIT " . $limit * $paged . ", " . $limit;
 		}
-	
+
 		$contents = Bitscr_Core()->get_dataStore()->get_results( $sql_query );
 		$items    = array();
 
@@ -273,14 +285,14 @@ class Bitwise_SC_Content {
 			);
 
 			$sfwd_course_id = isset( $content['sfwd_course_id'] ) ? $content['sfwd_course_id'] : 0;
-			$sfwd_lesson_id = isset( $content['sfwd_lesson_id'] ) ? intval($content['sfwd_lesson_id']) : 0;
+			$sfwd_lesson_id = isset( $content['sfwd_lesson_id'] ) ? intval( $content['sfwd_lesson_id'] ) : 0;
 
 			$course_data    = Bitscr_Common::get_multiple_columns( array( 'id' => 'bit_course_id' ), array( 'sfwd_course_id' => $sfwd_course_id ), 'courses' );
 			$bit_course_id  = isset( $course_data['bit_course_id'] ) ? $course_data['bit_course_id'] : 0;
 			$bit_course_obj = new Bitscr_Course( $bit_course_id );
 			$lessons        = ( $bit_course_obj instanceof Bitscr_Course ) ? $bit_course_obj->get_sfwd_lessons() : [];
 
-			$lesson_name    = array_key_exists( $sfwd_lesson_id, $lessons ) ? $lessons[ $sfwd_lesson_id ] : '';
+			$lesson_name = array_key_exists( $sfwd_lesson_id, $lessons ) ? $lessons[ $sfwd_lesson_id ] : '';
 
 			$items[] = array(
 				'id'          => $content['id'],
@@ -288,6 +300,7 @@ class Bitwise_SC_Content {
 				'type'        => $content['type'],
 				'lesson_name' => $lesson_name,
 				'source'      => $content['source'],
+				'status'      => $content['status'],
 				'date_added'  => $content['date_added'],
 				'row_actions' => $row_actions,
 			);
