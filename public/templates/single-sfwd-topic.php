@@ -72,12 +72,13 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 	$videos = wp_list_filter( $bit_course_content, array( 'type' => 'Video', 'status' => 'published' ) );
 	$helps  = wp_list_filter( $bit_course_content, array( 'type' => 'Help', 'status' => 'published' ) ); ?>
 
+
     <div class="bit_info_btn btn121" data-toggle="tooltip" data-placement="left">
         <div class="content_btns">
             <a href="javascript:void(0);" class="bttn videos_btn" data-tab="videos">VIDEOS</a>
-
             <a href="javascript:void(0);" class="bttn help_btn" data-tab="help">DOCUMENTS</a>
             <a href="javascript:void(0);" class="bttn notes_btn" data-tab="notes">NOTES</a>
+            <a href="javascript:void(0);" class="bttn code_btn" data-tab="bitsacdes"><?php esc_html_e('Snippets','bitwise-sidebar-content'); ?></a>
         </div>
     </div>
 
@@ -88,6 +89,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                 <li><a class="nav_link" data-toggle="pill" href="#videos">VIDEOS</a></li>
                 <li><a class="nav_link" data-toggle="pill" href="#help">DOCUMENTS</a></li>
                 <li><a class="nav_link" data-toggle="pill" href="#notes">NOTES</a></li>
+                <li><a class="nav_link" data-toggle="pill" href="#bitsacdes"><?php esc_html_e('Snippets','bitwise-sidebar-content'); ?></a></li>
             </ul>
             <div class="tab-content">
                 <div id="videos" class="tab-pane fade">
@@ -104,6 +106,22 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                             </li>
 							<?php
 						} ?>
+                    </ul>
+                </div>
+                <div id="bitsacdes" class="tab-pane fade">
+                    <h3>ALL Code Snippets</h3>
+                    <p><small style="color:#4e9a06;"><strong><?php echo count( $videos ); ?></strong> VIDEOS CURRENTLY AVAILABLE</small></p>
+                    <ul class="sidebar_list">
+			            <?php $vcount = 0;
+			            foreach ( $videos as $video ) {
+				            $vcount ++; ?>
+                            <li>
+                                <a data-group="video_content" class="html5lightbox" href="<?php echo $video['content_url'] ?>" title="<?php echo $video['name'] ?>">
+                                    <h3><?php echo "($vcount) " . $video['name'] ?></h3>
+                                </a>
+                            </li>
+				            <?php
+			            } ?>
                     </ul>
                 </div>
                 <div id="notes" class="tab-pane fade">
@@ -262,6 +280,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                     </ul>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

@@ -45,7 +45,6 @@
         var cursorY;
         var scrolltop;
         document.onmousemove = function (e) {
-
             cursorY = e.pageY;
             scrolltop = document.documentElement.scrollTop;
         }
@@ -131,11 +130,12 @@
          */
         $('.content_btns').find('.bttn').on('click', function () {
             let tab_slug = $(this).attr('data-tab');
+            console.log(tab_slug);
             $('.info_wrapp').find('.tab-pane').removeClass('active in');
             $('.info_wrapp').find('#' + tab_slug).addClass('active in');
 
             $('.info_wrapp').find('.nav.nav-pills li').removeClass('active');
-            $('.info_wrapp').find('a[href=#' + tab_slug + ']').parent('li').addClass('active');
+            $('.info_wrapp').find('a[href="#' + tab_slug + '"]').parent('li').addClass('active');
         });
 
         //Save notes updated by suresh 22-6-2020
@@ -381,5 +381,7 @@
             }).always(function () {
             });
         }
+        /** Opening text area on selecting code **/
+        
     }); //document.ready
 })(jQuery);

@@ -75,6 +75,7 @@ $content_url = add_query_arg( array(
                     <td class="bitscr-label">
                         <label><input <?php echo checked( $c_type, 'Video' ) ?> checked type="radio" name="content_type" value="Video">Video</label>
                         <label><input <?php echo checked( $c_type, 'Help' ) ?> type="radio" name="content_type" value="Help">Help</label>
+                        <label><input <?php echo checked( $c_target, 'Code' ) ?> type="radio" name="content_type" value="Code">Code</label>
                     </td>
                 </tr>
                 <tr>

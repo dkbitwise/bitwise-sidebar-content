@@ -15,12 +15,12 @@
         box-sizing: border-box;
         position: fixed;
         width: 100%;
-       /* margin-top: -25px !important;*/
+        /* margin-top: -25px !important;*/
     }
 }
 
 .header-navigation > div > ul {
-   /* height: 35px !important; */
+    /* height: 35px !important; */
     list-style: none;
     margin: 0;
     overflow: hidden;
@@ -32,7 +32,7 @@
 .site-header .header-inner .right-col {
     display: table-cell;
     float: none;
-   /* padding-top: 10px;*/
+    /* padding-top: 10px;*/
 }
 
 body #mastlogo {
@@ -71,7 +71,7 @@ body {
     position: fixed;
     top: 230px;
     right: -45px;
-   
+
 }
 
 .lf {
@@ -421,7 +421,7 @@ body {
     left: 111%;
     position: absolute;
     top: 0;
-   
+
     width: 1px;
 }
 
@@ -442,16 +442,18 @@ body {
 }
 
 .single-sfwd-topic .info_wrapp .nav.nav-pills .nav_link {
-    padding: 3px 13px;
+    padding: 3px 10px;
 }
+
 button#html5-close {
     width: 30px;
 }
+
 /* Learndash notes Css added by suresh on 22-6-2020 */
-#bitwisescr-note-submit{
+#bitwisescr-note-submit {
     background: #bdd537;
     color: #3a4111;
-    border: 0px!important;
+    border: 0px !important;
     font-weight: bold;
     font-size: 14px;
     text-transform: uppercase;
@@ -474,13 +476,16 @@ button#html5-close {
     width: 100%;
     background: #f3f3f3;
 }
+
 #bitwisescr-note-actions-wrapper {
     display: flex;
     justify-content: space-between;
 }
+
 #bitwisescr-note-editor-body {
     padding: 15px;
 }
+
 #bitwisescr-note-actions li a {
     font-size: 18px;
     color: #000;
@@ -491,98 +496,154 @@ button#html5-close {
     height: 55px;
     line-height: 55px;
 }
+
 #bitwisescr-note-actions li a {
-    text-decoration: none!important;
+    text-decoration: none !important;
     border: 0 !important;
     box-shadow: none;
 }
+
 #bitwisescr-note-title-fieldnew {
     padding: 15px;
     background: #f3f3f3;
     text-align: left;
 }
+
 #bitwisescr-note-submit:hover {
     cursor: pointer;
     background: #fff !important;
     color: #333 !important;
-    box-shadow: 0 0 5px rgba(0,0,0,.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 }
 
 .sideBar_wrapp.active_side_bar .close {
-	width:40px;
+    width: 40px;
 }
+
 /*.courses_btns .bttn{
 	width:33%!important;
 	
 }*/
-.pagination>li>a { width:auto; cursor:pointer;}
-.show_drpd{ float:left; padding-top: 21px;}
-.displaying_message{ display:inline-block; margin-top:12px;}
-.pagination {float:right; padding-top:0px!important;padding-bottom:0px!important;margin-top:12px!important;}
-.searchdiv { margin-top:23px; overflow:auto;margin-bottom:10px;}
-.genderradio span{padding-left:5px;}
-.genderradio input[type=radio] { margin-left:7px;}
-.pagination >li{margin: 0 0 0 0px;}
+.pagination > li > a {
+    width: auto;
+    cursor: pointer;
+}
 
-.mce-ico mce-i-image{display:none!important;}
-.ldnotes-hide{display:none!important;}
-@media only screen and (max-width: 1114px) and (min-width: 992px){
-.container {
-    width: 921px!important;
+.show_drpd {
+    float: left;
+    padding-top: 21px;
 }
-}
-@media only screen and (max-width: 1050px) and (min-width: 992px){
-.container {
-    width: 899px!important;
-}
-}
-@media only screen and (max-width: 1301px) and (min-width: 1202px){
-.container {
-    width: 1097px!important;
-}
-}
-@media only screen and  (max-width: 878px) and (min-width:768px){
-.container {
-    width: 640px!important;
-}
-}
-.lds-bulk-download{    
-	margin-bottom: 12px;
+
+.displaying_message {
+    display: inline-block;
     margin-top: 12px;
-	
 }
+
+.pagination {
+    float: right;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    margin-top: 12px !important;
+}
+
+.searchdiv {
+    margin-top: 23px;
+    overflow: auto;
+    margin-bottom: 10px;
+}
+
+.genderradio span {
+    padding-left: 5px;
+}
+
+.genderradio input[type=radio] {
+    margin-left: 7px;
+}
+
+.pagination > li {
+    margin: 0 0 0 0px;
+}
+
+.mce-ico mce-i-image {
+    display: none !important;
+}
+
+.ldnotes-hide {
+    display: none !important;
+}
+
+@media only screen and (max-width: 1114px) and (min-width: 992px) {
+    .container {
+        width: 921px !important;
+    }
+}
+
+@media only screen and (max-width: 1050px) and (min-width: 992px) {
+    .container {
+        width: 899px !important;
+    }
+}
+
+@media only screen and (max-width: 1301px) and (min-width: 1202px) {
+    .container {
+        width: 1097px !important;
+    }
+}
+
+@media only screen and  (max-width: 878px) and (min-width: 768px) {
+    .container {
+        width: 640px !important;
+    }
+}
+
+.lds-bulk-download {
+    margin-bottom: 12px;
+    margin-top: 12px;
+
+}
+
 .info_wrapp .tab-content > .tab-pane > h3 {
     font-weight: 100;
     margin-top: 5px;
 }
+
 .thumbnail {
-border: 0px solid #ddd!important;	
+    border: 0px solid #ddd !important;
 }
-#bitwisescr-course-note{
-  padding-top: 5px;
+
+#bitwisescr-course-note {
+    padding-top: 5px;
 }
+
 .info_wrapp .nav-pills > li > a.nav_link {
     color: #000;
     margin-right: 10px;
     padding: 2px 8px;
     position: relative;
 }
-@media only screen and (max-width: 800px) and (min-width: 450px){
-.info_wrapp {
-    width: 82% !important;
-}
-}
-@media only screen and (max-width: 450px) and (min-width: 375px){
-.info_wrapp {
-    width: 52% !important;
-}
-}
-@media only screen and (max-width: 570px) and (min-width: 375px){
-.content_btns {
-    width: 30% !important;
-}
-.courses_btns {
-    width: 30% !important;
-}
+
+@media only screen and (max-width: 800px) and (min-width: 450px) {
+    .info_wrapp {
+        width: 82% !important;
+    }
 }
 
+@media only screen and (max-width: 450px) and (min-width: 375px) {
+    .info_wrapp {
+        width: 52% !important;
+    }
+}
+
+@media only screen and (max-width: 570px) and (min-width: 375px) {
+    .content_btns {
+        width: 30% !important;
+    }
+
+    .courses_btns {
+        width: 30% !important;
+    }
+}
+
+.bttn.code_btn, .bttn.code_btn:hover, .bttn.code_btn:focus {
+    background-color: #012243;
+}
