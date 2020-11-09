@@ -15,3 +15,4 @@ table.bitscr-courses { width: 100%;}
 .bitwise-content-form .wp-spin.spinner { position: relative; left: 6px; top: -3px;}
 .bitscr-instance-table .bitscr-content td { padding-left: 10px;}
 .bitwise-content-table-form .bitscr-label label { display: inline-block; width: 30%;}
+.bitscr-hide{display: none;}

@@ -381,7 +381,6 @@
             }).always(function () {
             });
         }
-        /** Opening text area on selecting code **/
-        
+
     }); //document.ready
 })(jQuery);

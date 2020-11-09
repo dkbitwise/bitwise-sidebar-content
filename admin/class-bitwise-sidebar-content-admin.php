@@ -185,6 +185,10 @@ class Bitwise_Sidebar_Content_Admin {
 			$content_url    = isset( $posted_content['content_url'] ) ? $posted_content['content_url'] : '';
 			$content_status = isset( $posted_content['content_status'] ) ? $posted_content['content_status'] : 'draft';
 
+			if('Code'=== $content_type){
+				$content_url = isset( $posted_content['code_content'] ) ? $posted_content['code_content'] : '';
+			}
+
 			if ( empty( $content_name ) ) {
 				$url_arr    = explode( '/', $content_url );
 				$url_length = is_array( $url_arr ) ? count( $url_arr ) : 0;

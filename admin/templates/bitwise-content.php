@@ -24,6 +24,7 @@ $content_url = add_query_arg( array(
 			$c_status       = $content->get_status();
 			$c_url          = $content->get_content_url();
 			$c_name         = $content->get_name();
+			zwk_pc_debug($c_type);
 		} ?>
         <form class="bitwise-content-form-table" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
             <input type="hidden" name="action" value="bitwise_content_form">
@@ -54,6 +55,10 @@ $content_url = add_query_arg( array(
                     </td>
                 </tr>
                 <tr>
+                    <td>Enter the content title</td>
+                    <td><input value="<?php echo $c_name; ?>" type="text" name="content_name"/></td>
+                </tr>
+                <tr>
                     <td>Select a Lesson</td>
                     <td>
                         <select id="bitscr_lessons" name="lesson">
@@ -67,15 +72,11 @@ $content_url = add_query_arg( array(
                     </td>
                 </tr>
                 <tr>
-                    <td>Enter the content title</td>
-                    <td><input value="<?php echo $c_name; ?>" type="text" name="content_name"/></td>
-                </tr>
-                <tr>
                     <td>Select content type</td>
                     <td class="bitscr-label">
                         <label><input <?php echo checked( $c_type, 'Video' ) ?> checked type="radio" name="content_type" value="Video">Video</label>
                         <label><input <?php echo checked( $c_type, 'Help' ) ?> type="radio" name="content_type" value="Help">Help</label>
-                        <label><input <?php echo checked( $c_target, 'Code' ) ?> type="radio" name="content_type" value="Code">Code</label>
+                        <label><input <?php echo checked( $c_type, 'Code' ) ?> type="radio" name="content_type" value="Code">Code</label>
                     </td>
                 </tr>
                 <tr>
@@ -86,14 +87,18 @@ $content_url = add_query_arg( array(
                         <label><input <?php echo checked( $c_target, 'Both' ) ?> type="radio" name="content_source" value="Both">Both</label>
                     </td>
                 </tr>
-                <tr>
+                <tr class="bitscr-code-snippet bitscr-hide">
+                    <td>Enter the code snippet</td>
+                    <td><textarea name="code_content" rows="5" cols="45" value="<?php echo $c_url; ?>"><?php echo $c_url; ?></textarea></td>
+                </tr>
+                <tr class="bitscr-content-url">
                     <td>Enter Content URL</td>
                     <td><input value="<?php echo $c_url; ?>" id="content_url" type="text" name="content_url"/></td>
                 </tr>
-                <tr>
+                <tr class="bitscr-content-or">
                     <td>OR</td>
                 </tr>
-                <tr>
+                <tr class="bitscr-content-upload">
                     <td>Upload</td>
                     <td><input id="upload_image_button" type="button" class="button-secondary" value="Upload the Content"/></td>
                 </tr>
