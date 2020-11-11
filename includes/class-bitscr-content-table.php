@@ -41,6 +41,7 @@ class Bitscr_Content_Table extends WP_List_Table {
 	}
 
 	public function column_name( $item ) {
+	    zwk_pc_debug($item);
 		$edit_link     = $item['row_actions']['edit']['link'];
 		$column_string = '<div><strong>';
 

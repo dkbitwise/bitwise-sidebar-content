@@ -11,7 +11,7 @@ class Bitwise_SC_Content {
 	private $name = '';
 	private $sfwd_course_id = 0;
 	private $sfwd_lesson_id = 0;
-	private $content_url = '';
+	private $content = '';
 	private $type = '';
 	private $source = '';
 	private $status = '';
@@ -88,8 +88,8 @@ class Bitwise_SC_Content {
 	 *
 	 * @param $lessons
 	 */
-	public function set_content_url( $content_url ) {
-		$this->content_url = $content_url;
+	public function set_content( $content ) {
+		$this->content = $content;
 	}
 
 	/**
@@ -160,8 +160,8 @@ class Bitwise_SC_Content {
 	 * Getter function for content url
 	 * @return string
 	 */
-	public function get_content_url() {
-		return $this->content_url;
+	public function get_content() {
+		return $this->content;
 	}
 
 	/**
@@ -212,7 +212,7 @@ class Bitwise_SC_Content {
 		$data['name']           = $this->get_name();
 		$data['sfwd_course_id'] = $this->get_sfwd_course_id();
 		$data['sfwd_lesson_id'] = $this->get_sfwd_lesson_id();
-		$data['content_url']    = $this->get_content_url();
+		$data['content']    = $this->get_content();
 		$data['type']           = $this->get_type();
 		$data['source']         = $this->get_source();
 		$data['status']         = $this->get_status();
@@ -249,6 +249,7 @@ class Bitwise_SC_Content {
 		$sql_query      = "SELECT * FROM {table_name}";
 		$sql_query      .= " WHERE 1=1";
 		$found_contents = Bitscr_Core()->get_dataStore()->get_results( $sql_query );
+		zwk_pc_debug($found_contents);
 
 		if ( $search ) {
 			$sql_query .= "   and name LIKE  '%$search%'";
@@ -263,7 +264,7 @@ class Bitwise_SC_Content {
 		$items    = array();
 
 		foreach ( $contents as $content ) {
-			$content_url = add_query_arg( array(
+			$content_rul = add_query_arg( array(
 				'page' => 'bitwise-sidebar-content',
 				'edit' => $content['id'],
 			), admin_url( 'admin.php' ) );
@@ -273,7 +274,7 @@ class Bitwise_SC_Content {
 			$row_actions['edit'] = array(
 				'action' => 'edit',
 				'text'   => __( 'Edit', 'bitwise-sidebar-content' ),
-				'link'   => $content_url,
+				'link'   => $content_rul,
 				'attrs'  => '',
 			);
 
@@ -288,6 +289,7 @@ class Bitwise_SC_Content {
 			$sfwd_lesson_id = isset( $content['sfwd_lesson_id'] ) ? intval( $content['sfwd_lesson_id'] ) : 0;
 
 			$course_data    = Bitscr_Common::get_multiple_columns( array( 'id' => 'bit_course_id' ), array( 'sfwd_course_id' => $sfwd_course_id ), 'courses' );
+
 			$bit_course_id  = isset( $course_data['bit_course_id'] ) ? $course_data['bit_course_id'] : 0;
 			$bit_course_obj = new Bitscr_Course( $bit_course_id );
 			$lessons        = ( $bit_course_obj instanceof Bitscr_Course ) ? $bit_course_obj->get_sfwd_lessons() : [];

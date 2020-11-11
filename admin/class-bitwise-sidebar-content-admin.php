@@ -28,6 +28,8 @@ class Bitwise_Sidebar_Content_Admin {
 
 	public $logger;
 
+	public $shortcodes = array();  // Array of shortcodes to use
+
 	/**
 	 * Initialize the class and set its properties.
 	 * Bitwise_Sidebar_Content_Admin constructor.
@@ -40,6 +42,52 @@ class Bitwise_Sidebar_Content_Admin {
 		add_action( 'wp_ajax_bitscr_delete_content', array( $this, 'bitscr_delete_content' ) );
 
 		add_action( 'admin_post_bitwise_content_form', array( $this, 'bitwise_add_content' ) );
+
+		$this->brush_names = (array) apply_filters( 'syntaxhighlighter_brush_names', array(
+			'as3'        => __( 'ActionScript',              'syntaxhighlighter' ),
+			'arduino'    => __( 'Arduino',                   'syntaxhighlighter' ),
+			'bash'       => __( 'BASH / Shell',              'syntaxhighlighter' ),
+			'coldfusion' => __( 'ColdFusion',                'syntaxhighlighter' ),
+			'clojure'    => __( 'Clojure',                   'syntaxhighlighter' ),
+			'cpp'        => __( 'C / C++',                   'syntaxhighlighter' ),
+			'csharp'     => __( 'C#',                        'syntaxhighlighter' ),
+			'css'        => __( 'CSS',                       'syntaxhighlighter' ),
+			'delphi'     => __( 'Delphi / Pascal',           'syntaxhighlighter' ),
+			'diff'       => __( 'diff / patch',              'syntaxhighlighter' ),
+			'erlang'     => __( 'Erlang',                    'syntaxhighlighter' ),
+			'fsharp'     => __( 'F#',                        'syntaxhighlighter' ),
+			'groovy'     => __( 'Groovy',                    'syntaxhighlighter' ),
+			'java'       => __( 'Java',                      'syntaxhighlighter' ),
+			'javafx'     => __( 'JavaFX',                    'syntaxhighlighter' ),
+			'jscript'    => __( 'JavaScript',                'syntaxhighlighter' ),
+			'latex'      => __( 'LaTeX',                     'syntaxhighlighter' ),
+			'matlabkey'  => __( 'MATLAB',                    'syntaxhighlighter' ),
+			'objc'       => __( 'Objective-C',               'syntaxhighlighter' ),
+			'perl'       => __( 'Perl',                      'syntaxhighlighter' ),
+			'php'        => __( 'PHP',                       'syntaxhighlighter' ),
+			'plain'      => __( 'Plain Text',                'syntaxhighlighter' ),
+			'powershell' => __( 'PowerShell',                'syntaxhighlighter' ),
+			'python'     => __( 'Python',                    'syntaxhighlighter' ),
+			'r'          => __( 'R',                         'syntaxhighlighter' ),
+			'ruby'       => __( 'Ruby / Ruby on Rails',      'syntaxhighlighter' ),
+			'scala'      => __( 'Scala',                     'syntaxhighlighter' ),
+			'sql'        => __( 'SQL',                       'syntaxhighlighter' ),
+			'vb'         => __( 'Visual Basic',              'syntaxhighlighter' ),
+			'xml'        => __( 'HTML / XHTML / XML / XSLT', 'syntaxhighlighter' ),
+			'yaml'        => __( 'YAML',                     'syntaxhighlighter' ),
+		) );
+
+		$this->shortcodes = array( 'sourcecode', 'source', 'code' );
+		$this->shortcodes = array_merge( $this->shortcodes, array_keys( $this->brushes ) );
+
+		// Remove some shortcodes we don't want while still supporting them as language values
+		unset( $this->shortcodes[array_search( 'latex', $this->shortcodes )] ); // Remove "latex" shortcode (it'll collide)
+		unset( $this->shortcodes[array_search( 'r', $this->shortcodes )] ); // Remove "r" shortcode (too short)
+
+		$this->shortcodes = (array) apply_filters( 'syntaxhighlighter_shortcodes', $this->shortcodes );
+
+		foreach ( $this->shortcodes as $shortcode )
+			add_shortcode( $shortcode, '__return_empty_string' );
 	}
 
 	/**
@@ -182,15 +230,16 @@ class Bitwise_Sidebar_Content_Admin {
 			$sfwd_lesson_id = isset( $posted_content['lesson'] ) ? $posted_content['lesson'] : 0;
 			$content_type   = isset( $posted_content['content_type'] ) ? $posted_content['content_type'] : '';
 			$content_source = isset( $posted_content['content_source'] ) ? $posted_content['content_source'] : '';
-			$content_url    = isset( $posted_content['content_url'] ) ? $posted_content['content_url'] : '';
+			$content        = isset( $posted_content['content'] ) ? $posted_content['content'] : '';
 			$content_status = isset( $posted_content['content_status'] ) ? $posted_content['content_status'] : 'draft';
 
-			if('Code'=== $content_type){
-				$content_url = isset( $posted_content['code_content'] ) ? $posted_content['code_content'] : '';
+			if ( 'Code' === $content_type ) {
+				$content = isset( $posted_content['bitsa_content'] ) ? $posted_content['bitsa_content'] : '';
+				$content = addslashes( $this->encode_shortcode_contents( stripslashes( $content ) ) );
 			}
 
-			if ( empty( $content_name ) ) {
-				$url_arr    = explode( '/', $content_url );
+			if ( empty( $content_name ) && 'Code' !== $content_type ) {
+				$url_arr    = explode( '/', $content );
 				$url_length = is_array( $url_arr ) ? count( $url_arr ) : 0;
 
 				if ( $url_length > 0 ) {
@@ -205,7 +254,7 @@ class Bitwise_Sidebar_Content_Admin {
 			$content_obj->set_sfwd_lesson_id( $sfwd_lesson_id );
 			$content_obj->set_type( $content_type );
 			$content_obj->set_source( $content_source );
-			$content_obj->set_content_url( $content_url );
+			$content_obj->set_content( $content );
 			$content_obj->set_status( $content_status );
 			$content_obj->save( array() );
 
@@ -223,6 +272,67 @@ class Bitwise_Sidebar_Content_Admin {
 		}
 	}
 
+	public function encode_shortcode_contents($content){
+		return $this->shortcode_hack( $content, array( $this, 'encode_shortcode_contents_callback' ), false );
+	}
+
+	function shortcode_hack( $content, $callback, $ignore_html = true ) {
+		global $shortcode_tags;
+
+		// Regex is slow. Let's do some strpos() checks first.
+		if ( ! $this->string_has_shortcodes( $content, $this->shortcodes ) ) {
+			return $content;
+		}
+
+		// Backup current registered shortcodes and clear them all out
+		$orig_shortcode_tags = $shortcode_tags;
+		remove_all_shortcodes();
+
+		// Register all of this plugin's shortcodes
+		foreach ( $this->shortcodes as $shortcode ) {
+			add_shortcode( $shortcode, $callback );
+		}
+
+		$regex = '/' . get_shortcode_regex( $this->shortcodes ) . '/';
+
+		// Parse the shortcodes (only this plugins's are registered)
+		if ( $ignore_html ) {
+			// Extra escape escaped shortcodes because do_shortcode_tag() called by do_shortcode() is going to strip a pair of square brackets when it runs
+			$content = preg_replace_callback(
+				$regex,
+				array( $this, 'shortcode_hack_extra_escape_escaped_shortcodes' ),
+				$content
+			);
+
+			// Normal, safe parsing
+			$content = do_shortcode( $content, true );
+		} else {
+			// Extra escape escaped shortcodes because do_shortcode_tag() called by do_shortcode() is going to strip a pair of square brackets when it runs.
+			// Then call do_shortcode_tag(). This is basically do_shortcode() without calling do_shortcodes_in_html_tags() which breaks things.
+			// For context, see https://wordpress.org/support/topic/php-opening-closing-tags-break-code-blocks
+			$content = preg_replace_callback(
+				$regex,
+				array( $this, 'shortcode_hack_extra_escape_escaped_shortcodes_and_parse' ),
+				$content
+			);
+		}
+
+		// Put the original shortcodes back
+		$shortcode_tags = $orig_shortcode_tags;
+
+		return $content;
+	}
+
+	public function string_has_shortcodes( $string, $shortcodes ) {
+		foreach ( $shortcodes as $shortcode ) {
+			if ( false !== strpos( $string, "[/{$shortcode}]" ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public function get_date_format() {
 		return get_option( 'date_format', '' ) . ' ' . get_option( 'time_format', '' );
 	}
@@ -230,5 +340,4 @@ class Bitwise_Sidebar_Content_Admin {
 	public function posts_per_page() {
 		return 5;
 	}
-
 }

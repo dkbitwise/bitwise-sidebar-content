@@ -86,7 +86,7 @@ class Bitwise_Sidebar_Content {
 		}
 		$this->plugin_name = 'bitwise-sidebar-content';
 		if ( ! defined( 'BITSCR_DB_VERSION' ) ) {
-			define( 'BITSCR_DB_VERSION', '1.0.0' );
+			define( 'BITSCR_DB_VERSION', '1.0.2' );
 		}
 		$this->load_dependencies();
 		$this->set_locale();

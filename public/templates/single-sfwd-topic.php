@@ -100,7 +100,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 						foreach ( $videos as $video ) {
 							$vcount ++; ?>
                             <li>
-                                <a data-group="video_content" class="html5lightbox" href="<?php echo $video['content_url'] ?>" title="<?php echo $video['name'] ?>">
+                                <a data-group="video_content" class="html5lightbox" href="<?php echo $video['content'] ?>" title="<?php echo $video['name'] ?>">
                                     <h3><?php echo "($vcount) " . $video['name'] ?></h3>
                                 </a>
                             </li>
@@ -116,7 +116,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 			            foreach ( $videos as $video ) {
 				            $vcount ++; ?>
                             <li>
-                                <a data-group="video_content" class="html5lightbox" href="<?php echo $video['content_url'] ?>" title="<?php echo $video['name'] ?>">
+                                <a data-group="video_content" class="html5lightbox" href="<?php echo $video['content'] ?>" title="<?php echo $video['name'] ?>">
                                     <h3><?php echo "($vcount) " . $video['name'] ?></h3>
                                 </a>
                             </li>
@@ -271,7 +271,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 						foreach ( $helps as $help ) {
 							$hcount ++; ?>
                             <li>
-                                <a title="<?php echo $help['name'] ?>" data-group="help_content" class="example-image-link html5lightbox" href="<?php echo $help['content_url'] ?>">
+                                <a title="<?php echo $help['name'] ?>" data-group="help_content" class="example-image-link html5lightbox" href="<?php echo $help['content'] ?>">
                                     <h3><?php echo "($hcount) " . $help['name'] ?></h3>
                                 </a>
                             </li>

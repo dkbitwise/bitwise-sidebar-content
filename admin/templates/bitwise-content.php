@@ -22,9 +22,8 @@ $content_url = add_query_arg( array(
 			$c_type         = $content->get_type();
 			$c_target       = $content->get_source();
 			$c_status       = $content->get_status();
-			$c_url          = $content->get_content_url();
+			$content_str    = $content->get_content();
 			$c_name         = $content->get_name();
-			zwk_pc_debug($c_type);
 		} ?>
         <form class="bitwise-content-form-table" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
             <input type="hidden" name="action" value="bitwise_content_form">
@@ -49,8 +48,8 @@ $content_url = add_query_arg( array(
                     <td class="select-status">
                         <select id="bitscr_status" name="content_status">
                             <option value="0">Select a Status</option>
-                            <option <?php echo selected('draft',$c_status) ?> value="draft">Draft</option>
-                            <option <?php echo selected('published',$c_status) ?> value="published">Published</option>
+                            <option <?php echo selected( 'draft', $c_status ) ?> value="draft">Draft</option>
+                            <option <?php echo selected( 'published', $c_status ) ?> value="published">Published</option>
                         </select>
                     </td>
                 </tr>
@@ -72,14 +71,6 @@ $content_url = add_query_arg( array(
                     </td>
                 </tr>
                 <tr>
-                    <td>Select content type</td>
-                    <td class="bitscr-label">
-                        <label><input <?php echo checked( $c_type, 'Video' ) ?> checked type="radio" name="content_type" value="Video">Video</label>
-                        <label><input <?php echo checked( $c_type, 'Help' ) ?> type="radio" name="content_type" value="Help">Help</label>
-                        <label><input <?php echo checked( $c_type, 'Code' ) ?> type="radio" name="content_type" value="Code">Code</label>
-                    </td>
-                </tr>
-                <tr>
                     <td>Select content target</td>
                     <td class="bitscr-label">
                         <label><input <?php echo checked( $c_target, 'LMS' ) ?> checked type="radio" name="content_source" value="LMS">LMS</label>
@@ -87,13 +78,26 @@ $content_url = add_query_arg( array(
                         <label><input <?php echo checked( $c_target, 'Both' ) ?> type="radio" name="content_source" value="Both">Both</label>
                     </td>
                 </tr>
+                <tr>
+                    <td>Select content type</td>
+                    <td class="bitscr-label">
+                        <label><input <?php echo checked( $c_type, 'Video' ) ?> checked type="radio" name="content_type" value="Video">Video</label>
+                        <label><input <?php echo checked( $c_type, 'Help' ) ?> type="radio" name="content_type" value="Help">Help</label>
+                        <label><input <?php echo checked( $c_type, 'Code' ) ?> type="radio" name="content_type" value="Code">Code</label>
+                    </td>
+                </tr>
+
                 <tr class="bitscr-code-snippet bitscr-hide">
                     <td>Enter the code snippet</td>
-                    <td><textarea name="code_content" rows="5" cols="45" value="<?php echo $c_url; ?>"><?php echo $c_url; ?></textarea></td>
+                    <td></td>
+                </tr>
+
+                <tr class="bitscr-code-snippet bitscr-hide">
+                    <td colspan="2"><?php wp_editor( $content_str, 'bitsa_content', $settings = array( 'textarea_rows' => '10', 'media_buttons' => false, ) ); ?></td>
                 </tr>
                 <tr class="bitscr-content-url">
                     <td>Enter Content URL</td>
-                    <td><input value="<?php echo $c_url; ?>" id="content_url" type="text" name="content_url"/></td>
+                    <td><input value="<?php echo $content_str; ?>" id="content_url" type="text" name="content"/></td>
                 </tr>
                 <tr class="bitscr-content-or">
                     <td>OR</td>
