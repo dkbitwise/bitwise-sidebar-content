@@ -244,6 +244,11 @@ class Bitwise_Sidebar_Content_Public {
 				echo $oldnotes;
 				exit;
 			}
-		}
+		} 
+		?>
+		<script type="text/javascript">
+			let red = '';
+		</script>
+		<?php
 	}
 }

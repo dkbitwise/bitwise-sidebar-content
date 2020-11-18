@@ -41,7 +41,6 @@ class Bitscr_Content_Table extends WP_List_Table {
 	}
 
 	public function column_name( $item ) {
-	    zwk_pc_debug($item);
 		$edit_link     = $item['row_actions']['edit']['link'];
 		$column_string = '<div><strong>';
 
@@ -81,6 +80,10 @@ class Bitscr_Content_Table extends WP_List_Table {
 
 	public function column_status( $item ) {
 		return isset( $item['status'] ) ? $item['status'] : 'draft';
+	}
+
+	public function column_category( $item ) {
+		return $this->get_decoded_category( $item['category'] );
 	}
 
 	public function column_date_added( $item ) {
@@ -124,6 +127,7 @@ class Bitscr_Content_Table extends WP_List_Table {
 			'type'       => __( 'Type', 'bitwise-sidebar-content' ),
 			'source'     => __( 'Target', 'bitwise-sidebar-content' ),
 			'status'     => __( 'Status', 'bitwise-sidebar-content' ),
+			'category'   => __( 'Category', 'bitwise-sidebar-content' ),
 			'date_added' => __( 'Date Added', 'bitwise-sidebar-content' ),
 		);
 
@@ -132,8 +136,8 @@ class Bitscr_Content_Table extends WP_List_Table {
 
 
 	public function get_table_classes() {
-		$get_default_classes = parent::get_table_classes();
-		array_push( $get_default_classes, 'bitscr-instance-table' );
+		$get_default_classes   = parent::get_table_classes();
+		$get_default_classes[] = 'bitscr-instance-table';
 
 		return $get_default_classes;
 	}
@@ -163,11 +167,15 @@ class Bitscr_Content_Table extends WP_List_Table {
 			<?php
 			endif;
 			$this->extra_tablenav( $which );
-			$this->pagination( $which );
-			?>
-
+			$this->pagination( $which ); ?>
             <br class="clear"/>
         </div>
 		<?php
+	}
+
+	public function get_decoded_category( $category_id ) {
+		$categories = Bitscr_Core()->admin->content_categories();
+
+		return isset( $categories[ $category_id ] ) ? $categories[ $category_id ] : '';
 	}
 }

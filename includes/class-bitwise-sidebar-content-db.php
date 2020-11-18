@@ -35,7 +35,6 @@ class Bitwise_Sidebar_Content_DB {
 	 * @var int
 	 */
 	protected $max_index_length = 191;
-
 	protected $option_key = '';
 
 	/**
@@ -137,6 +136,7 @@ class Bitwise_Sidebar_Content_DB {
 				`sfwd_course_id` BIGINT(20) UNSIGNED NOT NULL,		
 				`sfwd_lesson_id` BIGINT(20) UNSIGNED NOT NULL,		
 				`content` LONGTEXT,
+				`category` TINYINT UNSIGNED NOT NULL DEFAULT 0,
 				`type` VARCHAR(200) NOT NULL,
 				`source` VARCHAR(200) NOT NULL,
 				`status` VARCHAR(200) NOT NULL DEFAULT 'draft',
@@ -149,7 +149,7 @@ class Bitwise_Sidebar_Content_DB {
 
 		$tables = get_option( $this->option_key, array() );
 
-		array_push( $tables, $this->wp_db->prefix . 'bitscr_content' );
+		$tables[] = $this->wp_db->prefix . 'bitscr_content';
 		$tables = array_unique( $tables );
 		update_option( $this->option_key, $tables );
 	}
@@ -176,7 +176,7 @@ class Bitwise_Sidebar_Content_DB {
 
 		$tables = get_option( $this->option_key, array() );
 
-		array_push( $tables, $this->wp_db->prefix . 'bitscr_courses' );
+		$tables[] =  $this->wp_db->prefix . 'bitscr_courses';
 		$tables = array_unique( $tables );
 		update_option( $this->option_key, $tables );
 	}
@@ -206,7 +206,7 @@ class Bitwise_Sidebar_Content_DB {
 
 		$tables = get_option( $this->option_key, array() );
 
-		array_push( $tables, $this->wp_db->prefix . 'bitscr_notes' );
+		$tables[] = $this->wp_db->prefix . 'bitscr_notes';
 		$tables = array_unique( $tables );
 		update_option( $this->option_key, $tables );
 	}

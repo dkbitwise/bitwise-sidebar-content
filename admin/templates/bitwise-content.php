@@ -10,6 +10,7 @@ $content_url = add_query_arg( array(
 <div class="bitwise-content-form wrap" id="bitwise-content-form">
     <h1 class="bitwise-content wp-heading-inline">Contents <a class="page-title-action bitwise-link" href="<?php echo esc_url( $content_url ) ?>">Add New<span class="wp-spin spinner"></span></a></h1>
 	<?php
+	$categories = Bitscr_Core()->admin->content_categories();
 	if ( ( isset( $_GET['add_new'] ) && $_GET['add_new'] ) || $edit_id > 0 ) {
 		$content = new Bitwise_SC_Content( $edit_id );
 		if ( $content instanceof Bitwise_SC_Content ) {
@@ -22,8 +23,12 @@ $content_url = add_query_arg( array(
 			$c_type         = $content->get_type();
 			$c_target       = $content->get_source();
 			$c_status       = $content->get_status();
+			$c_category     = $content->get_category();
 			$content_str    = $content->get_content();
 			$c_name         = $content->get_name();
+
+			$content_str = apply_filters( 'bitscr_content', $content_str );
+			//$content_str = stripslashes(html_entity_decode($content_str));
 		} ?>
         <form class="bitwise-content-form-table" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
             <input type="hidden" name="action" value="bitwise_content_form">
@@ -44,12 +49,25 @@ $content_url = add_query_arg( array(
                     </td>
                 </tr>
                 <tr>
-                    <td>Content status</td>
+                    <td>Status</td>
                     <td class="select-status">
                         <select id="bitscr_status" name="content_status">
                             <option value="0">Select a Status</option>
                             <option <?php echo selected( 'draft', $c_status ) ?> value="draft">Draft</option>
                             <option <?php echo selected( 'published', $c_status ) ?> value="published">Published</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    <td class="select-category">
+                        <select id="bitscr_category" name="content_category">
+                            <option value="-1">Select a Category</option>
+							<?php
+							foreach ( $categories as $category_id => $category ) { ?>
+                                <option <?php echo selected( $category_id, $c_category ) ?> value="<?php echo esc_attr( $category_id ) ?>"><?php echo esc_html( $category ); ?></option>
+							<?php }
+							?>
                         </select>
                     </td>
                 </tr>
@@ -93,7 +111,13 @@ $content_url = add_query_arg( array(
                 </tr>
 
                 <tr class="bitscr-code-snippet bitscr-hide">
-                    <td colspan="2"><?php wp_editor( $content_str, 'bitsa_content', $settings = array( 'textarea_rows' => '10', 'media_buttons' => false, ) ); ?></td>
+                    <td colspan="2"><?php wp_editor( $content_str, 'bitsa_content', $settings = array(
+							'textarea_rows' => '10',
+							'media_buttons' => false,
+							'quicktags'     => false,
+							'tinymce'       => array()
+						) ); ?></td>
+
                 </tr>
                 <tr class="bitscr-content-url">
                     <td>Enter Content URL</td>

@@ -14,6 +14,7 @@ class Bitwise_SC_Content {
 	private $content = '';
 	private $type = '';
 	private $source = '';
+	private $category = 0;
 	private $status = '';
 	private $date_added = '0000-00-00 00:00:00';
 
@@ -117,12 +118,18 @@ class Bitwise_SC_Content {
 	}
 
 	/**
+	 * @param $category
+	 */
+	public function set_category( $category ) {
+		$this->category = $category;
+	}
+
+	/**
 	 * @param $status
 	 */
 	public function set_status( $status ) {
 		$this->status = $status;
 	}
-
 
 	/**
 	 * Getter function for course id
@@ -189,6 +196,14 @@ class Bitwise_SC_Content {
 	}
 
 	/**
+	 * Getter function for category
+	 * @return string
+	 */
+	public function get_category() {
+		return $this->category;
+	}
+
+	/**
 	 * Getter function for school date added
 	 * @return string
 	 */
@@ -212,9 +227,10 @@ class Bitwise_SC_Content {
 		$data['name']           = $this->get_name();
 		$data['sfwd_course_id'] = $this->get_sfwd_course_id();
 		$data['sfwd_lesson_id'] = $this->get_sfwd_lesson_id();
-		$data['content']    = $this->get_content();
+		$data['content']        = $this->get_content();
 		$data['type']           = $this->get_type();
 		$data['source']         = $this->get_source();
+		$data['category']       = $this->get_category();
 		$data['status']         = $this->get_status();
 		$data['date_added']     = ( '0000-00-00 00:00:00' === $this->get_date_added() ) ? Bitscr_Common::get_now() : $this->get_date_added();
 
@@ -249,7 +265,6 @@ class Bitwise_SC_Content {
 		$sql_query      = "SELECT * FROM {table_name}";
 		$sql_query      .= " WHERE 1=1";
 		$found_contents = Bitscr_Core()->get_dataStore()->get_results( $sql_query );
-		zwk_pc_debug($found_contents);
 
 		if ( $search ) {
 			$sql_query .= "   and name LIKE  '%$search%'";
@@ -288,7 +303,7 @@ class Bitwise_SC_Content {
 			$sfwd_course_id = isset( $content['sfwd_course_id'] ) ? $content['sfwd_course_id'] : 0;
 			$sfwd_lesson_id = isset( $content['sfwd_lesson_id'] ) ? intval( $content['sfwd_lesson_id'] ) : 0;
 
-			$course_data    = Bitscr_Common::get_multiple_columns( array( 'id' => 'bit_course_id' ), array( 'sfwd_course_id' => $sfwd_course_id ), 'courses' );
+			$course_data = Bitscr_Common::get_multiple_columns( array( 'id' => 'bit_course_id' ), array( 'sfwd_course_id' => $sfwd_course_id ), 'courses' );
 
 			$bit_course_id  = isset( $course_data['bit_course_id'] ) ? $course_data['bit_course_id'] : 0;
 			$bit_course_obj = new Bitscr_Course( $bit_course_id );
@@ -303,6 +318,7 @@ class Bitwise_SC_Content {
 				'lesson_name' => $lesson_name,
 				'source'      => $content['source'],
 				'status'      => $content['status'],
+				'category'    => $content['category'],
 				'date_added'  => $content['date_added'],
 				'row_actions' => $row_actions,
 			);
