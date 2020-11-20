@@ -244,11 +244,20 @@ class Bitwise_Sidebar_Content_Public {
 				echo $oldnotes;
 				exit;
 			}
-		} 
-		?>
-		<script type="text/javascript">
-			let red = '';
-		</script>
-		<?php
+		}
+	}
+
+	public function bitscr_code_template( $page_template )	{
+		if ( is_page( 'code-template' ) ) {
+			$page_template = dirname( __FILE__ ) . '/templates/bitscr-code.php';
+		}
+		return $page_template;
+	}
+	public function bitscr_footer_template( $page_template, $theme, $post )	{
+		if ('footer-bitscr.php' === $page_template){
+		    $page_template = dirname(__FILE__).'/templates/footer-bitscr.php';
+		}
+
+		return $page_template;
 	}
 }

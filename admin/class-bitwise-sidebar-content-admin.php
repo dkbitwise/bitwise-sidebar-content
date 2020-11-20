@@ -191,7 +191,8 @@ class Bitwise_Sidebar_Content_Admin {
 			if ( 'Code' === $content_type ) {
 				$content = isset( $posted_content['bitsa_content'] ) ? $posted_content['bitsa_content'] : '';
 				if ( ! empty( $content ) ) {
-					$content = apply_filters( 'bitscr_content_pre_save', $content );
+					//$content = apply_filters( 'bitscr_content_pre_save', $content );
+					$content = stripslashes($content);
 				}
 			}
 

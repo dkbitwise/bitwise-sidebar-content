@@ -86,8 +86,9 @@ class Bitwise_Sidebar_Content {
 		}
 		$this->plugin_name = 'bitwise-sidebar-content';
 		if ( ! defined( 'BITSCR_DB_VERSION' ) ) {
-			define( 'BITSCR_DB_VERSION', '1.0.3' );
+			define( 'BITSCR_DB_VERSION', '1.0.4' );
 		}
+
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -214,7 +215,11 @@ class Bitwise_Sidebar_Content {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_filter( 'boss_learndash_locate_template', $plugin_public, 'bitsc_include_custom_topic_template' );
+
+		$this->loader->add_filter( 'page_template', $plugin_public,'bitscr_code_template' );
+		//$this->loader->add_filter( 'theme_page_templates', $plugin_public,'bitscr_footer_template' );
 	}
+
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.

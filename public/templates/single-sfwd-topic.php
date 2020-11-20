@@ -70,6 +70,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 	$bit_course_content = Bitscr_Common::get_multiple_data( array(), array( 'sfwd_lesson_id' => $lessonid ), 'content' );
 
 	$videos = wp_list_filter( $bit_course_content, array( 'type' => 'Video', 'status' => 'published' ) );
+	$codes = wp_list_filter( $bit_course_content, array( 'type' => 'Code', 'status' => 'published' ) );
 	$helps  = wp_list_filter( $bit_course_content, array( 'type' => 'Help', 'status' => 'published' ) ); ?>
 
 
@@ -78,7 +79,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
             <a href="javascript:void(0);" class="bttn videos_btn" data-tab="videos">VIDEOS</a>
             <a href="javascript:void(0);" class="bttn help_btn" data-tab="help">DOCUMENTS</a>
             <a href="javascript:void(0);" class="bttn notes_btn" data-tab="notes">NOTES</a>
-            <a href="javascript:void(0);" class="bttn code_btn" data-tab="bitsacdes"><?php esc_html_e('Snippets','bitwise-sidebar-content'); ?></a>
+            <a href="javascript:void(0);" class="bttn code_btn" data-tab="bitsacdes"><?php esc_html_e('Code','bitwise-sidebar-content'); ?></a>
         </div>
     </div>
 
@@ -89,7 +90,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                 <li><a class="nav_link" data-toggle="pill" href="#videos">VIDEOS</a></li>
                 <li><a class="nav_link" data-toggle="pill" href="#help">DOCUMENTS</a></li>
                 <li><a class="nav_link" data-toggle="pill" href="#notes">NOTES</a></li>
-                <li><a class="nav_link" data-toggle="pill" href="#bitsacdes"><?php esc_html_e('Snippets','bitwise-sidebar-content'); ?></a></li>
+                <li><a class="nav_link" data-toggle="pill" href="#bitsacdes"><?php esc_html_e('Code','bitwise-sidebar-content'); ?></a></li>
             </ul>
             <div class="tab-content">
                 <div id="videos" class="tab-pane fade">
@@ -109,16 +110,17 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                     </ul>
                 </div>
                 <div id="bitsacdes" class="tab-pane fade">
-                    <h3>ALL Code Snippets</h3>
+                    <h3>ALL Code Examples</h3>
                     <p><small style="color:#4e9a06;"><strong><?php echo count( $videos ); ?></strong> VIDEOS CURRENTLY AVAILABLE</small></p>
                     <ul class="sidebar_list">
-			            <?php $vcount = 0;
-			            foreach ( $videos as $video ) {
-				            $vcount ++; ?>
+			            <?php $ccount = 0;
+			            foreach ( $codes as $code ) {
+				            $ccount ++; ?>
                             <li>
-                                <a data-group="video_content" class="html5lightbox" href="<?php echo $video['content'] ?>" title="<?php echo $video['name'] ?>">
-                                    <h3><?php echo "($vcount) " . $video['name'] ?></h3>
+                                <a data-group="code_content" class="html5lightbox" href="<?php echo esc_url('http://localhost/bitwise/code-template/'); ?>" title="<?php echo $code['name'] ?>">
+                                    <h3><?php echo "($ccount) " . $code['name'] ?></h3>
                                 </a>
+                                <input type="hidden" value="">
                             </li>
 				            <?php
 			            } ?>
@@ -440,4 +442,3 @@ $traces = "[" . $d . "] Topic template Backtrace @ " . $logdate->format( 'm-d-Y 
 </script>
 </body>
 </html>
-

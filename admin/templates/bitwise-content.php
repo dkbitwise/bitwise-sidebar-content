@@ -27,7 +27,7 @@ $content_url = add_query_arg( array(
 			$content_str    = $content->get_content();
 			$c_name         = $content->get_name();
 
-			$content_str = apply_filters( 'bitscr_content', $content_str );
+			//$content_str = apply_filters( 'bitscr_content', $content_str );
 			//$content_str = stripslashes(html_entity_decode($content_str));
 		} ?>
         <form class="bitwise-content-form-table" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
@@ -111,12 +111,17 @@ $content_url = add_query_arg( array(
                 </tr>
 
                 <tr class="bitscr-code-snippet bitscr-hide">
-                    <td colspan="2"><?php wp_editor( $content_str, 'bitsa_content', $settings = array(
+                    <td colspan="2"><?php /* wp_editor( $content_str, 'bitsa_content', $settings = array(
 							'textarea_rows' => '10',
 							'media_buttons' => false,
 							'quicktags'     => false,
 							'tinymce'       => array()
-						) ); ?></td>
+						) );*/ ?>
+
+                    <textarea id="bitsa_content" name="bitsa_content" rows="25" spellcheck="false" style="font-family: monospace; width: 100%;"><?php
+		                echo esc_textarea( $content_str );
+		                ?></textarea>
+                    </td>
 
                 </tr>
                 <tr class="bitscr-content-url">
