@@ -11,6 +11,7 @@ $content_url = add_query_arg( array(
     <h1 class="bitwise-content wp-heading-inline">Contents <a class="page-title-action bitwise-link" href="<?php echo esc_url( $content_url ) ?>">Add New<span class="wp-spin spinner"></span></a></h1>
 	<?php
 	$categories = Bitscr_Core()->admin->content_categories();
+	//$codes      = Bitscr_Core()->admin->all_codes();
 	if ( ( isset( $_GET['add_new'] ) && $_GET['add_new'] ) || $edit_id > 0 ) {
 		$content = new Bitwise_SC_Content( $edit_id );
 		if ( $content instanceof Bitwise_SC_Content ) {
@@ -24,11 +25,12 @@ $content_url = add_query_arg( array(
 			$c_target       = $content->get_source();
 			$c_status       = $content->get_status();
 			$c_category     = $content->get_category();
-			$content_str    = $content->get_content();
+			$content_data   = $content->get_content();
 			$c_name         = $content->get_name();
 
-			//$content_str = apply_filters( 'bitscr_content', $content_str );
-			//$content_str = stripslashes(html_entity_decode($content_str));
+			$content_id   = is_numeric( $content_data ) ? abs( $content_data ) : 0;
+			$content_data = ( $content_id > 0 ) ? '' : $content_data;
+
 		} ?>
         <form class="bitwise-content-form-table" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
             <input type="hidden" name="action" value="bitwise_content_form">
@@ -106,27 +108,24 @@ $content_url = add_query_arg( array(
                 </tr>
 
                 <tr class="bitscr-code-snippet bitscr-hide">
-                    <td>Enter the code snippet</td>
-                    <td></td>
-                </tr>
-
-                <tr class="bitscr-code-snippet bitscr-hide">
-                    <td colspan="2"><?php /* wp_editor( $content_str, 'bitsa_content', $settings = array(
-							'textarea_rows' => '10',
-							'media_buttons' => false,
-							'quicktags'     => false,
-							'tinymce'       => array()
-						) );*/ ?>
-
-                    <textarea id="bitsa_content" name="bitsa_content" rows="25" spellcheck="false" style="font-family: monospace; width: 100%;"><?php
-		                echo esc_textarea( $content_str );
-		                ?></textarea>
+                    <td>Select a code snippet</td>
+                    <td>
+						<?php
+						wp_dropdown_pages( [
+							'post_type'         => 'bitsc_code',
+							'echo'              => 1,
+							'option_none_value' => 0,
+							'show_option_none'  => 'Select a Code',
+							'name'              => 'bitsc_code_id',
+							'selected'          => $content_id
+						] );
+						?>
                     </td>
-
                 </tr>
+
                 <tr class="bitscr-content-url">
                     <td>Enter Content URL</td>
-                    <td><input value="<?php echo $content_str; ?>" id="content_url" type="text" name="content"/></td>
+                    <td><input value="<?php echo $content_data; ?>" id="content_url" type="text" name="content_url"/></td>
                 </tr>
                 <tr class="bitscr-content-or">
                     <td>OR</td>

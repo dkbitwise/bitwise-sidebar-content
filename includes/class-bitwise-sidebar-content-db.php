@@ -135,7 +135,7 @@ class Bitwise_Sidebar_Content_DB {
 				`name` VARCHAR(200),
 				`sfwd_course_id` BIGINT(20) UNSIGNED NOT NULL,		
 				`sfwd_lesson_id` BIGINT(20) UNSIGNED NOT NULL,		
-				`content` LONGTEXT NOT NULL,
+				`content` VARCHAR(200) NOT NULL,
 				`category` TINYINT UNSIGNED NOT NULL DEFAULT 0,
 				`type` VARCHAR(200) NOT NULL,
 				`source` VARCHAR(200) NOT NULL,

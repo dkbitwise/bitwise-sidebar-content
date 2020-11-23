@@ -41,6 +41,7 @@ class Bitwise_Sidebar_Content_Admin {
 
 		add_action( 'admin_post_bitwise_content_form', array( $this, 'bitwise_add_content' ) );
 		add_action( 'init', array( $this, 'register_code_post_type' ) );
+		add_filter( 'parse_query', array( $this, 'bitsc_hide_code_template_page' ) );
 	}
 
 	/**
@@ -174,7 +175,6 @@ class Bitwise_Sidebar_Content_Admin {
 
 	public function bitwise_add_content() {
 		if ( isset( $_POST['bitwise_content_form_nonce'] ) && wp_verify_nonce( $_POST['bitwise_content_form_nonce'], 'bitwise_content_form_nonce_val' ) ) {
-			$content        = isset( $_POST['content'] ) ? $_POST['content'] : '';
 			$posted_content = isset( $_POST ) ? bitscr_clean( $_POST ) : [];
 
 			$content_obj    = new Bitwise_SC_Content();
@@ -184,19 +184,16 @@ class Bitwise_Sidebar_Content_Admin {
 			$sfwd_lesson_id = isset( $posted_content['lesson'] ) ? $posted_content['lesson'] : 0;
 			$content_type   = isset( $posted_content['content_type'] ) ? $posted_content['content_type'] : '';
 			$content_source = isset( $posted_content['content_source'] ) ? $posted_content['content_source'] : '';
-			//$content        = isset( $posted_content['content'] ) ? $posted_content['content'] : '';
+			$content_url    = isset( $posted_content['content_url'] ) ? $posted_content['content_url'] : '';
 			$category       = isset( $posted_content['content_category'] ) ? $posted_content['content_category'] : '';
 			$content_status = isset( $posted_content['content_status'] ) ? $posted_content['content_status'] : 'draft';
 
 			if ( 'Code' === $content_type ) {
-				$content = isset( $posted_content['bitsa_content'] ) ? $posted_content['bitsa_content'] : '';
-				if ( ! empty( $content ) ) {
-					//$content = apply_filters( 'bitscr_content_pre_save', $content );
-					$content = stripslashes( $content );
-				}
+				$code_id     = isset( $posted_content['bitsc_code_id'] ) ? $posted_content['bitsc_code_id'] : '0';
+				$content_url = ( $code_id > 0 ) ? $code_id : $content_url;
 			}
 
-			if ( empty( $content_name ) && 'Code' !== $content_type ) {
+			if ( empty( $content_name ) ) {
 				$url_arr    = explode( '/', $content );
 				$url_length = is_array( $url_arr ) ? count( $url_arr ) : 0;
 
@@ -212,7 +209,7 @@ class Bitwise_Sidebar_Content_Admin {
 			$content_obj->set_sfwd_lesson_id( $sfwd_lesson_id );
 			$content_obj->set_type( $content_type );
 			$content_obj->set_source( $content_source );
-			$content_obj->set_content( $content );
+			$content_obj->set_content( $content_url );
 			$content_obj->set_status( $content_status );
 			$content_obj->set_category( $category );
 			$content_obj->save( array() );
@@ -243,17 +240,27 @@ class Bitwise_Sidebar_Content_Admin {
 		return array( 'General', 'Excellent', 'Good', 'Average', 'Fair', 'Poor' );
 	}
 
-	public function register_code_post_type(){
-		register_post_type('bitsc_code',
-			array(
-				'labels'      => array(
-					'name'          => __('Codes', 'bitwise-sidebar-content'),
-					'singular_name' => __('Code', 'bitwise-sidebar-content'),
-				),
-				'public'      => true,
-				'has_archive' => true,
-				'rewrite' => array('slug' => 'code'),
-			)
-		);
+	public function register_code_post_type() {
+		register_post_type( 'bitsc_code', array(
+			'labels'       => array(
+				'name'          => __( 'Codes', 'bitwise-sidebar-content' ),
+				'singular_name' => __( 'Code', 'bitwise-sidebar-content' ),
+			),
+			'public'       => true,
+			'has_archive'  => true,
+			'rewrite'      => array( 'slug' => 'code' ),
+			'hierarchical' => true
+		) );
+	}
+
+	public function bitsc_hide_code_template_page( $query ) {
+		global $pagenow, $post_type;
+		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
+			$template_page    = get_page_by_path( 'bitsc_code_template' );
+			$template_page_id = ( $template_page instanceof WP_Post ) ? $template_page->ID : 0;
+			if ( $template_page_id > 0 ) {
+				$query->query_vars['post__not_in'] = array( $template_page_id );
+			}
+		}
 	}
 }

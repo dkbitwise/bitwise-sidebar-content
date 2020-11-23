@@ -58,6 +58,7 @@ class Bitwise_Sidebar_Content_Public {
 
 		// action to display the notes with pagination updated by suresh
 		add_action( 'wp_ajax_bitsa_get_notes_withlimit', [ __CLASS__, 'bitsa_get_notes_withlimit' ] );
+		add_filter( 'theme_page_templates', array( $this, 'bitscr_footer_template' ) );
 	}
 
 
@@ -235,6 +236,7 @@ class Bitwise_Sidebar_Content_Public {
 		$table         = $wpdb->prefix . 'bitscr_notes';
 		if ( isset( $_REQUEST['currenttopicid'] ) ) {
 			$currenttopicid = $_REQUEST['currenttopicid'];
+
 			return $oldnotes = Bitscr_Common::selecttopicnoteswithlimit( $search_str, $limit, $offset, $user_id, $currenttopicid, $current_page );
 		} else {
 			if ( array_intersect( $allowed_roles, $current_user->roles ) ) {
@@ -247,15 +249,21 @@ class Bitwise_Sidebar_Content_Public {
 		}
 	}
 
-	public function bitscr_code_template( $page_template )	{
-		if ( is_page( 'code-template' ) ) {
+	public function bitscr_code_template( $page_template ) {
+		if ( is_page( 'bitsc_code_template' ) ) {
 			$page_template = dirname( __FILE__ ) . '/templates/bitscr-code.php';
 		}
+
 		return $page_template;
 	}
-	public function bitscr_footer_template( $page_template, $theme, $post )	{
-		if ('footer-bitscr.php' === $page_template){
-		    $page_template = dirname(__FILE__).'/templates/footer-bitscr.php';
+
+	public function bitscr_footer_template( $page_template, $theme, $post ) {
+		print_r($page_template);
+		print_r($theme);
+		print_r($post);
+		die('d435');
+		if ( 'footer-bitscr.php' === $page_template ) {
+			$page_template = dirname( __FILE__ ) . '/templates/footer-bitscr.php';
 		}
 
 		return $page_template;

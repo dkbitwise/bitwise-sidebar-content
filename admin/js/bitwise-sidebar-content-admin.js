@@ -58,29 +58,25 @@
         });
         /** Opening text area on selecting code **/
         let content_type = $('input[name=content_type]:checked').val();
-        console.log(content_type);
-        $('input[name=content_type]').on('click',function (){
+        $('input[name=content_type]').on('click', function () {
             content_type = $(this).val();
-            console.log(content_type);
-            show_hide_code_field(content_type);
+            show_hide_code_fields(content_type);
         });
-        console.log(content_type);
-        show_hide_code_field(content_type);
-        function show_hide_code_field(type){
-            console.log(type);
-            if ('Code'===type){
+
+        show_hide_code_fields(content_type);
+        function show_hide_code_fields(type) {
+            if ('Code' === type) {
                 $('.bitscr-code-snippet').removeClass('bitscr-hide');
                 $('.bitscr-content-url').addClass('bitscr-hide');
                 $('.bitscr-content-or').addClass('bitscr-hide');
                 $('.bitscr-content-upload').addClass('bitscr-hide');
-            }else{
+            } else {
                 $('.bitscr-code-snippet').addClass('bitscr-hide');
                 $('.bitscr-content-url').removeClass('bitscr-hide');
                 $('.bitscr-content-or').removeClass('bitscr-hide');
                 $('.bitscr-content-upload').removeClass('bitscr-hide');
             }
         }
-
     }); //document.ready
 
 

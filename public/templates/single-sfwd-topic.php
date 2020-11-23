@@ -116,10 +116,9 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 						foreach ( $codes as $code ) {
 							$ccount ++; ?>
                             <li>
-                                <a data-group="code_content" class="html5lightbox" href="<?php echo esc_url( get_permalink( get_page_by_path( 'code-template' ) ).'?cid='.$code['id'] ); ?>" title="<?php echo $code['name'] ?>">
+                                <a data-group="code_content" class="html5lightbox" href="<?php echo esc_url( get_permalink( get_page_by_path( 'bitsc_code_template' ) ).'?cid='.$code['content'] ); ?>" title="<?php echo $code['name'] ?>">
                                     <h3><?php echo "($ccount) " . $code['name'] ?></h3>
                                 </a>
-                                <input type="hidden" value="">
                             </li>
 							<?php
 						} ?>

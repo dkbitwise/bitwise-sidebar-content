@@ -31,15 +31,6 @@ class Bitwise_Sidebar_Content {
 	 */
 	public static $_instance = null;
 
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      Bitwise_Sidebar_Content_Loader $loader Maintains and registers all hooks for the plugin.
-	 */
-	protected $loader;
 
 	/**
 	 * The unique identifier of this plugin.
@@ -86,7 +77,7 @@ class Bitwise_Sidebar_Content {
 		}
 		$this->plugin_name = 'bitwise-sidebar-content';
 		if ( ! defined( 'BITSCR_DB_VERSION' ) ) {
-			define( 'BITSCR_DB_VERSION', '1.0.4' );
+			define( 'BITSCR_DB_VERSION', '1.0.5' );
 		}
 
 		$this->load_dependencies();
@@ -100,7 +91,7 @@ class Bitwise_Sidebar_Content {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Bitwise_Sidebar_Content_Loader. Orchestrates the hooks of the plugin.
+	 * - Orchestrates the hooks of the plugin.
 	 * - Bitwise_Sidebar_Content_i18n. Defines internationalization functionality.
 	 * - Bitwise_Sidebar_Content_Admin. Defines all hooks for the admin area.
 	 * - Bitwise_Sidebar_Content_Public. Defines all hooks for the public side of the site.
@@ -112,12 +103,6 @@ class Bitwise_Sidebar_Content {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-
-		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
-		require_once __DIR__ . '/class-bitwise-sidebar-content-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
@@ -159,7 +144,6 @@ class Bitwise_Sidebar_Content {
 		require_once dirname( __DIR__ ) . '/public/class-bitwise-sidebar-content-public.php';
 		$this->public = Bitwise_Sidebar_Content_Public::get_instance();
 
-		$this->loader = new Bitwise_Sidebar_Content_Loader();
 	}
 
 	/**
@@ -185,7 +169,7 @@ class Bitwise_Sidebar_Content {
 	 */
 	private function set_locale() {
 		$plugin_i18n = new Bitwise_Sidebar_Content_i18n();
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
 	}
 
 	/**
@@ -198,9 +182,9 @@ class Bitwise_Sidebar_Content {
 	private function define_admin_hooks() {
 		$plugin_admin = $this->admin;
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'admin_sidebar_menu' );
+		add_action( 'admin_enqueue_scripts', array( $plugin_admin, 'enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $plugin_admin, 'enqueue_scripts' ) );
+		add_action( 'admin_menu', array( $plugin_admin, 'admin_sidebar_menu' ) );
 	}
 
 	/**
@@ -212,22 +196,10 @@ class Bitwise_Sidebar_Content {
 	 */
 	private function define_public_hooks() {
 		$plugin_public = $this->public;
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_filter( 'boss_learndash_locate_template', $plugin_public, 'bitsc_include_custom_topic_template' );
-
-		$this->loader->add_filter( 'page_template', $plugin_public,'bitscr_code_template' );
-		//$this->loader->add_filter( 'theme_page_templates', $plugin_public,'bitscr_footer_template' );
-	}
-
-
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function run() {
-		$this->loader->run();
+		add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_styles' ));
+		add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_scripts' ));
+		add_filter( 'boss_learndash_locate_template',array( $plugin_public, 'bitsc_include_custom_topic_template' ));
+		add_filter( 'page_template',array( $plugin_public, 'bitscr_code_template' ));
 	}
 
 	/**
@@ -239,16 +211,6 @@ class Bitwise_Sidebar_Content {
 	 */
 	public function get_plugin_name() {
 		return $this->plugin_name;
-	}
-
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @return    Bitwise_Sidebar_Content_Loader    Orchestrates the hooks of the plugin.
-	 * @since     1.0.0
-	 */
-	public function get_loader() {
-		return $this->loader;
 	}
 
 	/**
@@ -279,10 +241,8 @@ if ( ! function_exists( 'Bitscr_Core' ) ) {
 	 * @return Bitwise_Sidebar_Content|null
 	 */
 	function Bitscr_Core() {
-		$bitscr_main = Bitwise_Sidebar_Content::get_instance();
-		$bitscr_main->run();
+		return Bitwise_Sidebar_Content::get_instance();
 
-		return $bitscr_main;
 	}
 }
 
