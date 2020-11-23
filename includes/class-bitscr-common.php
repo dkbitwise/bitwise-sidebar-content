@@ -321,18 +321,38 @@ class Bitscr_Common {
 	public static function selectusernoteswithlimit( $search_str, $limit, $offset, $user_id, $current_page ) {
 
 		global $wpdb;
-		$table = $wpdb->prefix . 'bitscr_notes';
-		$total = $wpdb->get_var( "SELECT count(id) FROM $table WHERE (user_id = $user_id)" );
-		if ( $search_str != '' ) {
-			$note_list    = $wpdb->get_results( "SELECT * FROM $table where user_id=$user_id and  $search_str ORDER by added DESC  LIMIT $limit OFFSET $offset " );
-			$search_found = $wpdb->get_var( $wpdb->prepare( "SELECT count(id) FROM  $table where user_id=$user_id and  $search_str ORDER by added DESC" ) );
-			$pages        = ceil( $search_found / $limit );
-		} else {
-			$note_list    = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table where user_id=$user_id ORDER by added DESC  LIMIT $limit OFFSET $offset" ) );
-			$search_found = $wpdb->get_var( $wpdb->prepare( "SELECT count(id) FROM $table where user_id=$user_id ORDER by added DESC" ) );
-			$pages        = ceil( $search_found / $limit );
+		$table       = $wpdb->prefix . 'bitscr_notes';
+		$total_query = "SELECT count(id) FROM $table";
+		if ( $user_id > 0 ) {
+			$total_query .= " WHERE (user_id = $user_id)";
 		}
+		//$total = $wpdb->get_var( "SELECT count(id) FROM $table WHERE (user_id = $user_id)" );
+		$total = $wpdb->get_var( $total_query );
 
+		$note_query   = "SELECT * FROM $table";
+		$search_query = "SELECT count(id) FROM  $table";
+		if ( $user_id > 0 ) {
+			$note_query   .= " where user_id=$user_id";
+			$search_query .= " where user_id=$user_id";
+		}
+		if ( ! empty( $search_str ) ) {
+			if ( $user_id > 0 ) {
+				$note_query   .= " and";
+				$search_query .= " and";
+			} else {
+				$note_query   .= " where";
+				$search_query .= " where";
+			}
+
+			$note_query   .= " $search_str";
+			$search_query .= " $search_str";
+		}
+		$note_query   .= " ORDER by added DESC  LIMIT $limit OFFSET $offset";
+		$search_query .= " ORDER by added DESC";
+
+		$note_list    = $wpdb->get_results( $note_query );
+		$search_found = $wpdb->get_var( $wpdb->prepare( $search_query ) );
+		$pages        = ceil( $search_found / $limit );
 
 		if ( $note_list ):
 			$html  = '';
@@ -372,7 +392,6 @@ class Bitscr_Common {
 		endif;
 
 		//Return the list of notes with pagination detail updated by suresh on 8-7-2020
-
 		return json_encode( array(
 			'status'       => true,
 			'data'         => $html,
@@ -383,6 +402,12 @@ class Bitscr_Common {
 			'pages'        => $pages
 		) );
 		exit;
+	}
+
+	public function selectallnoteswithlimit( $search_str, $limit, $offset, $current_page ) {
+		$user_id = 0;
+
+		return self::selectusernoteswithlimit( $search_str, $limit, $offset, $user_id, $current_page );
 	}
 }
 

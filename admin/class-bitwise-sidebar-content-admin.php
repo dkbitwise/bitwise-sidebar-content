@@ -40,7 +40,7 @@ class Bitwise_Sidebar_Content_Admin {
 		add_action( 'wp_ajax_bitscr_delete_content', array( $this, 'bitscr_delete_content' ) );
 
 		add_action( 'admin_post_bitwise_content_form', array( $this, 'bitwise_add_content' ) );
-
+		add_action( 'init', array( $this, 'register_code_post_type' ) );
 	}
 
 	/**
@@ -192,7 +192,7 @@ class Bitwise_Sidebar_Content_Admin {
 				$content = isset( $posted_content['bitsa_content'] ) ? $posted_content['bitsa_content'] : '';
 				if ( ! empty( $content ) ) {
 					//$content = apply_filters( 'bitscr_content_pre_save', $content );
-					$content = stripslashes($content);
+					$content = stripslashes( $content );
 				}
 			}
 
@@ -241,5 +241,19 @@ class Bitwise_Sidebar_Content_Admin {
 
 	public function content_categories() {
 		return array( 'General', 'Excellent', 'Good', 'Average', 'Fair', 'Poor' );
+	}
+
+	public function register_code_post_type(){
+		register_post_type('bitsc_code',
+			array(
+				'labels'      => array(
+					'name'          => __('Codes', 'bitwise-sidebar-content'),
+					'singular_name' => __('Code', 'bitwise-sidebar-content'),
+				),
+				'public'      => true,
+				'has_archive' => true,
+				'rewrite' => array('slug' => 'code'),
+			)
+		);
 	}
 }

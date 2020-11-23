@@ -70,16 +70,15 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 	$bit_course_content = Bitscr_Common::get_multiple_data( array(), array( 'sfwd_lesson_id' => $lessonid ), 'content' );
 
 	$videos = wp_list_filter( $bit_course_content, array( 'type' => 'Video', 'status' => 'published' ) );
-	$codes = wp_list_filter( $bit_course_content, array( 'type' => 'Code', 'status' => 'published' ) );
+	$codes  = wp_list_filter( $bit_course_content, array( 'type' => 'Code', 'status' => 'published' ) );
 	$helps  = wp_list_filter( $bit_course_content, array( 'type' => 'Help', 'status' => 'published' ) ); ?>
-
 
     <div class="bit_info_btn btn121" data-toggle="tooltip" data-placement="left">
         <div class="content_btns">
             <a href="javascript:void(0);" class="bttn videos_btn" data-tab="videos">VIDEOS</a>
             <a href="javascript:void(0);" class="bttn help_btn" data-tab="help">DOCUMENTS</a>
             <a href="javascript:void(0);" class="bttn notes_btn" data-tab="notes">NOTES</a>
-            <a href="javascript:void(0);" class="bttn code_btn" data-tab="bitsacdes"><?php esc_html_e('Code','bitwise-sidebar-content'); ?></a>
+            <a href="javascript:void(0);" class="bttn code_btn" data-tab="bitsacdes"><?php esc_html_e( 'Code', 'bitwise-sidebar-content' ); ?></a>
         </div>
     </div>
 
@@ -90,7 +89,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                 <li><a class="nav_link" data-toggle="pill" href="#videos">VIDEOS</a></li>
                 <li><a class="nav_link" data-toggle="pill" href="#help">DOCUMENTS</a></li>
                 <li><a class="nav_link" data-toggle="pill" href="#notes">NOTES</a></li>
-                <li><a class="nav_link" data-toggle="pill" href="#bitsacdes"><?php esc_html_e('Code','bitwise-sidebar-content'); ?></a></li>
+                <li><a class="nav_link" data-toggle="pill" href="#bitsacdes"><?php esc_html_e( 'Code', 'bitwise-sidebar-content' ); ?></a></li>
             </ul>
             <div class="tab-content">
                 <div id="videos" class="tab-pane fade">
@@ -113,17 +112,17 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                     <h3>ALL Code Examples</h3>
                     <p><small style="color:#4e9a06;"><strong><?php echo count( $videos ); ?></strong> VIDEOS CURRENTLY AVAILABLE</small></p>
                     <ul class="sidebar_list">
-			            <?php $ccount = 0;
-			            foreach ( $codes as $code ) {
-				            $ccount ++; ?>
+						<?php $ccount = 0;
+						foreach ( $codes as $code ) {
+							$ccount ++; ?>
                             <li>
-                                <a data-group="code_content" class="html5lightbox" href="<?php echo esc_url('http://localhost/bitwise/code-template/'); ?>" title="<?php echo $code['name'] ?>">
+                                <a data-group="code_content" class="html5lightbox" href="<?php echo esc_url( get_permalink( get_page_by_path( 'code-template' ) ).'?cid='.$code['id'] ); ?>" title="<?php echo $code['name'] ?>">
                                     <h3><?php echo "($ccount) " . $code['name'] ?></h3>
                                 </a>
                                 <input type="hidden" value="">
                             </li>
-				            <?php
-			            } ?>
+							<?php
+						} ?>
                     </ul>
                 </div>
                 <div id="notes" class="tab-pane fade">
