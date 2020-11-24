@@ -41,7 +41,8 @@ class Bitwise_Sidebar_Content_Admin {
 
 		add_action( 'admin_post_bitwise_content_form', array( $this, 'bitwise_add_content' ) );
 		add_action( 'init', array( $this, 'register_code_post_type' ) );
-		add_filter( 'parse_query', array( $this, 'bitsc_hide_code_template_page' ) );
+		add_filter( 'parse_query', array( $this, 'bitscr_hide_code_template_page' ) );
+		add_filter( 'wp_dropdown_pages', [ $this, 'bitscr_wp_dropdown_pages' ], 10, 3 );
 	}
 
 	/**
@@ -253,7 +254,7 @@ class Bitwise_Sidebar_Content_Admin {
 		) );
 	}
 
-	public function bitsc_hide_code_template_page( $query ) {
+	public function bitscr_hide_code_template_page( $query ) {
 		global $pagenow, $post_type;
 		if ( is_admin() && $pagenow == 'edit.php' && $post_type == 'page' ) {
 			$template_page    = get_page_by_path( 'bitsc_code_template' );
@@ -262,5 +263,22 @@ class Bitwise_Sidebar_Content_Admin {
 				$query->query_vars['post__not_in'] = array( $template_page_id );
 			}
 		}
+	}
+
+	/**
+	 * @param $output
+	 * @param $parsed_args
+	 * @param $pages
+	 *
+	 * @return string
+	 */
+	public function bitscr_wp_dropdown_pages( $output, $parsed_args, $pages ) {
+
+		if ( empty( $output ) && 'bitsc_code_id' === $parsed_args['name'] ) {
+			$output = '<p class="bitscr-class-no-code">' . __( 'No codes added. ', 'bitwise-sidebar-content' );
+			$output .= '<a href="' . esc_url( admin_url() ) . '/post-new.php?post_type=bitsc_code">' . __( 'Click here', 'bitwise-sidebar-content' ) . '</a>' . __( ' to add a code example.' ) . '</p>';
+		}
+
+		return $output;
 	}
 }

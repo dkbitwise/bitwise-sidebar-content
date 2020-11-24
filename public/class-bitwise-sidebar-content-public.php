@@ -58,7 +58,6 @@ class Bitwise_Sidebar_Content_Public {
 
 		// action to display the notes with pagination updated by suresh
 		add_action( 'wp_ajax_bitsa_get_notes_withlimit', [ __CLASS__, 'bitsa_get_notes_withlimit' ] );
-		add_filter( 'theme_page_templates', array( $this, 'bitscr_footer_template' ) );
 	}
 
 
@@ -257,15 +256,4 @@ class Bitwise_Sidebar_Content_Public {
 		return $page_template;
 	}
 
-	public function bitscr_footer_template( $page_template, $theme, $post ) {
-		print_r($page_template);
-		print_r($theme);
-		print_r($post);
-		die('d435');
-		if ( 'footer-bitscr.php' === $page_template ) {
-			$page_template = dirname( __FILE__ ) . '/templates/footer-bitscr.php';
-		}
-
-		return $page_template;
-	}
 }

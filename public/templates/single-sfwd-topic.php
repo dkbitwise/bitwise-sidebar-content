@@ -110,7 +110,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                 </div>
                 <div id="bitsacdes" class="tab-pane fade">
                     <h3>ALL Code Examples</h3>
-                    <p><small style="color:#4e9a06;"><strong><?php echo count( $videos ); ?></strong> VIDEOS CURRENTLY AVAILABLE</small></p>
+                    <p><small style="color:#4e9a06;"><strong><?php echo count( $videos ); ?></strong> Code examples are currently available.</small></p>
                     <ul class="sidebar_list">
 						<?php $ccount = 0;
 						foreach ( $codes as $code ) {
