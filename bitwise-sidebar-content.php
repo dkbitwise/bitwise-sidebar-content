@@ -46,17 +46,7 @@ function activate_bitwise_sidebar_content() {
 	Bitwise_Sidebar_Content_Activator::activate();
 }
 
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-bitwise-sidebar-content-deactivator.php
- */
-function deactivate_bitwise_sidebar_content() {
-	require_once __DIR__ . '/includes/class-bitwise-sidebar-content-deactivator.php';
-	Bitwise_Sidebar_Content_Deactivator::deactivate();
-}
-
 register_activation_hook( __FILE__, 'activate_bitwise_sidebar_content' );
-register_deactivation_hook( __FILE__, 'deactivate_bitwise_sidebar_content' );
 
 /**
  * The core plugin class that is used to define internationalization,

@@ -41,7 +41,4 @@ class Bitwise_Sidebar_Content_i18n {
 		);
 
 	}
-
-
-
 }
