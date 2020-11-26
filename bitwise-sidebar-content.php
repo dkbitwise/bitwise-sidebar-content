@@ -35,6 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define( 'BITWISE_SIDEBAR_CONTENT_VERSION', '1.0.0' );
+define( 'BITSC_DB_VERSION', '1.0.3' );
 define( 'BITSCR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 /**

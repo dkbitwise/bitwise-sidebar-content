@@ -25,14 +25,14 @@ $content_url = add_query_arg( array(
 			$c_target       = $content->get_source();
 			$c_status       = $content->get_status();
 			$c_category     = $content->get_category();
-			$content_data   = $content->get_content();
+			$content_url    = $content->get_content_url();
 			$c_name         = $content->get_name();
 
-			$content_id   = is_numeric( $content_data ) ? abs( $content_data ) : 0;
-			$content_data = ( $content_id > 0 ) ? '' : $content_data;
+			$content_id  = is_numeric( $content_url ) ? abs( $content_url ) : 0;
+			$content_url = ( $content_id > 0 ) ? '' : $content_url;
 
 		} ?>
-        <form class="bitwise-content-form-table" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
+        <form name="bitsc_content_from" class="bitwise-content-form-table" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
             <input type="hidden" name="action" value="bitwise_content_form">
             <input type="hidden" name="bitwise_content_form_nonce" value="<?php echo wp_create_nonce( 'bitwise_content_form_nonce_val' ) ?>">
             <input type="hidden" name="content_id" value="<?php echo $edit_id ?>">
@@ -40,7 +40,7 @@ $content_url = add_query_arg( array(
                 <tr>
                     <td>Select a Course</td>
                     <td class="select-course">
-                        <select id="bitscr_course" name="course">
+                        <select id="bitscr_course" name="course" required>
                             <option value="0">Select a course</option>
 							<?php
 							foreach ( $courses as $course ) { ?>
@@ -53,7 +53,7 @@ $content_url = add_query_arg( array(
                 <tr>
                     <td>Status</td>
                     <td class="select-status">
-                        <select id="bitscr_status" name="content_status">
+                        <select required id="bitscr_status" name="content_status">
                             <option value="0">Select a Status</option>
                             <option <?php echo selected( 'draft', $c_status ) ?> value="draft">Draft</option>
                             <option <?php echo selected( 'published', $c_status ) ?> value="published">Published</option>
@@ -63,7 +63,7 @@ $content_url = add_query_arg( array(
                 <tr>
                     <td>Category</td>
                     <td class="select-category">
-                        <select id="bitscr_category" name="content_category">
+                        <select required id="bitscr_category" name="content_category">
                             <option value="-1">Select a Category</option>
 							<?php
 							foreach ( $categories as $category_id => $category ) { ?>
@@ -75,12 +75,12 @@ $content_url = add_query_arg( array(
                 </tr>
                 <tr>
                     <td>Enter the content title</td>
-                    <td><input value="<?php echo $c_name; ?>" type="text" name="content_name"/></td>
+                    <td><input required value="<?php echo $c_name; ?>" type="text" name="content_name"/></td>
                 </tr>
                 <tr>
                     <td>Select a Lesson</td>
                     <td>
-                        <select id="bitscr_lessons" name="lesson">
+                        <select required id="bitscr_lessons" name="lesson">
                             <option value="0">Select a lesson</option>
 							<?php
 							foreach ( $lessons as $lesson_id => $lesson_name ) { ?>
@@ -125,7 +125,7 @@ $content_url = add_query_arg( array(
 
                 <tr class="bitscr-content-url">
                     <td>Enter Content URL</td>
-                    <td><input value="<?php echo $content_data; ?>" id="content_url" type="text" name="content_url"/></td>
+                    <td><input value="<?php echo $content_url; ?>" id="content_url" type="text" name="content_url"/></td>
                 </tr>
                 <tr class="bitscr-content-or">
                     <td>OR</td>
@@ -137,7 +137,7 @@ $content_url = add_query_arg( array(
                 <tr>
                     <td>
                         <input type="hidden" name="bitwise-content">
-                        <input class="primary button-primary" type="submit" value="Submit">
+                        <input class="primary button-primary" type="button" value="Submit">
                     </td>
                 </tr>
 

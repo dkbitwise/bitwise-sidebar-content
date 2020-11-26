@@ -195,7 +195,7 @@ class Bitwise_Sidebar_Content_Admin {
 			}
 
 			if ( empty( $content_name ) ) {
-				$url_arr    = explode( '/', $content );
+				$url_arr    = explode( '/', $content_url );
 				$url_length = is_array( $url_arr ) ? count( $url_arr ) : 0;
 
 				if ( $url_length > 0 ) {
@@ -210,7 +210,7 @@ class Bitwise_Sidebar_Content_Admin {
 			$content_obj->set_sfwd_lesson_id( $sfwd_lesson_id );
 			$content_obj->set_type( $content_type );
 			$content_obj->set_source( $content_source );
-			$content_obj->set_content( $content_url );
+			$content_obj->set_content_url( $content_url );
 			$content_obj->set_status( $content_status );
 			$content_obj->set_category( $category );
 			$content_obj->save( array() );

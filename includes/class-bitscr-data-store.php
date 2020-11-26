@@ -41,11 +41,7 @@ class Bitscr_Data_Store {
 	 */
 	public function set_table( $tbl_name ) {
 		global $wpdb;
-		$option_key = '_bit_scr_created_tables_';
-
-		if ( defined( 'BITSCR_DB_VERSION' ) ) {
-			$option_key .= str_replace( '.', '_', BITSCR_DB_VERSION );
-		}
+		$option_key = '_bit_scr_created_tables_' . str_replace( '.', '_', BITSC_DB_VERSION );
 
 		$db_tables    = get_option( $option_key, array() );
 		$abs_tbl_name = $wpdb->prefix . $tbl_name;

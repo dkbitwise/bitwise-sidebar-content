@@ -11,7 +11,7 @@ class Bitwise_SC_Content {
 	private $name = '';
 	private $sfwd_course_id = 0;
 	private $sfwd_lesson_id = 0;
-	private $content = '';
+	private $content_url = '';
 	private $type = '';
 	private $source = '';
 	private $category = 0;
@@ -85,12 +85,12 @@ class Bitwise_SC_Content {
 	}
 
 	/**
-	 *  Setter function for content url
+	 * Setter function for content url
 	 *
-	 * @param $lessons
+	 * @param $content_url
 	 */
-	public function set_content( $content ) {
-		$this->content = $content;
+	public function set_content_url( $content_url ) {
+		$this->content_url = $content_url;
 	}
 
 	/**
@@ -167,8 +167,8 @@ class Bitwise_SC_Content {
 	 * Getter function for content url
 	 * @return string
 	 */
-	public function get_content() {
-		return $this->content;
+	public function get_content_url() {
+		return $this->content_url;
 	}
 
 	/**
@@ -227,7 +227,7 @@ class Bitwise_SC_Content {
 		$data['name']           = $this->get_name();
 		$data['sfwd_course_id'] = $this->get_sfwd_course_id();
 		$data['sfwd_lesson_id'] = $this->get_sfwd_lesson_id();
-		$data['content']        = $this->get_content();
+		$data['content_url']    = $this->get_content_url();
 		$data['type']           = $this->get_type();
 		$data['source']         = $this->get_source();
 		$data['category']       = $this->get_category();

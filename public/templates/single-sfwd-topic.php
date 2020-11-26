@@ -100,7 +100,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 						foreach ( $videos as $video ) {
 							$vcount ++; ?>
                             <li>
-                                <a data-group="video_content" class="html5lightbox" href="<?php echo $video['content'] ?>" title="<?php echo $video['name'] ?>">
+                                <a data-group="video_content" class="html5lightbox" href="<?php echo $video['content_url'] ?>" title="<?php echo $video['name'] ?>">
                                     <h3><?php echo "($vcount) " . $video['name'] ?></h3>
                                 </a>
                             </li>
@@ -116,7 +116,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 						foreach ( $codes as $code ) {
 							$ccount ++; ?>
                             <li>
-                                <a data-group="code_content" class="html5lightbox" href="<?php echo esc_url( get_permalink( get_page_by_path( 'bitsc_code_template' ) ).'?cid='.$code['content'] ); ?>" title="<?php echo $code['name'] ?>">
+                                <a data-group="code_content" class="html5lightbox" href="<?php echo esc_url( get_permalink( get_page_by_path( 'bitsc_code_template' ) ).'?cid='.$code['content_url'] ); ?>" title="<?php echo $code['name'] ?>">
                                     <h3><?php echo "($ccount) " . $code['name'] ?></h3>
                                 </a>
                             </li>
@@ -271,7 +271,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 						foreach ( $helps as $help ) {
 							$hcount ++; ?>
                             <li>
-                                <a title="<?php echo $help['name'] ?>" data-group="help_content" class="example-image-link html5lightbox" href="<?php echo $help['content'] ?>">
+                                <a title="<?php echo $help['name'] ?>" data-group="help_content" class="example-image-link html5lightbox" href="<?php echo $help['content_url'] ?>">
                                     <h3><?php echo "($hcount) " . $help['name'] ?></h3>
                                 </a>
                             </li>
@@ -335,7 +335,6 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
             <ul class="sidebar_list">
 				<?php foreach ( $lessons as $lesson ) { ?>
                     <li>
-						<?php // var_dump($lesson);?>
                         <p class="title"><strong><a href='<?php echo get_permalink( $lesson['post']->ID ) ?>'><?php echo $lesson['post']->post_title; ?></a></strong></p>
                         <p></p>
                         <p>The Angular framework makes it easy to build dynamic web applications with expressive HTML. </p>

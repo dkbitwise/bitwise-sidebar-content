@@ -17,3 +17,5 @@ table.bitscr-courses { width: 100%;}
 .bitwise-content-table-form .bitscr-label label { display: inline-block; width: 30%;}
 .bitscr-hide{display: none;}
 .bitscr-class-no-code a { text-decoration: none;}
+.bitwise-content-form-table .bitsc_err{border: 1px solid red}
+.bitwise-content-form-table .bitsc_err_msg{color: red; display: block;}

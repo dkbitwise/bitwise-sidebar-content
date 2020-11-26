@@ -43,10 +43,7 @@ class Bitwise_Sidebar_Content_DB {
 	public function __construct() {
 		global $wpdb;
 		$this->wp_db      = $wpdb;
-		$this->option_key = '_bit_scr_created_tables_';
-		if (defined('BITSCR_DB_VERSION')){
-			$this->option_key .= str_replace( '.', '_', BITSCR_DB_VERSION );
-		}
+		$this->option_key = '_bit_scr_created_tables_' . str_replace( '.', '_', BITSC_DB_VERSION );
 
 		add_action( 'plugins_loaded', array( $this, 'add_if_needed' ) );
 	}
@@ -135,7 +132,7 @@ class Bitwise_Sidebar_Content_DB {
 				`name` VARCHAR(200),
 				`sfwd_course_id` BIGINT(20) UNSIGNED NOT NULL,		
 				`sfwd_lesson_id` BIGINT(20) UNSIGNED NOT NULL,		
-				`content` VARCHAR(200) NOT NULL,
+				`content_url` VARCHAR(200) NOT NULL,
 				`category` TINYINT UNSIGNED NOT NULL DEFAULT 0,
 				`type` VARCHAR(200) NOT NULL,
 				`source` VARCHAR(200) NOT NULL,
@@ -150,7 +147,7 @@ class Bitwise_Sidebar_Content_DB {
 		$tables = get_option( $this->option_key, array() );
 
 		$tables[] = $this->wp_db->prefix . 'bitscr_content';
-		$tables = array_unique( $tables );
+		$tables   = array_unique( $tables );
 		update_option( $this->option_key, $tables );
 	}
 
@@ -176,8 +173,8 @@ class Bitwise_Sidebar_Content_DB {
 
 		$tables = get_option( $this->option_key, array() );
 
-		$tables[] =  $this->wp_db->prefix . 'bitscr_courses';
-		$tables = array_unique( $tables );
+		$tables[] = $this->wp_db->prefix . 'bitscr_courses';
+		$tables   = array_unique( $tables );
 		update_option( $this->option_key, $tables );
 	}
 
@@ -198,16 +195,16 @@ class Bitwise_Sidebar_Content_DB {
 		`topic_id` BIGINT(23) NOT NULL , 
 		`content` TEXT NOT NULL , 
 		`title` VARCHAR(256) NOT NULL , 
-		`added` TIMESTAMP NOT NULL , 
-		
-		PRIMARY KEY (`id`)) " . $collate . ";";
+		`added` TIMESTAMP NOT NULL ,		
+		PRIMARY KEY (`id`),
+		KEY `id` (`id`)
+		) " . $collate . ";";
 
 		dbDelta( $values_table );
 
-		$tables = get_option( $this->option_key, array() );
-
+		$tables   = get_option( $this->option_key, array() );
 		$tables[] = $this->wp_db->prefix . 'bitscr_notes';
-		$tables = array_unique( $tables );
+		$tables   = array_unique( $tables );
 		update_option( $this->option_key, $tables );
 	}
 }

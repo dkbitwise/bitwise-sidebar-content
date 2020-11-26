@@ -64,6 +64,7 @@
         });
 
         show_hide_code_fields(content_type);
+
         function show_hide_code_fields(type) {
             if ('Code' === type) {
                 $('.bitscr-code-snippet').removeClass('bitscr-hide');
@@ -77,6 +78,80 @@
                 $('.bitscr-content-upload').removeClass('bitscr-hide');
             }
         }
+
+        //Adding validation on
+        $('form[name="bitsc_content_from"] .button-primary').on('click', function (e) {
+            e.preventDefault();
+            $('.bitsc_err_msg').remove();
+            let course = $('select[name="course"]');
+            let submit = true;
+            if (course.val() < 1) {
+                course.addClass('bitsc_err')
+                course.parent('td').append('<span class="bitsc_err_msg">Please Select a course</span>');
+                submit = false;
+            } else {
+                course.removeClass('bitsc_err');
+                course.parent('td').find('span').remove();
+            }
+
+            let status = $('select[name="content_status"]');
+            if ('0' === status.val()) {
+                status.addClass('bitsc_err')
+                status.parent('td').append('<span class="bitsc_err_msg">Please content status</span>');
+                submit = false;
+            } else {
+                status.removeClass('bitsc_err');
+                status.parent('td').find('span').remove();
+            }
+
+            let category = $('select[name="content_category"]');
+            if (category.val() < 0) {
+                category.addClass('bitsc_err')
+                category.parent('td').append('<span class="bitsc_err_msg">Please select content category</span>');
+                submit = false;
+            } else {
+                category.removeClass('bitsc_err');
+                category.parent('td').find('span').remove();
+            }
+
+            let lesson = $('select[name="lesson"]');
+            if (lesson.val() < 1) {
+                lesson.addClass('bitsc_err')
+                lesson.parent('td').append('<span class="bitsc_err_msg">Please select a lesson</span>');
+                submit = false;
+            } else {
+                lesson.removeClass('bitsc_err');
+                lesson.parent('td').find('span').remove();
+            }
+
+            let content_type = $('input[name="content_type"]:checked').val();
+
+            if ('Code' === content_type) {
+                let code_id = $('select[name="bitsc_code_id"]');
+                if (code_id.val() < 1) {
+                    code_id.addClass('bitsc_err')
+                    code_id.parent('td').append('<span class="bitsc_err_msg">Please a code example.</span>');
+                    submit = false;
+                } else {
+                    code_id.removeClass('bitsc_err');
+                    code_id.parent('td').find('span').remove();
+                }
+            } else {
+                let content_url = $('input[name="content_url"]');
+                if ('' === content_url.val()) {
+                    content_url.addClass('bitsc_err')
+                    content_url.parent('td').append('<span class="bitsc_err_msg">Upload or enter content URL.</span>');
+                    submit = false;
+                } else {
+                    content_url.removeClass('bitsc_err');
+                    content_url.parent('td').find('span').remove();
+                }
+            }
+            if (submit) {
+                $('form[name="bitsc_content_from"]').submit();
+            }
+
+        });
     }); //document.ready
 
 
