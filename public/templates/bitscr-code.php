@@ -23,4 +23,4 @@ $cid     = filter_input( INPUT_GET, 'cid', FILTER_SANITIZE_NUMBER_INT );
 $content = get_the_content( null, true, get_post( $cid ) );
 $content = apply_filters( 'the_content', $content );
 echo html_entity_decode( $content );
-get_footer('bitscr');
+wp_footer();
