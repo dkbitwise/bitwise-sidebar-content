@@ -11,7 +11,6 @@ $content_url = add_query_arg( array(
     <h1 class="bitwise-content wp-heading-inline">Contents <a class="page-title-action bitwise-link" href="<?php echo esc_url( $content_url ) ?>">Add New<span class="wp-spin spinner"></span></a></h1>
 	<?php
 	$categories = Bitscr_Core()->admin->content_categories();
-	//$codes      = Bitscr_Core()->admin->all_codes();
 	if ( ( isset( $_GET['add_new'] ) && $_GET['add_new'] ) || $edit_id > 0 ) {
 		$content = new Bitwise_SC_Content( $edit_id );
 		if ( $content instanceof Bitwise_SC_Content ) {

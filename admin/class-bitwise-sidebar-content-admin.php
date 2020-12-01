@@ -37,6 +37,7 @@ class Bitwise_Sidebar_Content_Admin {
 		add_action( 'admin_init', [ $this, 'enable_disable_logging' ] );
 
 		add_action( 'wp_ajax_bitscr_get_lessons', array( $this, 'bitscr_get_lessons' ) );
+		add_action( 'wp_ajax_bitscr_get_code_in_lesson', array( $this, 'bitscr_get_code_in_lesson' ) );
 		add_action( 'wp_ajax_bitscr_delete_content', array( $this, 'bitscr_delete_content' ) );
 
 		add_action( 'admin_post_bitwise_content_form', array( $this, 'bitwise_add_content' ) );
@@ -127,6 +128,23 @@ class Bitwise_Sidebar_Content_Admin {
 			$lessons         = $course->get_sfwd_lessons();
 			$resp['success'] = true;
 			$resp['lessons'] = $lessons;
+		}
+		wp_send_json( $resp );
+	}
+
+	public function bitscr_get_code_in_lesson() {
+		$posted_data = isset( $_POST ) ? bitscr_clean( $_POST ) : [];
+		$lesson_id   = isset( $posted_data['lesson_id'] ) ? $posted_data['lesson_id'] : 0;
+		$code_id     = isset( $posted_data['code_id'] ) ? $posted_data['code_id'] : 0;
+		$resp        = array(
+			'success'   => false,
+			'in_lesson' => false
+		);
+		if ( $lesson_id > 0 && $code_id > 0 ) {
+			$in_lesson = Bitscr_Common::get_multiple_columns( array( 'id' => 'content_id' ), array( 'sfwd_lesson_id' => $lesson_id, 'content_url' => $code_id ), 'content' );
+
+			$resp['success']   = true;
+			$resp['in_lesson'] = isset( $in_lesson['content_id'] ) && ( $in_lesson['content_id'] > 0 );
 		}
 		wp_send_json( $resp );
 	}

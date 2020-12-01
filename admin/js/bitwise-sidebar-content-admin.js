@@ -82,6 +82,7 @@
         //Adding validation on
         $('form[name="bitsc_content_from"] .button-primary').on('click', function (e) {
             e.preventDefault();
+            let submit_btn = this;
             $('.bitsc_err_msg').remove();
             let course = $('select[name="course"]');
             let submit = true;
@@ -104,6 +105,16 @@
                 status.parent('td').find('span').remove();
             }
 
+            let content_name = $('input[name="content_name"]');
+            if ('' === content_name.val()) {
+                content_name.addClass('bitsc_err')
+                content_name.parent('td').append('<span class="bitsc_err_msg">Please enter content title</span>');
+                submit = false;
+            } else {
+                content_name.removeClass('bitsc_err');
+                content_name.parent('td').find('span').remove();
+            }
+
             let category = $('select[name="content_category"]');
             if (category.val() < 0) {
                 category.addClass('bitsc_err')
@@ -115,7 +126,8 @@
             }
 
             let lesson = $('select[name="lesson"]');
-            if (lesson.val() < 1) {
+            let lesson_id = lesson.val();
+            if (lesson_id < 1) {
                 lesson.addClass('bitsc_err')
                 lesson.parent('td').append('<span class="bitsc_err_msg">Please select a lesson</span>');
                 submit = false;
@@ -128,9 +140,10 @@
 
             if ('Code' === content_type) {
                 let code_id = $('select[name="bitsc_code_id"]');
-                if (code_id.val() < 1) {
+                let code_val = code_id.val();
+                if (code_val < 1) {
                     code_id.addClass('bitsc_err')
-                    code_id.parent('td').append('<span class="bitsc_err_msg">Please a code example.</span>');
+                    code_id.parent('td').append('<span class="bitsc_err_msg">Please select a code example.</span>');
                     submit = false;
                 } else {
                     code_id.removeClass('bitsc_err');
@@ -150,8 +163,44 @@
             if (submit) {
                 $('form[name="bitsc_content_from"]').submit();
             }
-
         });
+        $('select[name="lesson"]').on('change', function () {
+            maybe_check_existing();
+        });
+        $('#bitsc_code_id').on('change', function () {
+            maybe_check_existing()
+        });
+
+        function maybe_check_existing() {
+            let code_id = $('#bitsc_code_id');
+            let code_val = code_id.val();
+            let submit_btn = $('form[name="bitsc_content_from"] .button-primary');
+            let lesson = $('select[name="lesson"]');
+            let lesson_id = lesson.val();
+            
+            if (lesson_id > 0 && code_val > 0) {
+                code_id.removeClass('bitsc_err');
+                code_id.parent('td').find('span').remove();
+                let data = {
+                    'action': 'bitscr_get_code_in_lesson',
+                    'lesson_id': lesson_id,
+                    'code_id': code_val
+                };
+                $(submit_btn).attr('disabled', true);
+                $.post(ajaxurl, data, function (resp) {
+                    if (resp.success === true) {
+                        if (true === resp.in_lesson) {
+                            code_id.addClass('bitsc_err');
+                            code_id.parent('td').append('<span class="bitsc_err_msg">The code is already in this lesson</span>');
+                        } else {
+                            $(submit_btn).attr('disabled', false);
+                            code_id.removeClass('bitsc_err');
+                            code_id.parent('td').find('span').remove();
+                        }
+                    }
+                });
+            }
+        }
     }); //document.ready
 
 

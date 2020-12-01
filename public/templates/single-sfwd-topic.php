@@ -78,7 +78,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
             <a href="javascript:void(0);" class="bttn videos_btn" data-tab="videos">VIDEOS</a>
             <a href="javascript:void(0);" class="bttn help_btn" data-tab="help">DOCUMENTS</a>
             <a href="javascript:void(0);" class="bttn notes_btn" data-tab="notes">NOTES</a>
-            <a href="javascript:void(0);" class="bttn code_btn" data-tab="bitsacdes"><?php esc_html_e( 'Code', 'bitwise-sidebar-content' ); ?></a>
+            <a href="javascript:void(0);" class="bttn code_btn" data-tab="bitsacdes"><?php esc_html_e( 'CODE', 'bitwise-sidebar-content' ); ?></a>
         </div>
     </div>
 
@@ -89,7 +89,7 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
                 <li><a class="nav_link" data-toggle="pill" href="#videos">VIDEOS</a></li>
                 <li><a class="nav_link" data-toggle="pill" href="#help">DOCUMENTS</a></li>
                 <li><a class="nav_link" data-toggle="pill" href="#notes">NOTES</a></li>
-                <li><a class="nav_link" data-toggle="pill" href="#bitsacdes"><?php esc_html_e( 'Code', 'bitwise-sidebar-content' ); ?></a></li>
+                <li><a class="nav_link" data-toggle="pill" href="#bitsacdes"><?php esc_html_e( 'CODE', 'bitwise-sidebar-content' ); ?></a></li>
             </ul>
             <div class="tab-content">
                 <div id="videos" class="tab-pane fade">
