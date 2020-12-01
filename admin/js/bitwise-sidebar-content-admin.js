@@ -164,6 +164,15 @@
                 $('form[name="bitsc_content_from"]').submit();
             }
         });
+
+        $('input[name="content_type"]').on('change',function (){
+           console.log($(this).val());
+           let content_type = $(this).val();
+           if ('Code'===content_type){
+               maybe_check_existing();
+           }
+        });
+
         $('select[name="lesson"]').on('change', function () {
             maybe_check_existing();
         });
@@ -177,7 +186,7 @@
             let submit_btn = $('form[name="bitsc_content_from"] .button-primary');
             let lesson = $('select[name="lesson"]');
             let lesson_id = lesson.val();
-            
+            console.log('Lesson id: '+lesson_id+' Code id: '+code_val);
             if (lesson_id > 0 && code_val > 0) {
                 code_id.removeClass('bitsc_err');
                 code_id.parent('td').find('span').remove();
@@ -187,6 +196,7 @@
                     'code_id': code_val
                 };
                 $(submit_btn).attr('disabled', true);
+                $('.bitwise-content-table-form .spinner').css('visibility','visible');
                 $.post(ajaxurl, data, function (resp) {
                     if (resp.success === true) {
                         if (true === resp.in_lesson) {
@@ -197,6 +207,7 @@
                             code_id.removeClass('bitsc_err');
                             code_id.parent('td').find('span').remove();
                         }
+                        $('.bitwise-content-table-form .spinner').css('visibility','hidden');
                     }
                 });
             }

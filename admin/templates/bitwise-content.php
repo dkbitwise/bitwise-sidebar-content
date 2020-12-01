@@ -137,6 +137,7 @@ $content_url = add_query_arg( array(
                     <td>
                         <input type="hidden" name="bitwise-content">
                         <input class="primary button-primary" type="button" value="Submit">
+                        <span class="spinner"></span>
                     </td>
                 </tr>
 

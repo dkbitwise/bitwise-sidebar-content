@@ -19,3 +19,4 @@ table.bitscr-courses { width: 100%;}
 .bitscr-class-no-code a { text-decoration: none;}
 .bitwise-content-form-table .bitsc_err{border: 1px solid red}
 .bitwise-content-form-table .bitsc_err_msg{color: red; display: block;}
+.bitwise-content-form-table .spinner { right: 50%; position: relative;}
