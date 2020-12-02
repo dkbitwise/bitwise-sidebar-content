@@ -142,7 +142,7 @@
                 let code_id = $('select[name="bitsc_code_id"]');
                 let code_val = code_id.val();
                 if (code_val < 1) {
-                    code_id.addClass('bitsc_err')
+                    code_id.addClass('bitsc_err');
                     code_id.parent('td').append('<span class="bitsc_err_msg">Please select a code example.</span>');
                     submit = false;
                 } else {
@@ -151,13 +151,25 @@
                 }
             } else {
                 let content_url = $('input[name="content_url"]');
-                if ('' === content_url.val()) {
-                    content_url.addClass('bitsc_err')
-                    content_url.parent('td').append('<span class="bitsc_err_msg">Upload or enter content URL.</span>');
+                let file_name = content_url.val();
+                content_url.parent('td').append('<span class="bitsc_err_msg"></span>');
+                content_url.addClass('bitsc_err');
+                if ('' === file_name) {
+                    content_url.parent('td').find('.bitsc_err_msg').text('Upload or enter content URL');
                     submit = false;
                 } else {
-                    content_url.removeClass('bitsc_err');
-                    content_url.parent('td').find('span').remove();
+                    let ext = file_name.split('.').pop();
+
+                    if ('Video' === content_type && jQuery.inArray(ext, bitscr.video) < 0) {
+                        content_url.parent('td').find('.bitsc_err_msg').text('Supported video formats are: ' + bitscr.video.join(', '));
+                        submit = false;
+                    } else if ('Help' === content_type && jQuery.inArray(ext, bitscr.docs) < 0) {
+                        content_url.parent('td').find('.bitsc_err_msg').text('Supported doc types are: '+bitscr.docs.join(', '));
+                        submit = false;
+                    } else {
+                        content_url.removeClass('bitsc_err');
+                        content_url.parent('td').find('span').remove();
+                    }
                 }
             }
             if (submit) {
@@ -165,19 +177,19 @@
             }
         });
 
-        $('input[name="content_type"]').on('change',function (){
-           console.log($(this).val());
-           let content_type = $(this).val();
-           if ('Code'===content_type){
-               maybe_check_existing();
-           }
+        $('input[name="content_type"]').on('change', function () {
+            console.log($(this).val());
+            let content_type = $(this).val();
+            if ('Code' === content_type) {
+                maybe_check_existing();
+            }
         });
 
         $('select[name="lesson"]').on('change', function () {
             maybe_check_existing();
         });
         $('#bitsc_code_id').on('change', function () {
-            maybe_check_existing()
+            maybe_check_existing();
         });
 
         function maybe_check_existing() {
@@ -186,7 +198,7 @@
             let submit_btn = $('form[name="bitsc_content_from"] .button-primary');
             let lesson = $('select[name="lesson"]');
             let lesson_id = lesson.val();
-            console.log('Lesson id: '+lesson_id+' Code id: '+code_val);
+            console.log('Lesson id: ' + lesson_id + ' Code id: ' + code_val);
             if (lesson_id > 0 && code_val > 0) {
                 code_id.removeClass('bitsc_err');
                 code_id.parent('td').find('span').remove();
@@ -196,7 +208,7 @@
                     'code_id': code_val
                 };
                 $(submit_btn).attr('disabled', true);
-                $('.bitwise-content-table-form .spinner').css('visibility','visible');
+                $('.bitwise-content-table-form .spinner').css('visibility', 'visible');
                 $.post(ajaxurl, data, function (resp) {
                     if (resp.success === true) {
                         if (true === resp.in_lesson) {
@@ -207,7 +219,7 @@
                             code_id.removeClass('bitsc_err');
                             code_id.parent('td').find('span').remove();
                         }
-                        $('.bitwise-content-table-form .spinner').css('visibility','hidden');
+                        $('.bitwise-content-table-form .spinner').css('visibility', 'hidden');
                     }
                 });
             }

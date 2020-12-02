@@ -74,7 +74,11 @@ class Bitwise_Sidebar_Content_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( Bitscr_Core()->get_plugin_name(), plugin_dir_url( __FILE__ ) . 'js/bitwise-sidebar-content-admin.js', array( 'jquery' ), Bitscr_Core()->get_version(), false );
+		wp_register_script( Bitscr_Core()->get_plugin_name(), plugin_dir_url( __FILE__ ) . 'js/bitwise-sidebar-content-admin.js', array( 'jquery' ), Bitscr_Core()->get_version(), false );
+		$data = [ 'docs' => $this->get_allowed_document_formats(), 'video' => $this->get_allowed_video_formats() ];
+
+		wp_localize_script( Bitscr_Core()->get_plugin_name(), 'bitscr', $data );
+		wp_enqueue_script( Bitscr_Core()->get_plugin_name() );
 	}
 
 	public function admin_sidebar_menu() {
@@ -298,5 +302,13 @@ class Bitwise_Sidebar_Content_Admin {
 		}
 
 		return $output;
+	}
+
+	public function get_allowed_video_formats() {
+		return array( 'mp4', 'mpeg', 'mov', 'flv', 'webm' );
+	}
+
+	public function get_allowed_document_formats() {
+		return array( 'doc', 'pdf', 'xls', 'xlns', 'csv' );
 	}
 }

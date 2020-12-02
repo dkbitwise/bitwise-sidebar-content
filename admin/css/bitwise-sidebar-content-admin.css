@@ -6,7 +6,7 @@ table.bitscr-courses { width: 100%;}
 .bitscr-courses .bitscr_crs_sync { text-align: left;}
 .bitscr-courses td { text-align: center; border-bottom: 1px solid #ccc;}
 .bitscr-courses th { border-bottom: 2px solid #999;}
-.bitwise-content-form tr td:first-child { width: 45%;}
+.bitwise-content-form tr td:first-child { width: 30%;}
 .bitwise-content-form tr td { padding: 5px 0; }
 .bitscr-courses th { text-align: center; }
 .bitscr-courses th:last-child, .bitscr-courses td:last-child { text-align: left; }
