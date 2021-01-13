@@ -67,10 +67,10 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 	$get_post  = get_post( $course_id );
 	$lessonid  = learndash_get_lesson_id();
 
-	$bit_course_content = Bitscr_Common::get_multiple_data( array(), array( 'sfwd_lesson_id' => $lessonid ), 'content' );
+	$bit_course_content = Bitscr_Common::get_multiple_data( array(), array( 'sfwd_lesson_id' => $lessonid, 'category'=>array('0','1')  ), 'content' );
 
 	$videos = wp_list_filter( $bit_course_content, array( 'type' => 'Video', 'status' => 'published' ) );
-	$codes  = wp_list_filter( $bit_course_content, array( 'type' => 'Code', 'status' => 'published' ) );
+	$codes  = wp_list_filter( $bit_course_content, array( 'type' => 'Code', 'status' => 'published') );
 	$helps  = wp_list_filter( $bit_course_content, array( 'type' => 'Help', 'status' => 'published' ) ); ?>
 
     <div class="bit_info_btn btn121" data-toggle="tooltip" data-placement="left">
