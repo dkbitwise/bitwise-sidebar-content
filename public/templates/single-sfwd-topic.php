@@ -22,6 +22,10 @@
 
 <?php
 global $rtl;
+
+//load redis cache lib
+//require(plugin_dir_path( __DIR__ ).'RedisCache.php');
+
 $logo         = ( boss_get_option( 'logo_switch' ) && boss_get_option( 'boss_logo', 'id' ) ) ? '1' : '0';
 $inputs       = ( boss_get_option( 'boss_inputs' ) ) ? '1' : '0';
 $boxed        = boss_get_option( 'boss_layout_style' );
@@ -66,19 +70,46 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
 	$course_id = learndash_get_course_id();
 	$get_post  = get_post( $course_id );
 	$lessonid  = learndash_get_lesson_id();
+        $category  = array('0');
 
-	$bit_course_content = Bitscr_Common::get_multiple_data( array(), array( 'sfwd_lesson_id' => $lessonid ), 'content' );
+        //Get the previous path for the student
+        global $wpdb;
+        $path_table = $wpdb->prefix.'student_learning_path';
+        $select_query = $wpdb->prepare("SELECT * FROM $path_table WHERE `student_id`= %d AND `course_id`= %d", $userid, $courseid);
+        $result_qr = $wpdb->get_results($select_query);
+        $previous_path = json_encode(array(course_path=>array()));
+        if(count($result_qr) >= 1){
+		var_dump($previous_path);exit;
+	}
+	//var_dump($result_qr);
+	//exit('here');
+	//load the assests category based on the given course id and user id from Redis cache
+	/*$redis = new RedisCache();
+        $checkkey = $redis->isExists($user_id);
+        if($checkkey == 1) {
+		 $getPathDetails =  json_decode($redis->getValue($user_id))->learning_path;
+                 $category_id = $getPathDetails->$course_id->$lessonid;
+		 var_dump($category_id);exit;
+		 array_push($category, $category_id);
+        }*/
 
-	$videos = wp_list_filter( $bit_course_content, array( 'type' => 'Video', 'status' => 'published' ) );
-	$codes  = wp_list_filter( $bit_course_content, array( 'type' => 'Code', 'status' => 'published' ) );
-	$helps  = wp_list_filter( $bit_course_content, array( 'type' => 'Help', 'status' => 'published' ) ); ?>
+
+	//$category = array('0');
+
+	//$bit_course_content = Bitscr_Common::get_multiple_data( array(), array( 'sfwd_lesson_id' => $lessonid, 'category' => $category ), 'content' );
+    $bit_course_content = Bitscr_Common::get_multiple_data( array(), array( 'sfwd_lesson_id' => $lessonid,'category' => array('1','3') ), 'content' );
+
+	$videos = wp_list_filter( $bit_course_content, array( 'type' => 'Video', 'status' => '1') );
+	$codes  = wp_list_filter( $bit_course_content, array( 'type' => 'Code', 'status' => '1') );
+	$helps  = wp_list_filter( $bit_course_content, array( 'type' => 'Help', 'status' => '1') ); ?>
 
     <div class="bit_info_btn btn121" data-toggle="tooltip" data-placement="left">
         <div class="content_btns">
             <a href="javascript:void(0);" class="bttn videos_btn" data-tab="videos">VIDEOS</a>
             <a href="javascript:void(0);" class="bttn help_btn" data-tab="help">DOCUMENTS</a>
+	    <a href="javascript:void(0);" class="bttn code_btn" data-tab="bitsacdes"><?php esc_html_e( 'CODE', 'bitwise-sidebar-content' ); ?></a>
             <a href="javascript:void(0);" class="bttn notes_btn" data-tab="notes">NOTES</a>
-            <a href="javascript:void(0);" class="bttn code_btn" data-tab="bitsacdes"><?php esc_html_e( 'CODE', 'bitwise-sidebar-content' ); ?></a>
+            <!--<a href="javascript:void(0);" class="bttn code_btn" data-tab="bitsacdes"><?php esc_html_e( 'CODE', 'bitwise-sidebar-content' ); ?></a>-->
         </div>
     </div>
 
@@ -88,8 +119,9 @@ $logo_small    = wp_get_attachment_image( $logo_small_id, 'full', '', array( 'cl
             <ul class="nav nav-pills">
                 <li><a class="nav_link" data-toggle="pill" href="#videos">VIDEOS</a></li>
                 <li><a class="nav_link" data-toggle="pill" href="#help">DOCUMENTS</a></li>
+		<li><a class="nav_link" data-toggle="pill" href="#bitsacdes"><?php esc_html_e( 'CODE', 'bitwise-sidebar-content' ); ?></a></li>
                 <li><a class="nav_link" data-toggle="pill" href="#notes">NOTES</a></li>
-                <li><a class="nav_link" data-toggle="pill" href="#bitsacdes"><?php esc_html_e( 'CODE', 'bitwise-sidebar-content' ); ?></a></li>
+                <!--<li><a class="nav_link" data-toggle="pill" href="#bitsacdes"><?php esc_html_e( 'CODE', 'bitwise-sidebar-content' ); ?></a></li>-->
             </ul>
             <div class="tab-content">
                 <div id="videos" class="tab-pane fade">

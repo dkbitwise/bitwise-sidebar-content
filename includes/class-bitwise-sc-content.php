@@ -310,6 +310,15 @@ class Bitwise_SC_Content {
 			$lessons        = ( $bit_course_obj instanceof Bitscr_Course ) ? $bit_course_obj->get_sfwd_lessons() : [];
 
 			$lesson_name = array_key_exists( $sfwd_lesson_id, $lessons ) ? $lessons[ $sfwd_lesson_id ] : '';
+			
+			if($content['status'] == 1)
+			{
+				$status = "Published";
+			}
+			else
+			{
+				$status = "Draft";
+			}
 
 			$items[] = array(
 				'id'          => $content['id'],
@@ -317,7 +326,7 @@ class Bitwise_SC_Content {
 				'type'        => $content['type'],
 				'lesson_name' => $lesson_name,
 				'source'      => $content['source'],
-				'status'      => $content['status'],
+				'status'      => $status,
 				'category'    => $content['category'],
 				'date_added'  => $content['date_added'],
 				'row_actions' => $row_actions,

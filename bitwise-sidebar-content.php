@@ -114,29 +114,25 @@ function bitscr_clean( $var ) {
 		 require_once(dirname(__FILE__).'/lang/eng.php');
 		  $pdf->setLanguageArray($l);
 		}
-		
+
 		$pdf->AddPage();
 		$html = '<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>'.esc_html($current_user->display_name).'</title></head><body>';
-		foreach($oldnotes as $oldnote){ 
+		foreach($oldnotes as $oldnote){
 		$html.='<h1>'.esc_html($oldnote[0]->title).'</h1>'.wpautop($oldnote[0]->content).'
-				<p>Location: 
-				<a href="' . esc_url( get_the_permalink($oldnote[0]->course_id) ) .'">' . get_the_title($oldnote[0]->course_id) . '</a> &raquo; 
+				<p>Location:
+				<a href="' . esc_url( get_the_permalink($oldnote[0]->course_id) ) .'">' . get_the_title($oldnote[0]->course_id) . '</a> &raquo;
 				<a href="' . esc_url( get_the_permalink($oldnote[0]->lesson_id) ) .'">' . get_the_title($oldnote[0]->lesson_id) . '</a> &raquo;
 				<a href="' . esc_url( get_the_permalink($oldnote[0]->topic_id) ) .'">' . get_the_title($oldnote[0]->topic_id) . '</a>
 				</p><br><hr><br>';
-
 		 }
 		$html.='</body>
 		</html>';
 		$pdf->writeHTML($html, true, 0, true, 0);
 		$pdf->lastPage();
 		$pdf->Output($filename, 'D');
-		ob_end_flush(); 
+		ob_end_flush();
 		exit();
-	
 	 }
-	
-		
 	}
     /*********************************************************/
 		//View the notes updated by suresh on 23-6-2020
@@ -152,17 +148,15 @@ function bitscr_clean( $var ) {
 	 * @param int lesson_id
 	 * @param int topic_id
 	 */
-	 
-	
+
 	function bitsa_notes_viewnotes(){
-	
+
 		wp_enqueue_script( 'bitwise_sidebar_content_public_js', plugin_dir_url( __FILE__ ) . '/public/js/bitwise-sidebar-content-public.js', array( 'jquery' ), '1.0.0', false );
 		wp_enqueue_script( 'learndash_sidebar_content_public_js', plugin_dir_url( __FILE__ ) . '/public/js/nt_notes.js', array( 'jquery' ), '1.0.0', false );
 		wp_enqueue_script( 'learndash_sidebar_print_public_js', plugin_dir_url( __FILE__ ) . '/public/js/nt_notes_lib.js', array( 'jquery' ), '1.0.0', false );
-		wp_enqueue_script( 'bitwise_lightbox_html5view', plugin_dir_url( __FILE__ ) . 'public/html5lightbox/html5lightbox.js', array(), '1.0.0', false );	
-		
+		wp_enqueue_script( 'bitwise_lightbox_html5view', plugin_dir_url( __FILE__ ) . 'public/html5lightbox/html5lightbox.js', array(), '1.0.0', false );
 		wp_enqueue_style( 'bitwise_sidebar_content_public', plugin_dir_url( __FILE__ ) . 'public/css/bitwise-sidebar-content-public.css', array(), '1.0.0', 'all' );
-			
+
 	    global $wpdb;
 		$current_user	= wp_get_current_user();
 		$allowed_roles = array('administrator');

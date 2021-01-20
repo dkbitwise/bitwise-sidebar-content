@@ -200,7 +200,11 @@ class Bitscr_Data_Store {
 		if ( is_array( $where_pairs ) && count( $where_pairs ) > 0 ) {
 			$sql_query .= " WHERE 1 = 1";
 			foreach ( $where_pairs as $where_key => $where_value ) {
-				$sql_query .= " AND " . $where_key . " = '$where_value'";
+				if(is_array($where_value)){
+					$sql_query .= " AND " . $where_key . " IN (".implode(',',$where_value).")";
+				}else{
+					$sql_query .= " AND " . $where_key . " = '$where_value'";
+				}
 			}
 		}
 
@@ -229,12 +233,23 @@ class Bitscr_Data_Store {
 
 		$sql_query .= "FROM " . $this->get_table();
 
-		if ( is_array( $where_pairs ) && count( $where_pairs ) > 0 ) {
+		/*if ( is_array( $where_pairs ) && count( $where_pairs ) > 0 ) {
 			$sql_query .= " WHERE 1 = 1";
 			foreach ( $where_pairs as $where_key => $where_value ) {
 				$sql_query .= " AND " . $where_key . " = '$where_value'";
 			}
 		}
+echo $sql_query;*/
+if ( is_array( $where_pairs ) && count( $where_pairs ) > 0 ) {
+$sql_query .= " WHERE 1 = 1";
+foreach ( $where_pairs as $where_key => $where_value ) {
+if(is_array($where_value)){
+$sql_query .= " AND " . $where_key . " IN ".implode(',',$where_value);
+}else{
+$sql_query .= " AND " . $where_key . " = '$where_value'";
+}
+}
+}
 
 		return self::$wp_db->get_row( $sql_query, ARRAY_A );
 	}

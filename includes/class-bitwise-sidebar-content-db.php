@@ -136,7 +136,7 @@ class Bitwise_Sidebar_Content_DB {
 				`category` TINYINT UNSIGNED NOT NULL DEFAULT 0,
 				`type` VARCHAR(200) NOT NULL,
 				`source` VARCHAR(200) NOT NULL,
-				`status` VARCHAR(200) NOT NULL DEFAULT 'draft',
+				`status` TINYINT UNSIGNED NOT NULL DEFAULT 1,
 				`date_added` DATETIME DEFAULT NULL,
 				PRIMARY KEY (`id`),
 				KEY `id` (`id`)

@@ -53,9 +53,9 @@ $content_url = add_query_arg( array(
                     <td>Status</td>
                     <td class="select-status">
                         <select required id="bitscr_status" name="content_status">
-                            <option value="0">Select a Status</option>
-                            <option <?php echo selected( 'draft', $c_status ) ?> value="draft">Draft</option>
-                            <option <?php echo selected( 'published', $c_status ) ?> value="published">Published</option>
+                            <option disabled value="">Select a Status</option>
+                            <option <?php echo selected( 0, $c_status ) ?> value="0">Draft</option>
+                            <option <?php echo selected( 1, $c_status ) ?> value="1">Published</option>
                         </select>
                     </td>
                 </tr>

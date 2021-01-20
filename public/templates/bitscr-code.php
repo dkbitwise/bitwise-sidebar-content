@@ -6,7 +6,7 @@
  * @subpackage Boss
  * @since Boss 1.0.0
  */ ?>
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html <?php language_attributes(); ?>>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
